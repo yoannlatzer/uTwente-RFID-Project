@@ -47,10 +47,13 @@ def cur_tables():
         result = cur.execute("SELECT * FROM %s;" % table);
         
             # Get all rows.
-        rows = result.fetchall();
+        rows = result.fetchall()
+        cur.execute("SELECT * FROM %s" % table)
+        col_name = [tuple[0] for tuple in cur.description]
         
             # \n represents an end-of-line
         print ("\n--- TABLE ", table, "\n")
+        print (col_name)
         print (rows)
         
 def end():
@@ -63,5 +66,8 @@ def create_db():
     exeScriptFile('snack_create.sql')
     cur_tables()
     end()
+
+def useless():
+    print ('only to test correct calls from other documents')
 
 create_db()
