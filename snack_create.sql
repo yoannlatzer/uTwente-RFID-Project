@@ -38,10 +38,11 @@ CREATE TABLE items
 iid INTEGER PRIMARY KEY NOT NULL,
 item_name varchar,
 stock INTEGER,  --make db constraint that always above > -1?,
-cprice DECIMAL(5,2) --is most likely just overkill for a snack system,
---PIC varchar   -- currently of no use due to non-GUI enviroment
+cprice DECIMAL(5,2), --is most likely just overkill for a snack system,
+PIC varchar   -- currently of no use due to non-GUI enviroment
+CHECK(PIC <> '')
 );
-INSERT INTO items VALUES(1,'Bueno',20,0.41);
+INSERT INTO items VALUES(1,'Bueno',20,0.41,Null);
 
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS basket;
