@@ -41,10 +41,11 @@ def exeScriptFile(filename):
         
 def cur_tables():
     """Shows all info for current tables (not yet db independent due to fetching of Tables)"""
+    begin()
     cur.execute("SELECT name FROM sqlite_master WHERE type='table';")    
     x = [tup[0] for tup in cur.fetchall()]
     for table in x:
-        result = cur.execute("SELECT * FROM %s;" % table);
+        result = cur.execute("SELECT * FROM %s;" % table)
         
             # Get all rows.
         rows = result.fetchall()
@@ -52,22 +53,30 @@ def cur_tables():
         col_name = [tuple[0] for tuple in cur.description]
         
             # \n represents an end-of-line
-        print ("\n--- TABLE ", table, "\n")
+        print ("\n--- TABLE ", table)
         print (col_name)
         print (rows)
-        
-def end():
-    """End the connection we have made and store everything"""
+    end()
+
+def lastId():
+    """Get last inserted id"""
+    return cur.lastrowid
+
+def commit():
+    """Commit changes"""
     con.commit()
+
+def end():
+    """End the connection we have made"""
+    con.close()
 
 def create_db():
     """create a connection, exe script, see wat you created (data wise) and end the connection"""
     begin()
     exeScriptFile('snack_create.sql')
-    cur_tables()
+ #   cur_tables()
+    commit()
     end()
 
 def useless():
     print ('only to test correct calls from other documents')
-
-create_db()

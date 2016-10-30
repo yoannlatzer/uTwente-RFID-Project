@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Hello world</title>
+      <link rel="stylesheet" href="/style/style.css"/>
+      <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+      <script src="/lib/jquery-2.1.1.min.js"></script>
+      <script src="/lib/core.js"></script>
+      <script src="/js/fake.js"></script>
+      <script src="/js/user.js"></script>
+      <script>
+          var current = 'home';
+          $(document).ready(function() {
+              $('#home').removeClass('screen');
+          });
+
+          function goto(page) {
+              $('#' + current).addClass('screen');
+              $('#' + page).removeClass('screen');
+              current = page;
+          }
+      </script>
+      <script src="/js/events.js"></script>
+  </head>
+<body>
+    <div id="home" class="screen">
+        <h1>Please scan your student id</h1>
+        <ul>
+            <li><a href="#" onclick="goto('login')">Login with username and password (not functional)</a></li>
+            <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
+            <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
+            <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
+        </ul>
+    </div>
+    <div id="newUser" class="screen">
+        <h1>Please fill the form below to register as a new user (todo errors)</h1>
+        <form>
+            <input placeholder="Name" type="text" id="register_name" /><br />
+            <input placeholder="s1234567" type="text" id="register_studentnr" /><br />
+            <input placeholder="password" type="password" id="register_password" /><br />
+            <input type="button" value="Register.." onClick="register()"/><br />
+        </form>
+        <br />
+        <a href="#" href="#" onclick="goto('home')">go back</a>
+    </div>
+    <div id="login" class="screen">
+        <h1>Please enter your student number and password (not functional)</h1>
+        <form>
+            <input placeholder="s1234567" type="text" id="studentnr" /><br />
+            <input placeholder="password" type="password" id="password" /><br />
+            <input type="button" value="Login.." /><br />
+        </form>
+        <br />
+        <a href="#" href="#" onclick="goto('home')">go back</a>
+    </div>
+    <div id="authenticated" class="screen">
+        <h1>Welcome back</h1>
+        Page when logged in..
+        <br />
+        <a href="#" href="#" onclick="logout()">Logout</a>
+    </div>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        // Event to show new user screen (unknown card)
+        block('#newUser').newUser();
+        events.connect('newUser', '#newUser')
+        // Event when user is authenticated
+        block('#authenticated').authenticatedUser();
+        events.connect('authenticated', '#authenticated')
+        // Event when user is logged out
+        block('#home').logoutUser();
+        events.connect('logout', '#home')
+    </script>
+</body>
+</html>
