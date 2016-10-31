@@ -14,9 +14,10 @@ global con
 global cur
 
 def ExepHand(query):
+    """For all user input we check if corret DataType INSIDE querry and catch Exceptions"""
     try:
         result = cur.execute(query)
-    except ValueError as msg:
+    except ValueError as msg:  #trying to store s1234567 as sid shouldn't work, sid = integer, we check with python in querry
         print ("msg") #possibly use a return to send back an error?
     return result
     

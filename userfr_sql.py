@@ -8,6 +8,7 @@ import exe_sql as sql
 
 
 def UserCheck(keyhash):
+    """Select user data from keyhash recieved"""
     sql.begin()
     result = sql.cur.execute("""SELECT person.name,person.sid,person.balance
                             from  person, KPL, key
@@ -18,8 +19,10 @@ def UserCheck(keyhash):
     sql.end()
     return res
 
-    #items should be set up as a (list of) tuple (iid, quant) for easier inserts
+
+    # the items list should be set up as a (list of) tuple (iid, quant) for easier inserts :: [(a,b),(a,b)]
 def CreateTransAndBask(pid,item): #should update the pid to become keyhash from user scan, or we return value of pid gotten above?
+    """Create the basket and Transactions of different items and update userbalance, stock accordingly"""
     sql.begin()
     sql.cur.execute("""INSERT INTO basket (pid,date) VALUES(?,CURRENT_TIMESTAMP)""", [pid])
     bid = sql.lastId()
@@ -58,6 +61,7 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
 
 #quick debug function for getting stuff
 def getUsers():
+    """Mainly debug for quick overview of data to test allowed inputs for other queries"""
     sql.begin()
     result = sql.cur.execute('''SELECT keyhash, key.kid, person.pid, person.name,person.sid,person.balance, usertype
                             from person, KPL, key
