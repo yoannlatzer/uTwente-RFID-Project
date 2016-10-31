@@ -39,6 +39,8 @@ def registerUser(ctx, e):
                 userActions.newUser(e.data['name'], e.data['sid'], ctx.currentHash)
                 # show logged in screen
                 print('Successful registration!')
+                user = rfid.sendFakeHash(ctx.currentHash)
+                ctx.person = user
                 loginUser(ctx, e)
 
 def loginUser(ctx, e):
