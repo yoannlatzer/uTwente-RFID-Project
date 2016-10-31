@@ -6,6 +6,7 @@ Created on Fri Oct 28 18:07:53 2016
 """
 
 import exe_sql as sql
+import random
 
 def newUser(name,sid, hash): # user will not be created under a new name if SID already exists due to UNIQUE CONSTRAINT
     sql.begin()
@@ -15,7 +16,7 @@ def newUser(name,sid, hash): # user will not be created under a new name if SID 
     kid = sql.lastId()
 
     # insert user
-    sql.cur.execute("INSERT INTO person (name,sid,usertype) VALUES(?,?,0)", [name, sid])
+    sql.cur.execute("INSERT INTO person (name,sid,usertype,balance) VALUES(?,?,0,?)", [name, sid,random.uniform(1,20)])
     sql.commit()
     pid = sql.lastId()
 

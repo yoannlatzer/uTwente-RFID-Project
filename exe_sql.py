@@ -13,6 +13,13 @@ import sqlite3 as sql                        #import the sqlite3 library, set as
 global con
 global cur
 
+def ExepHand(query):
+    try:
+        result = cur.execute(query)
+    except ValueError as msg:
+        print ("msg") #possibly use a return to send back an error?
+    return result
+    
 def begin():
     """Start connection and return global vars con and cur"""
     global cur
