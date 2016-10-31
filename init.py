@@ -8,6 +8,8 @@ import fake
 def add_request_handlers(httpd):
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
+  httpd.add_route('/admin', eca.http.GenerateEvent('adminscreen'), methods=["POST"])
+  httpd.add_route('/admin/page', eca.http.GenerateEvent('adminpage'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
 
 @event('init')
@@ -20,6 +22,19 @@ def setup(ctx, e):
     ctx.person = None
     ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
     rfid.listen()
+
+@event('adminscreen')
+def openAdminScreen(ctx, e):
+    if ctx.person[3] == 1:
+        emit('admin', {'pid': ctx.person[0], 'type': ctx.person[3], 'name': ctx.person[1], 'sid': ctx.person[2]})
+        print('Show admin screen')
+
+@event('adminpage')
+def showAdminPage(ctx, e):
+    if ctx.person[3] == 1:
+        emit('adminpage', {'page': e.data['page']})
+        print('Show admin page')
+
 
 @event('register')
 def registerUser(ctx, e):

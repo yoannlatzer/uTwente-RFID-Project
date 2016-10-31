@@ -20,6 +20,16 @@
               $('#' + page).removeClass('screen');
               current = page;
           }
+
+          function loadAdminScreen() {
+              $.post('/admin', JSON.stringify({}))
+          }
+
+          function adminPage(page) {
+              $.post('/admin/page', JSON.stringify({page: page}))
+          }
+
+
       </script>
       <script src="/js/events.js"></script>
   </head>
@@ -66,6 +76,25 @@
         <br />
         <a href="#" href="#" onclick="logout()">Logout</a>
     </div>
+    <div id="admin_link" class="screen">
+        <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
+    </div>
+    <div id="admin" class="screen">
+        Whoohoo admin screen<br />
+        <ul>
+            <li><a href="#" onClick="adminPage('adminList')">Admin list</a></li>
+            <li><a href="#" onClick="adminPage('userList')">User list</a></li>
+            <li><a href="#" onClick="adminPage('keyList')">Key list</a></li>
+            <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
+            <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
+        </ul>
+        <div id="adminList" class="screen"><h1>admin list</h1></div>
+        <div id="userList" class="screen"><h1>user list</h1></div>
+        <div id="keyList" class="screen"><h1>key list</h1></div>
+        <div id="productList" class="screen"><h1>product list</h1></div>
+        <div id="productAdd" class="screen"><h1>product Add</h1></div>
+        <a href="#" href="#" onclick="logout()">Logout</a>
+    </div>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         // Event to show new user screen (unknown card)
@@ -77,6 +106,11 @@
         // Event when user is logged out
         block('#home').logoutUser();
         events.connect('logout', '#home')
+        // Event when admin panel should load
+        block('#admin').admin();
+        events.connect('admin', '#admin')
+        block('#admin').adminpage();
+        events.connect('adminpage', '#admin')
     </script>
 </body>
 </html>
