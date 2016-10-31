@@ -17,7 +17,7 @@ def begin():
     """Start connection and return global vars con and cur"""
     global cur
     global con    
-    con = sql.connect('example3.db')             #connect to given filename, if unexistent it will be created
+    con = sql.connect('snack.db')             #connect to given filename, if unexistent it will be created
     cur = con.cursor()
     
 
@@ -74,9 +74,11 @@ def create_db():
     """create a connection, exe script, see wat you created (data wise) and end the connection"""
     begin()
     exeScriptFile('snack_create.sql')
- #   cur_tables()
+#    cur_tables()
     commit()
     end()
+
+create_db()
 
 def useless():
     print ('only to test correct calls from other documents')
