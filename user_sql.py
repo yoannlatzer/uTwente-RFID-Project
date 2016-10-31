@@ -16,7 +16,7 @@ def newUser(name,sid, hash): # user will not be created under a new name if SID 
     kid = sql.lastId()
 
     # insert user
-    sql.cur.execute("INSERT INTO person (name,sid,usertype,balance) VALUES(?,?,0,?)", [name, sid,random.uniform(1,20)])
+    sql.cur.execute("INSERT INTO person (name,sid,usertype,balance) VALUES(?,?,0,?)", [name, sid,round(random.uniform(1,20),2)])
     sql.commit()
     pid = sql.lastId()
 
