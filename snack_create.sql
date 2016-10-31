@@ -10,10 +10,11 @@ keyhash BLOB   --? sha3_512 hash rfid tag uid
 DROP TABLE IF EXISTS person;     
 CREATE TABLE person                     
 (
-PID INTEGER NOT NULL PRIMARY KEY, -- person id
+pid INTEGER NOT NULL PRIMARY KEY, -- person id
 name VARCHAR,
 sid INTEGER UNIQUE, -- student id
 usertype TINYINT -- 0: user, 1: admin
+balance DECIMAL (5,2) DEFAULT 0 -- SHOULD ONLY BE NUMBERS, DO NOT USE THE 'FEATURE'
 );
 --------------------------------------------------------------------------------;
 DROP TABLE IF EXISTS KPL;
@@ -36,7 +37,7 @@ iid INTEGER PRIMARY KEY NOT NULL, -- item id
 item_name varchar,
 stock INTEGER,  --make db constraint that always above > -1?,
 cprice DECIMAL(5,2), --is most likely just overkill for a snack system,
-PIC varchar   -- currently of no use due to non-GUI enviroment
+pic varchar   -- currently of no use due to non-GUI enviroment
 CHECK(PIC <> '')
 );
 INSERT INTO items VALUES(1,'Bueno',20,0.41,Null);
@@ -54,14 +55,15 @@ FOREIGN KEY(pid) REFERENCES person(pid)
 );
 INSERT INTO basket VALUES (1,15.62,CURRENT_TIMESTAMP,2);
 --------------------------------------------------------------------------------
-DROP TABLE IF EXISTS transacties;
+DROP TABLE IF EXISTS transactions;
 
-Create TABLE transacties
+Create TABLE transactions
 (
 bid INTEGER NOT NULL,
 iid INTEGER NOT NULL,
 quantity INTEGER,
 price DECIMAL(5,2),
+PRIMARY KEY (bid,iid),
 FOREIGN KEY(bid) REFERENCES basket(bid),
 FOREIGN KEY (iid) REFERENCES items(iid)
 )
