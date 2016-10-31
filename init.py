@@ -33,7 +33,7 @@ def openAdminScreen(ctx, e):
 
 @event('adminpage')
 def showAdminPage(ctx, e):
-    if ctx.person[3] == 1:
+    if ctx.person[4] == 1:
         if e.data['page'] == 'keyList':
             emit('adminpage', {'page': e.data['page'], 'data': userActions.keyList()})
         if e.data['page'] == 'userList':

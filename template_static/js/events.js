@@ -62,6 +62,7 @@
           $('#' + currentAdminPage + 'Content').empty()
           $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
           message.data.map(function(item) {
+            console.log(item)
             $li = $('<li/>')
                 .text('key id:' + item[1] + " <--> person id:" + item[0] + " - [ Delete key ]")
                 .appendTo($ul)
