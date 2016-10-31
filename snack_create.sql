@@ -13,8 +13,9 @@ CREATE TABLE person
 pid INTEGER NOT NULL PRIMARY KEY, -- person id
 name VARCHAR,
 sid INTEGER UNIQUE, -- student id
+balance DECIMAL (5,2) DEFAULT 0, -- SHOULD ONLY BE NUMBERS, DO NOT USE THE 'FEATURE'
 usertype TINYINT -- 0: user, 1: admin
-balance DECIMAL (5,2) DEFAULT 0 -- SHOULD ONLY BE NUMBERS, DO NOT USE THE 'FEATURE'
+
 );
 --------------------------------------------------------------------------------;
 DROP TABLE IF EXISTS KPL;
@@ -36,11 +37,11 @@ CREATE TABLE items
 iid INTEGER PRIMARY KEY NOT NULL, -- item id
 item_name varchar,
 stock INTEGER,  --make db constraint that always above > -1?,
-cprice DECIMAL(5,2), --is most likely just overkill for a snack system,
-pic varchar   -- currently of no use due to non-GUI enviroment
-CHECK(PIC <> '')
+current_price DECIMAL(5,2), --is most likely just overkill for a snack system,
+pic_url text
+CHECK(pic_url <> '')
 );
-INSERT INTO items VALUES(1,'Bueno',20,0.41,Null);
+INSERT INTO items VALUES(1,'Bueno',20,0.41,'xx');
 
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS basket;

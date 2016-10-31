@@ -17,7 +17,7 @@ def add_request_handlers(httpd):
 @event('init')
 def setup(ctx, e):
     sql.create_db()
-    userActions.newUser('Admin', 0000000, fake.hash(0))
+    userActions.newUser('Admin', 1000000, fake.hash(0))
     userActions.makeAdmin(1)
     userActions.newUser('User 1', 1000001, fake.hash(1))
     sql.cur_tables()
