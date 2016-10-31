@@ -30,23 +30,39 @@ def makeAdmin(pid):
     sql.commit()
     sql.end()
 
+def removeAdmin(pid):
+    sql.begin()
+    sql.cur.execute("UPDATE person SET usertype=0 WHERE pid=?", [pid])
+    sql.commit()
+    sql.end()
+
+def adminList():
+    sql.begin()
+    result = sql.cur.execute("SELECT * FROM person WHERE usertype=1")
+    res = result.fetchall()
+    sql.end()
+    return res
+
 def keyList():
     sql.begin()
     result = sql.cur.execute("SELECT * FROM key")
-    print(result.fetchall())
+    res = result.fetchall()
     sql.end()
+    return res
 
 def keyUserList():
     sql.begin()
     result = sql.cur.execute("SELECT * FROM KPL")
-    print(result.fetchall())
+    res = result.fetchall()
     sql.end()
+    return res
 
 def userList():
     sql.begin()
-    result = sql.cur.execute("SELECT * FROM person")
-    print(result.fetchall())
+    result = sql.cur.execute("SELECT * FROM person WHERE usertype=0")
+    res = result.fetchall()
     sql.end()
+    return res
 
 def y():
     pass
