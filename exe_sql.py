@@ -78,7 +78,7 @@ def create_db():
     commit()
     end()
 
-create_db()
+#create_db()
 
 def useless():
     print ('only to test correct calls from other documents')
