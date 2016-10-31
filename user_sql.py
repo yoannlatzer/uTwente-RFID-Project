@@ -39,36 +39,28 @@ def removeAdmin(pid):
 
 def adminList():
     sql.begin()
-    result = sql.cur.execute("SELECT * FROM person WHERE usertype=1")
+    result = sql.cur.execute("SELECT (name,sid,usertype) FROM person WHERE usertype=1")
     res = result.fetchall()
     sql.end()
     return res
 
 def keyList():
     sql.begin()
-    result = sql.cur.execute("SELECT * FROM key")
+    result = sql.cur.execute("SELECT kid, keyhash FROM key")
     res = result.fetchall()
     sql.end()
     return res
 
 def keyUserList():
     sql.begin()
-    result = sql.cur.execute("SELECT * FROM KPL")
+    result = sql.cur.execute("SELECT kid, pid FROM KPL")
     res = result.fetchall()
     sql.end()
     return res
 
 def userList():
     sql.begin()
-    result = sql.cur.execute("SELECT * FROM person WHERE usertype=0")
+    result = sql.cur.execute("SELECT pid, name, sid, balance, usertype FROM person WHERE usertype=0")
     res = result.fetchall()
     sql.end()
     return res
-
-def y():
-    pass
-
-#print ("lolol")
-#newUser("Piet",1235984)
-#sql.cur_tables()
-#sql.useless()

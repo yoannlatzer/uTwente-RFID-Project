@@ -27,8 +27,8 @@ def setup(ctx, e):
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
-    if ctx.person[3] == 1:
-        emit('admin', {'pid': ctx.person[0], 'type': ctx.person[3], 'name': ctx.person[1], 'sid': ctx.person[2]})
+    if ctx.person[4] == 1:
+        emit('admin', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2]})
         print('Show admin screen')
 
 @event('adminpage')
@@ -66,7 +66,7 @@ def registerUser(ctx, e):
 def loginUser(ctx, e):
     # TODO: balance
     if ctx.person != None:
-        emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[3], 'name': ctx.person[1], 'sid': ctx.person[2]})
+        emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2]})
         print('Successful login!')
 
 @event('logout')
