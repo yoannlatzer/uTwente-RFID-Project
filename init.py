@@ -13,9 +13,9 @@ def add_request_handlers(httpd):
 @event('init')
 def setup(ctx, e):
     sql.create_db()
-    userActions.newUser('Admin', 's0000000', fake.hash(0))
+    userActions.newUser('Admin', 0000000, fake.hash(0))
     userActions.makeAdmin(1)
-    userActions.newUser('User 1', 's0000001', fake.hash(1))
+    userActions.newUser('User 1', 1000001, fake.hash(1))
     sql.cur_tables()
     ctx.person = None
     ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
