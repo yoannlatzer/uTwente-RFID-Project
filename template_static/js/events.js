@@ -35,6 +35,47 @@
       $('#' + currentAdminPage).addClass('screen');
       $('#' + message.page).removeClass('screen');
       currentAdminPage = message.page
+
+      switch(currentAdminPage) {
+        // get admin list
+        case 'adminList':
+            $('#' + currentAdminPage + 'Content').empty()
+            $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+            message.data.map(function(item) {
+              $li = $('<li/>')
+                .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4] + " - [ Make user | edit | Delete ]")
+                .appendTo($ul)
+            });
+          break;
+        // get user list
+        case 'userList':
+          $('#' + currentAdminPage + 'Content').empty()
+          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+          message.data.map(function(item) {
+            $li = $('<li/>')
+                .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4] + " - [ Make admin | edit | Delete ]")
+                .appendTo($ul)
+          });
+          break;
+        // get key list
+        case 'keyList':
+          $('#' + currentAdminPage + 'Content').empty()
+          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+          message.data.map(function(item) {
+            $li = $('<li/>')
+                .text('key id:' + item[1] + " <--> person id:" + item[0] + " - [ Delete key ]")
+                .appendTo($ul)
+          });
+          break
+        // get product list
+        case 'productList':
+
+          break
+        // get product add page
+        case 'productAdd':
+
+          break
+      }
     });
   };
 

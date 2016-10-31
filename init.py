@@ -4,6 +4,8 @@ import serial_listener as rfid
 import user_sql as userActions
 import exe_sql as sql
 import fake
+import json
+
 
 def add_request_handlers(httpd):
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
@@ -32,9 +34,12 @@ def openAdminScreen(ctx, e):
 @event('adminpage')
 def showAdminPage(ctx, e):
     if ctx.person[3] == 1:
-        emit('adminpage', {'page': e.data['page']})
-        print('Show admin page')
-
+        if e.data['page'] == 'keyList':
+            emit('adminpage', {'page': e.data['page'], 'data': userActions.keyList()})
+        if e.data['page'] == 'userList':
+            emit('adminpage', {'page': e.data['page'], 'data': userActions.userList()})
+        if e.data['page'] == 'adminList':
+            emit('adminpage', {'page': e.data['page'], 'data': userActions.adminList()})
 
 @event('register')
 def registerUser(ctx, e):
