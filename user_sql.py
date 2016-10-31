@@ -24,6 +24,12 @@ def newUser(name,sid, hash): # user will not be created under a new name if SID 
     sql.commit()
     sql.end()
 
+def makeAdmin(pid):
+    sql.begin()
+    sql.cur.execute("UPDATE person SET usertype=1 WHERE pid=?", [pid])
+    sql.commit()
+    sql.end()
+
 def keyList():
     sql.begin()
     result = sql.cur.execute("SELECT * FROM key")

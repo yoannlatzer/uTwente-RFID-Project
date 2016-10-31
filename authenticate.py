@@ -13,6 +13,19 @@ def authenticateHash(hash):
 def getUserId(hash):
     sql.begin()
     sql.cur.execute("SELECT kid FROM key WHERE keyhash=?", [hash])
-    user = sql.cur.fetchone()
+    key = sql.cur.fetchone()
+    if key == None:
+        sql.end()
+        return None
+    else:
+        sql.cur.execute("SELECT pid FROM KPL WHERE kid=?", [key[0]])
+        pid = sql.cur.fetchone()
+        if pid == None:
+            sql.end()
+            return None
+        else:
+            sql.cur.execute("SELECT * FROM person WHERE pid=?", [pid[0]])
+            person = sql.cur.fetchone()
+
     sql.end()
-    return user
+    return person

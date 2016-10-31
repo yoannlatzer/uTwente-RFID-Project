@@ -14,8 +14,10 @@ def add_request_handlers(httpd):
 def setup(ctx, e):
     sql.create_db()
     userActions.newUser('Admin', 's0000000', fake.hash(0))
+    userActions.makeAdmin(1)
     userActions.newUser('User 1', 's0000001', fake.hash(1))
     sql.cur_tables()
+    ctx.person = None
     ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
     rfid.listen()
 
@@ -40,9 +42,10 @@ def registerUser(ctx, e):
                 loginUser(ctx, e)
 
 def loginUser(ctx, e):
-    # TODO: user data in event name, student#, balance, type
-    emit('authenticated', {})
-    print('Successful login!')
+    # TODO: balance
+    if ctx.person != None:
+        emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[3], 'name': ctx.person[1], 'sid': ctx.person[2]})
+        print('Successful login!')
 
 @event('logout')
 def logoutUser(ctx,e):
@@ -57,5 +60,7 @@ def scan(ctx, e):
     if user == False:
         emit('newUser', {})
     else:
+        print(user)
+        ctx.person = user
         # show logged in screen
         loginUser(ctx, e)
