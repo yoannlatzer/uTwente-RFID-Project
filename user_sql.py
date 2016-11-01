@@ -65,6 +65,13 @@ def keyList():
     sql.end()
     return res
 
+def removeKey(kid):
+    sql.begin()
+    sql.cur.execute("DELETE FROM KPL WHERE kid=?", [kid])
+    sql.cur.execute("DELETE FROM key WHERE kid=?", [kid])
+    sql.commit()
+    sql.end()
+
 def keyUserList():
     """Get list of kid and pid in Tables"""
     sql.begin()

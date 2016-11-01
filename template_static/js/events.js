@@ -137,7 +137,6 @@
               $info = $('<div>')
                   .addClass('col-md-7')
                   .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
-
               $user = $('<div>')
                   .text('Make Admin')
                   .attr('onClick', 'makeAdmin(' + item[0] + ')')
@@ -161,13 +160,24 @@
           break;
         // get key list
         case 'keyList':
-          $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('key id: ' + item[1] + " <--> person id: " + item[0] + " - [ Delete key ]")
-                .appendTo($ul)
-          });
+           $('#' + currentAdminPage + 'Content').empty()
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-7')
+                  .text('Key id: ' + item[0] + ", Person id: " + item[1])
+              $delete = $('<div>')
+                  .text('delete key')
+                  .attr('onClick', 'deleteKey(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break
         // get category list
         case 'categoryList':

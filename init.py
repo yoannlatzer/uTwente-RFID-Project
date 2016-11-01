@@ -20,6 +20,7 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/admin/make', eca.http.GenerateEvent('adminmake'), methods=["POST"])
   httpd.add_route('/admin/admin/remove', eca.http.GenerateEvent('adminremove'), methods=["POST"])
   httpd.add_route('/admin/user/remove', eca.http.GenerateEvent('userremove'), methods=["POST"])
+  httpd.add_route('/admin/key/remove', eca.http.GenerateEvent('keyremove'), methods=["POST"])
   httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
   httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
@@ -51,6 +52,13 @@ def removeUser(ctx, e):
     userActions.removeUser(ctx.data['pid'])
     print('Remove user')
     emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
+
+@event('keyremove')
+def removeKey(ctx, e):
+    userActions.removeKey(ctx.data['kid'])
+    print('Remove user')
+    emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
+
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):

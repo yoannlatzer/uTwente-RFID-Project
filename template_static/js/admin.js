@@ -13,3 +13,7 @@ function editUser(pid) {
 function deleteUser(pid) {
     $.post('/admin/user/remove', JSON.stringify({pid: pid}))
 }
+
+function deleteKey(kid) {
+    $.post('/admin/key/remove', JSON.stringify({kid: kid}))
+}
