@@ -53,6 +53,8 @@ CHECK(pic_url <> ''),
 FOREIGN KEY(cid) REFERENCES categories(cid)
 );
 INSERT INTO items VALUES(1,'Bueno',20,0.41,'xx', 1);
+INSERT INTO items VALUES(2,'Bagel',25,1.41,'xx', 1);
+INSERT INTO items VALUES(3,'Fristi',10,1.41,'xx', 0);
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS basket;
 

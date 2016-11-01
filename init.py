@@ -11,8 +11,14 @@ import json
 def add_request_handlers(httpd):
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
+  httpd.add_route('/categories/list', eca.http.GenerateEvent('categoriesList'), methods=["POST"])
+  httpd.add_route('/items/list', eca.http.GenerateEvent('itemsList'), methods=["POST"])
+  httpd.add_route('/items/select', eca.http.GenerateEvent('itemsSelect'), methods=["POST"])
+  httpd.add_route('/items/remove', eca.http.GenerateEvent('itemsRemove'), methods=["POST"])
+  httpd.add_route('/buy', eca.http.GenerateEvent('buyBasket'), methods=["POST"])
   httpd.add_route('/admin', eca.http.GenerateEvent('adminscreen'), methods=["POST"])
   httpd.add_route('/admin/page', eca.http.GenerateEvent('adminpage'), methods=["POST"])
+  httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
   httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
 
@@ -23,9 +29,8 @@ def setup(ctx, e):
     userActions.makeAdmin(1)
     userActions.newUser('User 1', 1000001, fake.hash(1))
     sql.cur_tables()
-    ctx.person = None
-    ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
     rfid.listen()
+    logoutUser(ctx, e)
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
@@ -49,17 +54,71 @@ def showAdminPage(ctx, e):
         if e.data['page'] == 'productList':
             emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
         if e.data['page'] == 'productAdd':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
+            emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+
+@event('addItem')
+def newItem(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.newItem(e.data['name'], e.data['stock'], e.data['price'], e.data['image'], e.data['cid'])
+        print('Item added', e.data['name'])
+        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
+
+    else:
+        logoutUser()
 
 @event('addCategory')
 def newCategory(ctx, e):
     if ctx.person[4] == 1:
         itemActions.newCategory(e.data['name'])
-        print('Item added', e.data['name'])
+        print('Category added', e.data['name'])
         emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
 
     else:
         logoutUser()
+
+@event('categoriesList')
+def listCategories(ctx, e):
+    emit('categories', {'data': itemActions.categoriesList()})
+    print('List categories')
+
+@event('itemsList')
+def listItems(ctx, e):
+    emit('items', {'data': itemActions.getFilterdItems(e.data['cid'])})
+    print('List items')
+
+@event('itemsSelect')
+def selectItem(ctx, e):
+    ctx.basket = addBasketItem(ctx.basket, e.data['iid'])
+    emit('basket', {'data': ctx.basket})
+    print('Select Item')
+
+def addBasketItem(basket, iid):
+    itemInfo = itemActions.getItem(iid)
+    for item in basket:
+        if item['iid'] == iid:
+            item['quantity'] += 1
+            return basket
+    item = {'iid': int(iid), 'quantity': 1, 'price': itemInfo[3], 'name': itemInfo[1]}
+    basket.append(item)
+    return basket
+
+@event('itemsRemove')
+def removeItem(ctx, e):
+    ctx.basket = removeBasketItem(ctx.basket, e.data['iid'])
+    emit('basket', {'data': ctx.basket})
+    print('Remove Item')
+
+def removeBasketItem(basket, iid):
+    for item in basket:
+        if item['iid'] == iid:
+            item['quantity'] -= 1
+            if item['quantity'] == 0:
+                basket.remove(item)
+            return basket
+
+@event('buyBasket')
+def buy(ctx, e):
+    print('buy function TODO')
 
 @event('register')
 def registerUser(ctx, e):
@@ -91,8 +150,9 @@ def loginUser(ctx, e):
 
 @event('logout')
 def logoutUser(ctx, e):
-    ctx.currentHash = None
     ctx.person = None
+    ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
+    ctx.basket = []
     emit('logout', {})
     print('Successful logged out!')
 

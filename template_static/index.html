@@ -43,10 +43,33 @@
               }))
           }
 
+          function categories() {
+              $.post('/categories/list', JSON.stringify({}))
+          }
+
+          function setCategory(cid) {
+              $.post('/items/list', JSON.stringify({cid: cid}))
+          }
+
+          function selectItem(iid) {
+              $.post('/items/select', JSON.stringify({iid: iid}))
+          }
+
+          function removeItem(iid) {
+              $.post('/items/remove', JSON.stringify({iid: iid}))
+          }
+
+          function buyBasket() {
+              $.post('/buy', JSON.stringify({}))
+          }
+
       </script>
       <script src="/js/events.js"></script>
   </head>
 <body>
+    <!--
+    BEGIN HOME SCREEN
+    -->
     <div id="home" class="screen">
         <h1>Please scan your student id</h1>
         <ul>
@@ -56,6 +79,12 @@
             <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
         </ul>
     </div>
+    <!--
+    END HOME SCREEN
+    -->
+    <!--
+    BEGIN NEW USER SCREEN
+    -->
     <div id="newUser" class="screen">
         <h1>Please fill the form below to register as a new user (todo errors)</h1>
         <form>
@@ -65,8 +94,14 @@
             <input type="button" value="Register.." onClick="register()"/><br />
         </form>
         <br />
-        <a href="#" href="#" onclick="goto('home')">go back</a>
+        <a href="#" onclick="goto('home')">go back</a>
     </div>
+    <!--
+    END NEW USER SCREEN
+    -->
+    <!--
+    BEGIN LOGIN SCREEN
+    -->
     <div id="login" class="screen">
         <h1>Please enter your student number and password (not functional)</h1>
         <form>
@@ -75,8 +110,14 @@
             <input type="button" value="Login.." /><br />
         </form>
         <br />
-        <a href="#" href="#" onclick="goto('home')">go back</a>
+        <a href="#" onClick="goto('home')">go back</a>
     </div>
+    <!--
+    END LOGIN SCREEN
+    -->
+    <!--
+    BEGIN SHOP SCREEN
+    -->
     <div id="authenticated" class="screen">
         <h1>Welcome back</h1>
         Page when logged in..
@@ -87,11 +128,26 @@
             <li id="authenticated_balance"></li>
         </ul>
         <br />
-        <a href="#" href="#" onclick="logout()">Logout</a>
+        <div id="authCategories" class="screen"></div>
+        <div id="authItems" class="screen"></div>
+        <br />
+        <div id="authBasket">
+            <h1>Shopping Basket</h1>
+            <ul id="basketList"></ul>
+            <input type="button" value="Check out" onClick="buyBasket()" />
+        </div>
+        <a href="#" id="categoriesLink" class="screen" onClick="categories()">Categories</a><br />
+        <a href="#" onClick="logout()">Logout</a>
     </div>
     <div id="admin_link" class="screen">
         <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
     </div>
+    <!--
+    END SHOP SCREEN
+    -->
+    <!--
+    BEGIN ADMIN SCREEN
+    -->
     <div id="admin" class="screen">
         Whoohoo admin screen<br />
         <ul>
@@ -134,31 +190,40 @@
             <h1>Add Product</h1>
             <form>
                 <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
-                <div id="categories"></div>
+                <select id="addItemCategory"></select><br />
                 <input style="width: 250px;" type="text" placeholder="Price exp. 1,50" id="addItemPrice" /><br />
                 <input style="width: 250px;" type="text" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
                 <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
                 <input type="submit" value="Add Product" onClick="addItem()">
             </form>
         </div>
-        <a href="#" href="#" onclick="logout()">Logout</a>
+        <a href="#" onClick="logout()">Logout</a>
     </div>
+    <!--
+    END ADMIN SCREEN
+    -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         // Event to show new user screen (unknown card)
         block('#newUser').newUser();
-        events.connect('newUser', '#newUser')
+        events.connect('newUser', '#newUser');
         // Event when user is authenticated
         block('#authenticated').authenticatedUser();
-        events.connect('authenticated', '#authenticated')
+        events.connect('authenticated', '#authenticated');
+        block('#authCategories').categories();
+        events.connect('categories', '#authCategories');
+        block('#authItems').items();
+        events.connect('items', '#authItems');
+        block('#basketList').basket();
+        events.connect('basket', '#basketList');
         // Event when user is logged out
         block('#home').logoutUser();
-        events.connect('logout', '#home')
+        events.connect('logout', '#home');
         // Event when admin panel should load
         block('#admin').admin();
-        events.connect('admin', '#admin')
+        events.connect('admin', '#admin');
         block('#admin').adminpage();
-        events.connect('adminpage', '#admin')
+        events.connect('adminpage', '#admin');
     </script>
 </body>
 </html>
