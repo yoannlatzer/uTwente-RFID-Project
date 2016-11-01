@@ -17,10 +17,6 @@
 
           function goto(page) {
               $('#' + current).addClass('screen');
-              $('#photo').addClass('screen');
-              $('#events').addClass('screen');
-              $('#news').addClass('screen');
-              $('#statistics').addClass('screen');
               $('#' + page).removeClass('screen');
               current = page;
           }
@@ -71,7 +67,6 @@
       <script src="/js/events.js"></script>
   </head>
 <body>
-<<<<<<< HEAD
     <div class="row">
         <div id="header" class="col-md-11 group">
         <h1>
@@ -83,14 +78,7 @@
         <div id="photo" class="col-md-4 group">
             <div style="text-align:center;margin:auto;" ><object width="auto" height="auto" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"> <param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" /> <param name="allowFullScreen" value="false" /> <param name="src" value="https://www.flickr.com/apps/slideshow/show.swf?v=71649" /> <embed width="100%" height="350" type="application/x-shockwave-flash" src="https://www.flickr.com/apps/slideshow/show.swf?v=71649" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" allowFullScreen="false" /> </object><br /></div>
         </div>
-        <div id="events" class="col-md-3 group" style="height:415px;">
-=======
-<div class="row">
-    <div id="photo" class="col-md-4 group">
-        <div style="text-align:center;margin:auto;" ><object width="auto" height="auto" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"> <param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" /> <param name="allowFullScreen" value="false" /> <param name="src" value="https://www.flickr.com/apps/slideshow/show.swf?v=71649" /> <embed width="100%" height="350" type="application/x-shockwave-flash" src="https://www.flickr.com/apps/slideshow/show.swf?v=71649" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" allowFullScreen="false" /> </object><br /></div>
-    </div>
     <div id="events" class="col-md-3 group" style="height:415px;">
->>>>>>> origin/master
                 <h4 class="caps-title">
                     Upcoming Events
                 </h4>
@@ -134,7 +122,6 @@
             <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
         </ul>
     </div>
-<<<<<<< HEAD
     <div class="row">
         <div id="news" class="col-md-7 group" style="height:355px;">
             <h2>Das Retrofest 2016</h2><i>October 7, 2016</i><br />
@@ -162,7 +149,6 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                     Number of snacks: 41
                 </li>
             </ul>
-=======
     <!--
     END HOME SCREEN
     -->
@@ -234,7 +220,6 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
             <h1>Shopping Basket</h1>
             <ul id="basketList"></ul>
             <input type="button" value="Check out" onClick="buyBasket()" />
->>>>>>> origin/master
         </div>
         <a href="#" id="categoriesLink" class="screen" onClick="categories()">Categories</a><br />
         <a href="#" onClick="logout()">Logout</a>
