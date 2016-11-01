@@ -7,10 +7,13 @@
 
   block.fn.authenticatedUser = function() {
     this.actions(function(e, message) {
-      $('#authenticated_name').text('Name: ' + message.name)
-      $('#authenticated_sid').text('Student#: ' + message.sid)
-      $('#authenticated_type').text('Type: ' + message.type)
-      $('#authenticated_balance').text('Balance: ' + message.balance)
+      console.log(message)
+      if ( typeof message.pid != 'undefined') {
+        $('#authenticated_name').text('Name: ' + message.name)
+        $('#authenticated_sid').text('Student#: ' + message.sid)
+        $('#authenticated_type').text('Type: ' + message.type)
+        $('#authenticated_balance').text('Balance: ' + message.balance)
+      }
       if ($('#authCategories').hasClass('screen') == true && $('#authItems').hasClass('screen') == true) {
         $('#authCategories').removeClass('screen');
         $.post('/categories/list', JSON.stringify({}));
