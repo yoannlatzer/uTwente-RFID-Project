@@ -13,11 +13,21 @@ def newUser(name,sid, hash): # user will not be created under a new name if SID 
     sql.cur.execute("INSERT INTO key (keyhash) VALUES(?)", [hash])
     sql.commit()
     kid = sql.lastId()
-
-    # insert user
-    sql.cur.execute("INSERT INTO person (name,sid,usertype,balance) VALUES(?,?,0,?)", [name, sid,round(random.uniform(1,20),2)])
-    sql.commit()
-    pid = sql.lastId()
+    
+    x = sql.cur.execute("SELECT * FROM person WHERE sid=?",[sid])
+    res = x.fetchone()
+#    print(res)
+#    print (len(res))
+    
+    if res == None:
+        # insert user
+        sql.cur.execute("INSERT INTO person (name,sid,usertype,balance) VALUES(?,?,0,?)", [name, sid,round(random.uniform(1,20),2)])
+        sql.commit()
+        pid = sql.lastId()
+        print ("this")
+    else:
+        pid = res[0]
+    print ("that")    
 
     # link user to card
     sql.cur.execute("INSERT INTO KPL (kid, pid) VALUES(?,?)", [kid, pid])
