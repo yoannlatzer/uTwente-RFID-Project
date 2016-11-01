@@ -209,6 +209,7 @@
             <li><a href="#" onClick="adminPage('categoryAdd')">Category add</a></li>
             <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
             <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
+            <li><a href="#" onClick="adminPage('orderList')">Orders</a></li>
         </ul>
         <div id="adminList" class="screen">
             <h1>admin list</h1>
@@ -247,6 +248,10 @@
                 <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
                 <input type="submit" value="Add Product" onClick="addItem()">
             </form>
+        </div>
+        <div id="orderList" class="screen">
+            <h1>Order list</h1>
+            <div id="orderListContent"></div>
         </div>
         <a href="#" onClick="logout()">Logout</a>
     </div>
