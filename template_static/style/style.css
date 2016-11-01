@@ -46,3 +46,10 @@ h2, .h2 {
 #news {
     width: 60.333333%;
 }
+
+#header {
+    background: rgba(44,62,80,0.92);
+    text-align:center;
+    color: rgba(265,265,265,265);
+    width: 95.6667%;
+}

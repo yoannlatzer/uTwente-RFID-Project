@@ -12,6 +12,7 @@
       $('#news').addClass('screen')
       $('#statistics').addClass('screen')
       $('#authenticated').removeClass('col-md-4')
+      $('#authenticated').removeClass('screen')
       if ( typeof message.pid != 'undefined') {
         $('#authenticated_name').text('Name: ' + message.name)
         $('#authenticated_sid').text('Student#: ' + message.sid)
@@ -64,15 +65,19 @@
 
   block.fn.basket = function() {
     this.actions(function(e, message) {
-      $('#basketList').empty();
-      $ul =  $('#basketList');
-      message.data.map(function(item) {
-        $('<li/>')
-            .text('Item: ' + item.name + ' Price: ' + item.price + ' Quantity: ' + item.quantity + ' Total: ' + Math.round(((item.quantity * item.price)*100))/100 + ' [x]')
-            .attr('onClick', 'removeItem('+item.iid+')')
-            .appendTo($ul)
-      });
-      $('#authItems').removeClass('screen');
+      if (typeof message.data != 'undefined' ) {
+
+        $('#basketList').empty();
+        $ul = $('#basketList');
+        message.data.map(function (item) {
+          $('<li/>')
+              .text('Item: ' + item.name + ' Price: ' + item.price + ' Quantity: ' + item.quantity + ' Total: ' + Math.round(((item.quantity * item.price) * 100)) / 100 + ' [x]')
+              .attr('onClick', 'removeItem(' + item.iid + ')')
+              .appendTo($ul)
+        });
+
+        $('#authItems').removeClass('screen');
+      }
     })
   }
 
@@ -96,32 +101,83 @@
         // get admin list
         case 'adminList':
             $('#' + currentAdminPage + 'Content').empty()
-            $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+            $div = $('#' + currentAdminPage + 'Content');
             message.data.map(function(item) {
-              $('<li/>')
-                .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4] + " - [ Make user | edit | Delete ]")
-                .appendTo($ul)
+              $info = $('<div>')
+                  .addClass('col-md-7')
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+
+              $user = $('<div>')
+                  .text('Make User')
+                  .attr('onClick', 'makeUser(' + item[0] + ')')
+              $edit = $('<div>')
+                  .text('edit')
+                  .attr('onClick', 'editUser(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete')
+                  .attr('onClick', 'deleteUser(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($user)
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+
             });
           break;
         // get user list
         case 'userList':
           $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4] + " - [ Make admin | edit | Delete ]")
-                .appendTo($ul)
-          });
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-7')
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+              $user = $('<div>')
+                  .text('Make Admin')
+                  .attr('onClick', 'makeAdmin(' + item[0] + ')')
+              $edit = $('<div>')
+                  .text('edit')
+                  .attr('onClick', 'editUser(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete')
+                  .attr('onClick', 'deleteUser(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($user)
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break;
         // get key list
         case 'keyList':
-          $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('key id: ' + item[1] + " <--> person id: " + item[0] + " - [ Delete key ]")
-                .appendTo($ul)
-          });
+           $('#' + currentAdminPage + 'Content').empty()
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-7')
+                  .text('Key id: ' + item[0] + ", Person id: " + item[1])
+              $delete = $('<div>')
+                  .text('delete key')
+                  .attr('onClick', 'deleteKey(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break
         // get category list
         case 'categoryList':
@@ -158,15 +214,29 @@
     });
   };
 
+  block.fn.thankyou = function() {
+    this.actions(function(e, message) {
+      $('#authenticated').addClass('screen');
+      $('#authItems').addClass('screen');
+      $('#thankyou').removeClass('screen')
+      setTimeout(function() {
+        $.post('/logout', JSON.stringify({}))
+      }, 3000);
+    });
+  };
+
   block.fn.logoutUser = function() {
     this.actions(function(e, message) {
+      $('#basketList').empty();
       $('#photo').removeClass('screen')
       $('#events').removeClass('screen')
       $('#news').removeClass('screen')
       $('#statistics').removeClass('screen')
       $('#authenticated').addClass('col-md-4')
+      $('#authenticated').addClass('screen')
       $('#admin_link').addClass('screen');
       $('#authCategories').addClass('screen');
+      $('#thankyou').addClass('screen');
       $('#authItems').addClass('screen');
       goto('home')
     });

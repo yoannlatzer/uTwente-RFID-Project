@@ -3,10 +3,9 @@ import eca.http
 import serial_listener as rfid
 import user_sql as userActions
 import product_sql as itemActions
+import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
-import json
-
 
 def add_request_handlers(httpd):
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
@@ -18,6 +17,10 @@ def add_request_handlers(httpd):
   httpd.add_route('/buy', eca.http.GenerateEvent('buyBasket'), methods=["POST"])
   httpd.add_route('/admin', eca.http.GenerateEvent('adminscreen'), methods=["POST"])
   httpd.add_route('/admin/page', eca.http.GenerateEvent('adminpage'), methods=["POST"])
+  httpd.add_route('/admin/admin/make', eca.http.GenerateEvent('adminmake'), methods=["POST"])
+  httpd.add_route('/admin/admin/remove', eca.http.GenerateEvent('adminremove'), methods=["POST"])
+  httpd.add_route('/admin/user/remove', eca.http.GenerateEvent('userremove'), methods=["POST"])
+  httpd.add_route('/admin/key/remove', eca.http.GenerateEvent('keyremove'), methods=["POST"])
   httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
   httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
@@ -25,12 +28,37 @@ def add_request_handlers(httpd):
 @event('init')
 def setup(ctx, e):
     sql.create_db()
+    logoutUser(ctx, e)
     userActions.newUser('Admin', 1000000, fake.hash(0))
     userActions.makeAdmin(1)
     userActions.newUser('User 1', 1000001, fake.hash(1))
     sql.cur_tables()
     rfid.listen()
-    logoutUser(ctx, e)
+
+@event('adminmake')
+def makeAdmin(ctx, e):
+    userActions.makeAdmin(e.data['pid'])
+    print('Make admin')
+    emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+
+@event('adminremove')
+def removeAdmin(ctx, e):
+    userActions.removeAdmin(e.data['pid'])
+    print('Remove admin')
+    emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+
+@event('userremove')
+def removeUser(ctx, e):
+    userActions.removeUser(e.data['pid'])
+    print('Remove user')
+    emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
+
+@event('keyremove')
+def removeKey(ctx, e):
+    userActions.removeKey(e.data['kid'])
+    print('Remove user')
+    emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
+
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
@@ -118,7 +146,12 @@ def removeBasketItem(basket, iid):
 
 @event('buyBasket')
 def buy(ctx, e):
-    print('buy function TODO')
+    itemTuple = []
+    for item in ctx.basket:
+        itemTuple.append((item['iid'], item['quantity']))
+    userFrontendActions.CreateTransAndBask(ctx.person[0], itemTuple)
+    print('Items bought')
+    emit('thankyou', {})
 
 @event('register')
 def registerUser(ctx, e):
@@ -163,7 +196,6 @@ def scan(ctx, e):
     if user == False:
         emit('newUser', {})
     else:
-        print(user)
         ctx.person = user
         # show logged in screen
         loginUser(ctx, e)
