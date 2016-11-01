@@ -11,5 +11,5 @@ def generateHash(id):
     return id
 
 def hash(id):
-    return id
+    return str(id)
    # return generateHash('b\'{}\''.format(id))

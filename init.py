@@ -56,7 +56,7 @@ def removeUser(ctx, e):
 @event('keyremove')
 def removeKey(ctx, e):
     userActions.removeKey(e.data['kid'])
-    print('Remove user')
+    print('Remove key')
     emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
 
@@ -176,7 +176,6 @@ def registerUser(ctx, e):
                 loginUser(ctx, e)
 
 def loginUser(ctx, e):
-    # TODO: balance
     if ctx.person != None:
         emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2], 'balance': ctx.person[3]})
         print('Successful login!')
