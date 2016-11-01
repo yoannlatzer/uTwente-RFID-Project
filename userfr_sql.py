@@ -20,7 +20,7 @@ def UserCheck(keyhash):
     return res
 
 
-    # the items list should be set up as a (list of) tuple (iid, quant) for easier inserts :: [(a,b),(a,b)]
+    # the items list should be set up as a (list of) tuple (iid, quant) for easier inserts :: [(iid,quantity),(iid,quantity)]
 def CreateTransAndBask(pid,item): #should update the pid to become keyhash from user scan, or we return value of pid gotten above?
     """Create the basket and Transactions of different items and update userbalance, stock accordingly"""
     sql.begin()

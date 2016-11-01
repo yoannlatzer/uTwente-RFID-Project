@@ -7,7 +7,6 @@
 
   block.fn.authenticatedUser = function() {
     this.actions(function(e, message) {
-      console.log(message)
       $('#photo').addClass('screen')
       $('#events').addClass('screen')
       $('#news').addClass('screen')
@@ -66,15 +65,19 @@
 
   block.fn.basket = function() {
     this.actions(function(e, message) {
-      $('#basketList').empty();
-      $ul =  $('#basketList');
-      message.data.map(function(item) {
-        $('<li/>')
-            .text('Item: ' + item.name + ' Price: ' + item.price + ' Quantity: ' + item.quantity + ' Total: ' + Math.round(((item.quantity * item.price)*100))/100 + ' [x]')
-            .attr('onClick', 'removeItem('+item.iid+')')
-            .appendTo($ul)
-      });
-      $('#authItems').removeClass('screen');
+      if (typeof message.data != 'undefined' ) {
+
+        $('#basketList').empty();
+        $ul = $('#basketList');
+        message.data.map(function (item) {
+          $('<li/>')
+              .text('Item: ' + item.name + ' Price: ' + item.price + ' Quantity: ' + item.quantity + ' Total: ' + Math.round(((item.quantity * item.price) * 100)) / 100 + ' [x]')
+              .attr('onClick', 'removeItem(' + item.iid + ')')
+              .appendTo($ul)
+        });
+
+        $('#authItems').removeClass('screen');
+      }
     })
   }
 
@@ -160,6 +163,17 @@
     });
   };
 
+  block.fn.thankyou = function() {
+    this.actions(function(e, message) {
+      $('#authenticated').addClass('screen');
+      $('#authItems').addClass('screen');
+      $('#thankyou').removeClass('screen')
+      setTimeout(function() {
+        $.post('/logout', JSON.stringify({}))
+      }, 3000);
+    });
+  };
+
   block.fn.logoutUser = function() {
     this.actions(function(e, message) {
       $('#photo').removeClass('screen')
@@ -170,6 +184,7 @@
       $('#authenticated').addClass('screen')
       $('#admin_link').addClass('screen');
       $('#authCategories').addClass('screen');
+      $('#thankyou').addClass('screen');
       $('#authItems').addClass('screen');
       goto('home')
     });

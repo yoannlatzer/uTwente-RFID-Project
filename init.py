@@ -26,12 +26,12 @@ def add_request_handlers(httpd):
 @event('init')
 def setup(ctx, e):
     sql.create_db()
+    logoutUser(ctx, e)
     userActions.newUser('Admin', 1000000, fake.hash(0))
     userActions.makeAdmin(1)
     userActions.newUser('User 1', 1000001, fake.hash(1))
     sql.cur_tables()
     rfid.listen()
-    logoutUser(ctx, e)
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
@@ -119,10 +119,12 @@ def removeBasketItem(basket, iid):
 
 @event('buyBasket')
 def buy(ctx, e):
-    print(ctx.basket)
-    print(ctx.person[0])
-    userFrontendActions.CreateTransAndBask()
-    print('buy function TODO')
+    itemTuple = []
+    for item in ctx.basket:
+        itemTuple.append((item['iid'], item['quantity']))
+    userFrontendActions.CreateTransAndBask(ctx.person[0], itemTuple)
+    print('Items bought')
+    emit('thankyou', {})
 
 @event('register')
 def registerUser(ctx, e):

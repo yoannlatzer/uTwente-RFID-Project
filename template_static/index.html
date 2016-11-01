@@ -75,6 +75,13 @@
         </div>
     </div>
     <div class="row">
+        <div id="thankyou" class="col-md-11 group screen">
+        <h1>
+            Thank you for ...
+        </h1>
+        </div>
+    </div>
+    <div class="row">
         <div id="photo" class="col-md-4 group">
             <div style="text-align:center;margin:auto;" ><object width="auto" height="auto" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"> <param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" /> <param name="allowFullScreen" value="false" /> <param name="src" value="https://www.flickr.com/apps/slideshow/show.swf?v=71649" /> <embed width="100%" height="350" type="application/x-shockwave-flash" src="https://www.flickr.com/apps/slideshow/show.swf?v=71649" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" allowFullScreen="false" /> </object><br /></div>
         </div>
@@ -309,6 +316,9 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
         events.connect('items', '#authItems');
         block('#basketList').basket();
         events.connect('basket', '#basketList');
+        // Event thank you
+        block('#thankyou').thankyou();
+        events.connect('thankyou', '#thankyou');
         // Event when user is logged out
         block('#home').logoutUser();
         events.connect('logout', '#home');
