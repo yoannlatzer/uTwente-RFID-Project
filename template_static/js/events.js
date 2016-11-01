@@ -105,7 +105,7 @@
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4])
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
 
               $user = $('<div>')
                   .text('Make User')
@@ -132,12 +132,32 @@
         // get user list
         case 'userList':
           $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4] + " - [ Make admin | edit | Delete ]")
-                .appendTo($ul)
-          });
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-7')
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+
+              $user = $('<div>')
+                  .text('Make Admin')
+                  .attr('onClick', 'makeAdmin(' + item[0] + ')')
+              $edit = $('<div>')
+                  .text('edit')
+                  .attr('onClick', 'editUser(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete')
+                  .attr('onClick', 'deleteUser(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($user)
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break;
         // get key list
         case 'keyList':

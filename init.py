@@ -6,8 +6,6 @@ import product_sql as itemActions
 import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
-import json
-
 
 def add_request_handlers(httpd):
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
