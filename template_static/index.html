@@ -17,6 +17,10 @@
 
           function goto(page) {
               $('#' + current).addClass('screen');
+              $('#photo').addClass('screen');
+              $('#events').addClass('screen');
+              $('#news').addClass('screen');
+              $('#statistics').addClass('screen');
               $('#' + page).removeClass('screen');
               current = page;
           }
@@ -47,6 +51,13 @@
       <script src="/js/events.js"></script>
   </head>
 <body>
+    <div class="row">
+        <div id="header" class="col-md-11 group">
+        <h1>
+            Stress Snack System
+        </h1>
+        </div>
+    </div>
     <div class="row">
         <div id="photo" class="col-md-4 group">
             <div style="text-align:center;margin:auto;" ><object width="auto" height="auto" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"> <param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" /> <param name="allowFullScreen" value="false" /> <param name="src" value="https://www.flickr.com/apps/slideshow/show.swf?v=71649" /> <embed width="100%" height="350" type="application/x-shockwave-flash" src="https://www.flickr.com/apps/slideshow/show.swf?v=71649" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" allowFullScreen="false" /> </object><br /></div>
@@ -163,12 +174,30 @@
     <div class="row">
         <div id="news" class="col-md-7 group" style="height:355px;">
             <h2>Das Retrofest 2016</h2><i>October 7, 2016</i><br />
-<p>Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement for their first spectacle of this year. With retro music for the 90s and 00s and unlimited refills the stage was set for an awesome party. At 21:00 the lights and music were switched on and the party was ready to start. Throughout the evening people were enjoying the refills in their own tankard and we can say that there have been a lot of refills. The B.U.F.F.E.L.S. enjoyed the evening very much and hope that you had the same. As board we want to thank everyone present and we think the party was a huge success and are looking forward to the next one. Are you having trouble remembering the party be sure to check out the photos and piece together the evening. </p>
+Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement for their first spectacle of this year. With retro music for the 90s and 00s and unlimited refills the stage was set for an awesome party. At 21:00 the lights and music were switched on and the party was ready to start. Throughout the evening people were enjoying the refills in their own tankard and we can say that there have been a lot of refills. The B.U.F.F.E.L.S. enjoyed the evening very much and hope that you had the same. As board we want to thank everyone present and we think the party was a huge success and are looking forward to the next one. Are you having trouble remembering the party be sure to check out the photos and piece together the evening.
         </div>
         <div id="statistics" class="col-md-4 group" style="height:355px;">
-        <p>
-            Blabhagve
-        </p>
+            <h2>Statistics</h2>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    Most sold item: Kanjers
+                </li>
+                <li class="list-group-item">
+                    Least sold item: Energy Drink
+                </li>
+                <li class="list-group-item">
+                    Cheapest item: &#8364; 0.25
+                </li>
+                <li class="list-group-item">
+                    Average money spend: &#8364; 0.41
+                </li>
+                <li class="list-group-item">
+                    Most kanjers eaten by: Kevin
+                </li>
+                <li class="list-group-item">
+                    Number of snacks: 41
+                </li>
+            </ul>
         </div>
     <div id="admin" class="screen">
         Whoohoo admin screen<br />
