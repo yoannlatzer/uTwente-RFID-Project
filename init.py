@@ -3,6 +3,7 @@ import eca.http
 import serial_listener as rfid
 import user_sql as userActions
 import product_sql as itemActions
+import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
 import json
@@ -118,6 +119,9 @@ def removeBasketItem(basket, iid):
 
 @event('buyBasket')
 def buy(ctx, e):
+    print(ctx.basket)
+    print(ctx.person[0])
+    userFrontendActions.CreateTransAndBask()
     print('buy function TODO')
 
 @event('register')
