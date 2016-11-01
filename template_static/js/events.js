@@ -7,11 +7,13 @@
 
   block.fn.authenticatedUser = function() {
     this.actions(function(e, message) {
+      console.log(message)
       $('#photo').addClass('screen')
       $('#events').addClass('screen')
       $('#news').addClass('screen')
       $('#statistics').addClass('screen')
       $('#authenticated').removeClass('col-md-4')
+      $('#authenticated').removeClass('screen')
       if ( typeof message.pid != 'undefined') {
         $('#authenticated_name').text('Name: ' + message.name)
         $('#authenticated_sid').text('Student#: ' + message.sid)
@@ -165,6 +167,7 @@
       $('#news').removeClass('screen')
       $('#statistics').removeClass('screen')
       $('#authenticated').addClass('col-md-4')
+      $('#authenticated').addClass('screen')
       $('#admin_link').addClass('screen');
       $('#authCategories').addClass('screen');
       $('#authItems').addClass('screen');
