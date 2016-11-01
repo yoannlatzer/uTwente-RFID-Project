@@ -48,7 +48,7 @@ item_name varchar,
 stock INTEGER,                        --make db constraint that always above > -1?,
 current_price DECIMAL(5,2),           --is most likely just overkill for a snack system,
 pic_url text,
-cid INTEGER                           --category ID
+cid INTEGER,                           --category ID
 CHECK(pic_url <> ''),
 FOREIGN KEY(cid) REFERENCES categories(cid)
 );
