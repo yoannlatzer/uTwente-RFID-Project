@@ -101,11 +101,32 @@
         // get admin list
         case 'adminList':
             $('#' + currentAdminPage + 'Content').empty()
-            $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+            $div = $('#' + currentAdminPage + 'Content');
             message.data.map(function(item) {
-              $('<li/>')
-                .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4] + " - [ Make user | edit | Delete ]")
-                .appendTo($ul)
+              $info = $('<div>')
+                  .addClass('col-md-7')
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[4])
+
+              $user = $('<div>')
+                  .text('Make User')
+                  .attr('onClick', 'makeUser(' + item[0] + ')')
+              $edit = $('<div>')
+                  .text('edit')
+                  .attr('onClick', 'editUser(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete')
+                  .attr('onClick', 'deleteUser(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($user)
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+
             });
           break;
         // get user list
