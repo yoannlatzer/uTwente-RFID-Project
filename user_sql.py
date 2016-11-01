@@ -52,7 +52,7 @@ def removeAdmin(pid):
 def adminList():
     """Get list of all current admins"""
     sql.begin()
-    result = sql.cur.execute("SELECT name,sid,usertype FROM person WHERE usertype=1")
+    result = sql.cur.execute("SELECT pid,name,sid,usertype FROM person WHERE usertype=1")
     res = result.fetchall()
     sql.end()
     return res
