@@ -169,7 +169,6 @@ def scan(ctx, e):
     if user == False:
         emit('newUser', {})
     else:
-        print(user)
         ctx.person = user
         # show logged in screen
         loginUser(ctx, e)

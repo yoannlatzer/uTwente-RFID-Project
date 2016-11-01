@@ -43,10 +43,11 @@ def makeAdmin(pid):
 
 def removeAdmin(pid):
     """Down someones usertype"""
-    sql.begin()
-    sql.cur.execute("UPDATE person SET usertype=0 WHERE pid=?", [pid])
-    sql.commit()
-    sql.end()
+    if len(adminList()) > 1:
+        sql.begin()
+        sql.cur.execute("UPDATE person SET usertype=0 WHERE pid=?", [pid])
+        sql.commit()
+        sql.end()
 
 def adminList():
     """Get list of all current admins"""
