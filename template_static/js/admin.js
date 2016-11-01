@@ -3,7 +3,6 @@ function makeAdmin(pid) {
 }
 
 function makeUser(pid) {
-    console.log(pid)
     $.post('/admin/admin/remove', JSON.stringify({pid: pid}))
 }
 

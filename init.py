@@ -50,9 +50,9 @@ def removeAdmin(ctx, e):
 
 @event('userremove')
 def removeUser(ctx, e):
-    userActions.removeAdmin(ctx.data['pid'])
-    print('Remove admin')
-    emit('adminpage', {'page': e.data['page'], 'data': userActions.adminList()})
+    userActions.removeUser(ctx.data['pid'])
+    print('Remove user')
+    emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
