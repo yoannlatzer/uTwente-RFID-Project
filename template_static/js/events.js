@@ -10,7 +10,7 @@
       $('#authenticated_name').text('Name: ' + message.name)
       $('#authenticated_sid').text('Student#: ' + message.sid)
       $('#authenticated_type').text('Type: ' + message.type)
-      $('#authenticated_balance').text('Balance: ??')
+      $('#authenticated_balance').text('Balance: ' + message.balance)
       if (message.type == 1) {
         // is admin
         $('#admin_link').removeClass('screen');
@@ -62,15 +62,30 @@
           $('#' + currentAdminPage + 'Content').empty()
           $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
           message.data.map(function(item) {
-            console.log(item)
             $li = $('<li/>')
-                .text('key id:' + item[1] + " <--> person id:" + item[0] + " - [ Delete key ]")
+                .text('key id: ' + item[1] + " <--> person id: " + item[0] + " - [ Delete key ]")
+                .appendTo($ul)
+          });
+          break
+        // get category list
+        case 'categoryList':
+          $('#' + currentAdminPage + 'Content').empty()
+          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+          message.data.map(function(item) {
+            $li = $('<li/>')
+                .text('id: ' + item[0] + " Name: " + item[1] + " - [ Edit | Delete ]")
                 .appendTo($ul)
           });
           break
         // get product list
         case 'productList':
-
+          $('#' + currentAdminPage + 'Content').empty()
+          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
+          message.data.map(function(item) {
+            $li = $('<li/>')
+                .text('id: ' + item[0] + " Name: " + item[1] + " - [ Edit | Delete ]")
+                .appendTo($ul)
+          });
           break
         // get product add page
         case 'productAdd':

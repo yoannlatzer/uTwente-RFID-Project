@@ -29,6 +29,19 @@
               $.post('/admin/page', JSON.stringify({page: page}))
           }
 
+          function addCategory() {
+              $.post('/admin/category/add', JSON.stringify({name: $('#categoryName').val()}))
+          }
+
+          function addItem() {
+              $.post('/admin/item/add', JSON.stringify({
+                  name: $('#addItemName').val(),
+                  price: $('#addItemPrice').val(),
+                  stock: $('#addItemStock').val(),
+                  image: $('#addItemUrl').val(),
+                  cid: $('#addItemCategory').val()
+              }))
+          }
 
       </script>
       <script src="/js/events.js"></script>
@@ -85,6 +98,8 @@
             <li><a href="#" onClick="adminPage('adminList')">Admin list</a></li>
             <li><a href="#" onClick="adminPage('userList')">User list</a></li>
             <li><a href="#" onClick="adminPage('keyList')">Key list</a></li>
+            <li><a href="#" onClick="adminPage('categoryList')">Category list</a></li>
+            <li><a href="#" onClick="adminPage('categoryAdd')">Category add</a></li>
             <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
             <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
         </ul>
@@ -93,15 +108,39 @@
             <div id="adminListContent"></div>
         </div>
         <div id="userList" class="screen">
-            <h1>user list</h1>
+            <h1>User list</h1>
             <div id="userListContent"></div>
         </div>
         <div id="keyList" class="screen">
-            <h1>key list</h1>
+            <h1>Key list</h1>
             <div id="keyListContent"></div>
         </div>
-        <div id="productList" class="screen"><h1>product list</h1></div>
-        <div id="productAdd" class="screen"><h1>product Add</h1></div>
+        <div id="categoryList" class="screen">
+            <h1>Category list</h1>
+            <div id="categoryListContent"></div>
+        </div>
+        <div id="categoryAdd" class="screen">
+            <h1>Add Category</h1>
+            <form>
+                <input type="text" placeholder="Category name" id="categoryName" /><br /><br />
+                <input type="submit" value="Add Category" onClick="addCategory()">
+            </form>
+        </div>
+        <div id="productList" class="screen">
+            <h1>Product list</h1>
+            <div id="productListContent"></div>
+        </div>
+        <div id="productAdd" class="screen">
+            <h1>Add Product</h1>
+            <form>
+                <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
+                <div id="categories"></div>
+                <input style="width: 250px;" type="text" placeholder="Price exp. 1,50" id="addItemPrice" /><br />
+                <input style="width: 250px;" type="text" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
+                <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
+                <input type="submit" value="Add Product" onClick="addItem()">
+            </form>
+        </div>
         <a href="#" href="#" onclick="logout()">Logout</a>
     </div>
     <script src="/bootstrap/js/bootstrap.min.js"></script>

@@ -4,8 +4,7 @@ CREATE TABLE key
 (
 kid INTEGER NOT NULL PRIMARY KEY, -- key id
 keyhash BLOB   --? sha3_512 hash rfid tag uid
-); 
-
+);
 --------------------------------------------------------------------------------;
 DROP TABLE IF EXISTS person;     
 CREATE TABLE person                     
@@ -29,7 +28,16 @@ FOREIGN KEY(kid) REFERENCES KEY(kid),
 FOREIGN KEY(pid) REFERENCEs person(pid)
 );
 --------------------------------------------------------------------------------
+DROP TABLE IF EXISTS categories;
 
+CREATE TABLE categories
+(
+cid INTEGER PRIMARY KEY NOT NULL, -- category id
+name varchar
+);
+INSERT INTO categories VALUES(0, 'Drinks');
+INSERT INTO categories VALUES(1, 'Food');
+--------------------------------------------------------------------------------
 DROP TABLE IF EXISTS items;
 
 CREATE TABLE items
@@ -38,11 +46,12 @@ iid INTEGER PRIMARY KEY NOT NULL, -- item id
 item_name varchar,
 stock INTEGER,  --make db constraint that always above > -1?,
 current_price DECIMAL(5,2), --is most likely just overkill for a snack system,
-pic_url text
-CHECK(pic_url <> '')
+pic_url text,
+cid INTEGER
+CHECK(pic_url <> ''),
+FOREIGN KEY(cid) REFERENCES categories(cid)
 );
-INSERT INTO items VALUES(1,'Bueno',20,0.41,'xx');
-
+INSERT INTO items VALUES(1,'Bueno',20,0.41,'xx', 1);
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS basket;
 
