@@ -227,6 +227,7 @@
 
   block.fn.logoutUser = function() {
     this.actions(function(e, message) {
+      $('#basketList').empty();
       $('#photo').removeClass('screen')
       $('#events').removeClass('screen')
       $('#news').removeClass('screen')
