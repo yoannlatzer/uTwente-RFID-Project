@@ -49,13 +49,13 @@ def removeAdmin(ctx, e):
 
 @event('userremove')
 def removeUser(ctx, e):
-    userActions.removeUser(ctx.data['pid'])
+    userActions.removeUser(e.data['pid'])
     print('Remove user')
     emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
 
 @event('keyremove')
 def removeKey(ctx, e):
-    userActions.removeKey(ctx.data['kid'])
+    userActions.removeKey(e.data['kid'])
     print('Remove user')
     emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
