@@ -56,7 +56,7 @@ def removeUser(ctx, e):
 @event('keyremove')
 def removeKey(ctx, e):
     userActions.removeKey(e.data['kid'])
-    print('Remove user')
+    print('Remove key')
     emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
 

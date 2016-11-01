@@ -61,7 +61,7 @@ def keyList():
     #this should work as kid is now the hashed cardID
 def removeKey(kid):
     sql.begin()
-    sql.cur.execute("DELETE FROM keys WHERE kid=?", [kid])
+    sql.cur.execute("DELETE FROM keys WHERE kid=?", [str(kid)])
     sql.commit()
     sql.end()
 
