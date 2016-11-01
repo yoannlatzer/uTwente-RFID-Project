@@ -7,7 +7,7 @@ import exe_sql as sql
 
 def categoriesList():
     sql.begin()
-    result = sql.cur.execute('SELECT * FROM categories')
+    result = sql.cur.execute('SELECT cid, name FROM categories')
     res = result.fetchall()
     sql.end()
     return res

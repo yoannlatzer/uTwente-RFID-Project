@@ -85,6 +85,8 @@ def create_db():
     commit()
     end()
 
+def rollback():
+    con.rollback()
 #create_db()
 
 def useless():
