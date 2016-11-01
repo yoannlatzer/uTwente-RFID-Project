@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS categories;
 
 CREATE TABLE categories
 (
-cid INTEGER PRIMARY KEY NOT NULL, -- category id
+cid INTEGER PRIMARY KEY NOT NULL,     -- category id
 name varchar
 );
 INSERT INTO categories VALUES(0, 'Drinks');
@@ -43,12 +43,12 @@ DROP TABLE IF EXISTS items;
 
 CREATE TABLE items
 (
-iid INTEGER PRIMARY KEY NOT NULL,      -- item id
+iid INTEGER PRIMARY KEY NOT NULL,     -- item id
 item_name varchar,
-stock INTEGER,  --make db constraint that always above > -1?,
-current_price DECIMAL(5,2), --is most likely just overkill for a snack system,
+stock INTEGER,                        --make db constraint that always above > -1?,
+current_price DECIMAL(5,2),           --is most likely just overkill for a snack system,
 pic_url text,
-cid INTEGER
+cid INTEGER                           --category ID
 CHECK(pic_url <> ''),
 FOREIGN KEY(cid) REFERENCES categories(cid)
 );
