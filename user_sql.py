@@ -94,3 +94,25 @@ def resetUserBalance(pid):
     sql.cur.execute("UPDATE person SET balance = 0.00 where pid=?",[pid])   
     sql.commit()
     sql.end()
+    
+def removeUser(pid):
+    sql.begin()
+    result = sql.cur.execute("SELECT balance from person WHERE pid=?",[pid])    
+    res = result.fetchone()
+    print (res[0])
+    if res[0] <= 0:
+#        sql.cur.execute("DELETE FROM person WHERE pid=?",[pid]) #first we delete the person themselves
+        result = sql.cur.execute("SELECT KID FROM KPL WHERE pid=?",[pid])        
+        res = result.fetchall()
+#        print ([res])
+        for i in [res]:
+            z = len(i)-1
+            while z >= 0:
+                removeKey(i[z][0])
+                z -= 1
+#            removeKey(res[0])
+#        sql.cur.execute("DELETE FROM KPL WHERE pid=?",[pid])
+#        sql.cur.execute("DELETE FROM person WHERE pid=?",[pid])
+#        sql.cur.execute("DELETE FROM person WHERE pid=?",[pid])
+#        sql.cur.execute("DELETE FROM person WHERE pid=?",[pid])
+#        sql.cur.execute("DELETE FROM person WHERE pid=?",[pid])
