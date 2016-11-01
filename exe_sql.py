@@ -6,17 +6,18 @@ Created on Thu Oct 27 22:48:13 2016
 
 @author: Luuk
 """
-                                            #For explanation: look on Blackboard given links and search the internet
+                                 #For explanation: look on Blackboard given links and search the internet
 
-import sqlite3 as sql                        #import the sqlite3 library, set as sql (we don't use another version right now)
+import sqlite3 as sql            #import the sqlite3 library, set as sql (we don't use another version right now)
 
 global con
 global cur
 
 def ExepHand(query):
+    """For all user input we check if corret DataType INSIDE querry and catch Exceptions"""
     try:
         result = cur.execute(query)
-    except ValueError as msg:
+    except ValueError as msg:  #trying to store s1234567 as sid shouldn't work, sid = integer, we check with python in querry
         print ("msg") #possibly use a return to send back an error?
     return result
     
@@ -24,7 +25,7 @@ def begin():
     """Start connection and return global vars con and cur"""
     global cur
     global con    
-    con = sql.connect('snack.db')             #connect to given filename, if unexistent it will be created
+    con = sql.connect('snack.db')     #connect to given filename, if unexistent it will be created
     cur = con.cursor()
     
 
@@ -78,10 +79,9 @@ def end():
     con.close()
 
 def create_db():
-    """create a connection, exe script, see wat you created (data wise) and end the connection"""
+    """create a connection, exe script, and end the connection"""
     begin()
     exeScriptFile('snack_create.sql')
-#    cur_tables()
     commit()
     end()
 
