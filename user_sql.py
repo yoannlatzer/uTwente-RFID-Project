@@ -53,7 +53,7 @@ def adminList():
 def keyList():
     """Get list of all keys in system (mainly unreadable hashes)"""
     sql.begin()
-    result = sql.cur.execute("SELECT kid, keyhash FROM keys")
+    result = sql.cur.execute("SELECT kid, pid FROM keys")
     res = result.fetchall()
     sql.end()
     return res
