@@ -177,6 +177,7 @@ def registerUser(ctx, e):
 
 def loginUser(ctx, e):
     if ctx.person != None:
+        ctx.basket = []
         emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2], 'balance': ctx.person[3]})
         print('Successful login!')
 
