@@ -86,8 +86,13 @@ def getStats():
     Fifth (pid, username, quant) user who ate most of most sold item
     Sixth (number of different items in system)
     """
+    
     res = []  
     sql.begin()
+    result = sql.cur.execute("""SELECT * FROM orderitems""")
+    z = (result.fetchone())
+    if z== None:
+        return None
     result = sql.cur.execute("""SELECT items.iid, item_name, SUM(orderitems.quantity) as quant
                                 FROM items, orderitems, orders
                                 WHERE items.iid = orderitems.iid
