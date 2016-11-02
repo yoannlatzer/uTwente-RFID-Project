@@ -119,3 +119,30 @@ def removeOrderItems(bid):
     sql.cur.execute("DELETE FROM items WHERE bid=?",[bid])
     sql.commit()
     sql.end()
+    
+def getOrders():
+    """Get all orders and their information"""
+    sql.begin()
+    result = sql.cur.execute("SELECT bid, total, date, pid FROM orders")
+    res = result.fetchall()
+    sql.end()
+    return res
+    
+def getOrders2(oid):
+    """Get all orders and their information"""
+    sql.begin()
+    result = sql.cur.execute("SELECT bid, total, date, pid FROM orders WHERE bid=?",[oid])
+    res = result.fetchall()
+    sql.end()
+    return res
+    
+def getOrderItems(oid):
+    """Get all items for an oid"""
+    sql.begin()
+    result = sql.cur.execute("""SELECT bid, orderitems.iid,items.item_name, quantity, price
+                       FROM items, orderitems
+                       WHERE orderitems.bid = ?
+                       and items.iid = orderitems.iid""",[oid])
+    res = result.fetchall()
+    sql.end()                       
+    return res
