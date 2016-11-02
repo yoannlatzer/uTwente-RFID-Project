@@ -50,30 +50,6 @@ def adminList():
     sql.end()
     return res
 
-def keyList():
-    """Get list of all keys in system (mainly unreadable hashes)"""
-    sql.begin()
-    result = sql.cur.execute("SELECT kid, pid FROM keys")
-    res = result.fetchall()
-    sql.end()
-    return res
-
-    #this should work as kid is now the hashed cardID
-def removeKey(kid):
-    """Remove a key, can be based on selection"""
-    sql.begin()
-    sql.cur.execute("DELETE FROM keys WHERE kid=?", [str(kid)])
-    sql.commit()
-    sql.end()
-
-def keyUserList():
-    """Get list of kid and pid in Tables"""
-    sql.begin()
-    result = sql.cur.execute("SELECT kid, pid FROM keys")
-    res = result.fetchall()
-    sql.end()
-    return res
-
 def userList():
     """Fetch list of /normal/ users"""
     sql.begin()
@@ -96,8 +72,9 @@ def resetUserBalance(pid):
     sql.commit()
     sql.end()
 
+#CHECK: realy necessary?
 def addUserBalance(pid, add):
-    """Sets one users balance to 0, useful for "system clean" after invoices"""
+    """Sets one users balance to 0, useful for "system clean" after one invoice"""
     sql.begin()
     sql.cur.execute("UPDATE persons SET balance = balance - ? where pid=?", [add, pid])
     sql.commit()
@@ -120,10 +97,11 @@ def removeUser(pid):
             while z >= 0:
                 removeOrderItems(i[z][0])
                 z -= 1
-        removeOrders(pid)
+        removeOrdersWithUser(pid)
         sql.cur.execute("DELETE FROM persons WHERE pid=?",[pid]) #first we delete the persons themselves
 
-def removeOrders(pid):
+def removeOrdersWithUser(pid):
+    """Use for removing orders linked to user::(int)"""
     sql.begin()
     sql.cur.execute("DELETE FROM orders WHERE pid=?",[pid]) 
     sql.commit()
@@ -136,6 +114,7 @@ def removeOrderItems(oid):
     sql.end()
 
 def removeOrder(oid):
+    """Removes Order :: (int)"""
     sql.begin()
     order = sql.cur.execute("SELECT total, pid FROM orders WHERE oid=?", [oid])
     order = order.fetchone()
@@ -165,6 +144,16 @@ def getOrders():
     """Get all orders and their information"""
     sql.begin()
     result = sql.cur.execute("SELECT oid, total, date, pid FROM orders")
+    res = result.fetchall()
+    sql.end()
+    return res
+    
+def getUserOrders(pid):
+    """Get orders for pid:: (int)--> [(pid,name,oid,total,date)]"""
+    sql.begin()
+    result = sql.cur.execute("""SELECT persons.pid, name, oid, total, date 
+                                FROM persons, orders 
+                                WHERE orders.pid = persons.pid and persons.pid=?""",[pid])
     res = result.fetchall()
     sql.end()
     return res
@@ -199,3 +188,42 @@ def getOrderItems(oid):
     res = result.fetchall()
     sql.end()                       
     return res
+
+def keyList():
+    """Get list of all keys in system (mainly unreadable hashes)"""
+    sql.begin()
+    result = sql.cur.execute("SELECT kid, pid FROM keys")
+    res = result.fetchall()
+    sql.end()
+    return res
+
+    #this should work as kid is now the hashed cardID
+def removeKey(kid):
+    """Remove a key, can be based on selection"""
+    sql.begin()
+    sql.cur.execute("DELETE FROM keys WHERE kid=?", [str(kid)])
+    sql.commit()
+    sql.end()
+
+def keyUserList():
+    """Get list of kid and pid in Tables"""
+    sql.begin()
+    result = sql.cur.execute("SELECT kid, pid FROM keys")
+    res = result.fetchall()
+    sql.end()
+    return res
+    
+def editKeyName(name, kid):
+    """Gives key (new) name :: (name, kid)"""
+    sql.begin()
+    sql.cur.execute("""UPDATE keys SET keyname=? WHERE kid=?""",[name,kid])
+    sql.end()
+    
+def getLinkedKeys(pid):
+    """Gives info of keys for user:: (int pid) --> (pid, name, keyname)"""
+    sql.begin()
+    results = sql.cur.execute("SELECT persons.pid, name, keyname FROM keys, persons WHERE keys.pid = persons.pid AND persons.pid=?",[pid])
+    res = results.fetchall()
+    sql.end()
+    return res
+    
