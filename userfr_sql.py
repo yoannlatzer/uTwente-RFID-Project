@@ -82,7 +82,7 @@ def getStats():
     First (iid,item_name,quant) is Most sold
     Second (iid,item_name,quant) is least sold
     Third (iid,item_name,current_price) is cheapest item
-    Fourth (average order price) is avg_order_price ##COURTESY OF FANGFANG
+    Fourth (average order price) is avg_order_price
     Fifth (pid, username, quant) user who ate most of most sold item
     Sixth (number of different items in system)
     """
