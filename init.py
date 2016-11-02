@@ -84,6 +84,8 @@ def showAdminPage(ctx, e):
                 emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
             if e.data['page'] == 'productAdd':
                 emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+            if e.data['page'] == 'orderList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.getFullOrders()})
 
 @event('addItem')
 def newItem(ctx, e):

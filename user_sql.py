@@ -120,7 +120,18 @@ def removeOrderItems(bid):
     sql.cur.execute("DELETE FROM orderitems WHERE bid=?",[bid])
     sql.commit()
     sql.end()
-    
+
+def getFullOrders():
+    orders = getOrders()
+    result = []
+    for i in [orders]:
+        z = len(i) - 1
+        while z >= 0:
+            items = getOrderItems(orders[z][0])
+            result.append({'oid': orders[z][0], 'total': orders[z][1], 'date': orders[z][2], 'items': items})
+            z -= 1
+    return result
+
 def getOrders():
     """Get all orders and their information"""
     sql.begin()
