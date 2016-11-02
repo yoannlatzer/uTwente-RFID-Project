@@ -57,7 +57,6 @@ def removeUser(ctx, e):
 
 @event('orderitemremove')
 def removeOrderItem(ctx, e):
-    print(e)
     userActions.removeOrderItem(e.data['oid'], e.data['iid'])
     print('Remove oder item')
     emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
