@@ -66,6 +66,15 @@ void loop() {
     if(uid != -1){
       // Print the uid on serial port
       Serial.print("Card detected, UID: "); Serial.println(uid);
+      
+      // Turn the buzzer on and off
+      tone(6, 440);
+      delay(200);
+      tone(6, 1760);
+      delay(10);
+      tone(6, 587);
+      delay(300);
+      noTone(6);
       // BLAKE2s: reset the key, update the uid and finalize the hash
       B2s.resetHMAC(key, sizeof(key));
       B2s.update(uid, sizeof(uid));
@@ -77,11 +86,10 @@ void loop() {
       }
       // Print the hash string on serial port
       Serial.println(hashStr);
-      // Turn the buzzer on and off when hash is transmitted
-      tone(6, 523);
-      delay(200);
-      tone(6, 698);
-      delay(200);
+
+       // Turn the buzzer on and off
+      tone(6, 3520);
+      delay(300);
       noTone(6);
     }
   
