@@ -152,10 +152,9 @@
                     <label for="register_password">Password</label>
                     <input placeholder="password" type="password" id="register_password" class="form-control" /><br />
                 </div>
-                    <button onClick="register()" class="btn btn-primary">Register</button><br />
+                    <button onClick="register()" class="btn btn-primary">Register</button>
+                    <button onclick="goto('home')" href="#" class="btn btn-danger">Go Back</button>
             </form>
-            <br />
-            <a href="#" onclick="goto('home')">go back</a>
         </div>
         <!--
         END NEW USER SCREEN
@@ -174,10 +173,11 @@
                     <label for="password">Password</label>
                     <input placeholder="password" type="password" id="password" class="form-control" /><br />
                 </div>
-                    <button class="btn btn-primary">Login</button><br />
+                    <button class="btn btn-primary">Login</button>
+                    <button onclick="goto('home')" href="#" class="btn btn-danger">Go Back</button>
             </form>
             <br />
-            <a href="#" href="#" onclick="goto('home')">go back</a>
+            
         </div>
         <!--
         END LOGIN SCREEN
@@ -216,25 +216,21 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
         -->
         <div id="authenticated" class=" screen" style="height:415px;">
             <div class="row">
-                <div class="col-md-8 group" style="height:130px;">
-                    <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
-                    <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
-                </div>
-                <div class="col-md-2 group" style="height:130px;">
-                    <a href="#" onClick="logout()">Logout</a>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-md-7 group">
-                    <h1>Shop</h1>
+                 <h1>Shop</h1>
                     <a href="#" id="categoriesLink" class="screen " onClick="categories()">Categories</a><br />
                     <div id="authCategories" class="screen"></div>
                     <div id="authItems" class="screen"></div>
                 </div>
-                <div class="col-md-4 group">
-                    <div id="authBasket">
+                <div class="col-md-4">
+                    <div id="authID" class="group">           
+                        <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
+                        <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
+                        <a href="#" onClick="logout()">Logout</a>
+                    </div>
+                    <div id="authBasket" class="group">
                         <h1>Shopping Basket</h1>
-                        <table id="basketList" style="width: 100%;"></table>
+                        <table id="basketList" class="table table-striped" style="width: 100%;"></table>
                         <input id="basketButton" class="screen" type="button" value="Check out" onClick="buyBasket()" />
                     </div>
                 </div>
