@@ -249,69 +249,70 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
             <!--
             END SHOP SCREEN
             -->
-            <!--
-            BEGIN ADMIN SCREEN
-            -->
-            <div id="admin" class="screen" style="height:415px;">
-                Whoohoo admin screen<br />
-                <ul>
-                    <li><a href="#" onClick="adminPage('adminList')">Admin list</a></li>
-                    <li><a href="#" onClick="adminPage('userList')">User list</a></li>
-                    <li><a href="#" onClick="adminPage('keyList')">Key list</a></li>
-                    <li><a href="#" onClick="adminPage('categoryList')">Category list</a></li>
-                    <li><a href="#" onClick="adminPage('categoryAdd')">Category add</a></li>
-                    <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
-                    <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
-                    <li><a href="#" onClick="adminPage('orderList')">Orders</a></li>
-                </ul>
-                <div id="adminList" class="screen">
-                    <h1>admin list</h1>
-                    <div id="adminListContent"></div>
-                </div>
-                <div id="userList" class="screen">
-                    <h1>User list</h1>
-                    <div id="userListContent"></div>
-                </div>
-                <div id="keyList" class="screen">
-                    <h1>Key list</h1>
-                    <div id="keyListContent"></div>
-                </div>
-                <div id="categoryList" class="screen">
-                    <h1>Category list</h1>
-                    <div id="categoryListContent"></div>
-                </div>
-                <div id="categoryAdd" class="screen">
-                    <h1>Add Category</h1>
-                    <form>
-                        <input type="text" placeholder="Category name" id="categoryName" /><br /><br />
-                        <input type="submit" value="Add Category" onClick="addCategory()">
-                    </form>
-                </div>
-                <div id="productList" class="screen">
-                    <h1>Product list</h1>
-                    <div id="productListContent"></div>
-                </div>
-                <div id="productAdd" class="screen">
-                    <h1>Add Product</h1>
-                    <form>
-                        <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
-                        <select id="addItemCategory"></select><br />
-                        <input style="width: 250px;" type="number" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
-                        <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
-                        <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
-                        <input type="submit" value="Add Product" onClick="addItem()">
-                    </form>
-                </div>
-                <div id="orderList" class="screen">
-                    <h1>Order list</h1>
-                    <div id="orderListContent"></div>
-                </div>
-                <a href="#" onClick="logout()">Logout</a>
-            </div>
-            <!--
-            END ADMIN SCREEN
-            -->
         </div>
+        <!--
+        BEGIN ADMIN SCREEN
+        -->
+        <div id="admin" class="screen" style="height:415px;">
+            Whoohoo admin screen<br />
+            <ul>
+                <li><a href="#" onClick="adminPage('adminList')">Admin list</a></li>
+                <li><a href="#" onClick="adminPage('userList')">User list</a></li>
+                <li><a href="#" onClick="adminPage('keyList')">Key list</a></li>
+                <li><a href="#" onClick="adminPage('categoryList')">Category list</a></li>
+                <li><a href="#" onClick="adminPage('categoryAdd')">Category add</a></li>
+                <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
+                <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
+                <li><a href="#" onClick="adminPage('orderList')">Orders</a></li>
+            </ul>
+            <div id="adminList" class="screen">
+                <h1>admin list</h1>
+                <div id="adminListContent"></div>
+            </div>
+            <div id="userList" class="screen">
+                <h1>User list</h1>
+                <div id="userListContent"></div>
+            </div>
+            <div id="keyList" class="screen">
+                <h1>Key list</h1>
+                <div id="keyListContent"></div>
+            </div>
+            <div id="categoryList" class="screen">
+                <h1>Category list</h1>
+                <div id="categoryListContent"></div>
+            </div>
+            <div id="categoryAdd" class="screen">
+                <h1>Add Category</h1>
+                <form>
+                    <input type="text" placeholder="Category name" id="categoryName" /><br /><br />
+                    <input type="submit" value="Add Category" onClick="addCategory()">
+                </form>
+            </div>
+            <div id="productList" class="screen">
+                <h1>Product list</h1>
+                <div id="productListContent"></div>
+            </div>
+            <div id="productAdd" class="screen">
+                <h1>Add Product</h1>
+                <form>
+                    <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
+                    <select id="addItemCategory"></select><br />
+                    <input style="width: 250px;" type="number" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
+                    <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
+                    <input type="submit" value="Add Product" onClick="addItem()">
+                </form>
+            </div>
+            <div id="orderList" class="screen">
+                <h1>Order list</h1>
+                <div id="orderListContent"></div>
+            </div>
+            <a href="#" onClick="logout()">Logout</a>
+        </div>
+        <!--
+        END ADMIN SCREEN
+        -->
+
         <!--
         END AUTHENTICATED SCREEN
         -->
