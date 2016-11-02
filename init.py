@@ -68,21 +68,22 @@ def openAdminScreen(ctx, e):
 
 @event('adminpage')
 def showAdminPage(ctx, e):
-    if ctx.person[4] == 1:
-        if e.data['page'] == 'keyList':
-            emit('adminpage', {'page': e.data['page'], 'data': userActions.keyList()})
-        if e.data['page'] == 'userList':
-            emit('adminpage', {'page': e.data['page'], 'data': userActions.userList()})
-        if e.data['page'] == 'adminList':
-            emit('adminpage', {'page': e.data['page'], 'data': userActions.adminList()})
-        if e.data['page'] == 'categoryAdd':
-            emit('adminpage', {'page': e.data['page']})
-        if e.data['page'] == 'categoryList':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
-        if e.data['page'] == 'productList':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
-        if e.data['page'] == 'productAdd':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+    if ctx.person != None:
+        if ctx.person[4] == 1:
+            if e.data['page'] == 'keyList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.keyList()})
+            if e.data['page'] == 'userList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.userList()})
+            if e.data['page'] == 'adminList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.adminList()})
+            if e.data['page'] == 'categoryAdd':
+                emit('adminpage', {'page': e.data['page']})
+            if e.data['page'] == 'categoryList':
+                emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+            if e.data['page'] == 'productList':
+                emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
+            if e.data['page'] == 'productAdd':
+                emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
 
 @event('addItem')
 def newItem(ctx, e):
