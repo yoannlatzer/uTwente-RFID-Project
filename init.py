@@ -21,9 +21,11 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/admin/remove', eca.http.GenerateEvent('adminremove'), methods=["POST"])
   httpd.add_route('/admin/user/remove', eca.http.GenerateEvent('userremove'), methods=["POST"])
   httpd.add_route('/admin/key/remove', eca.http.GenerateEvent('keyremove'), methods=["POST"])
+  httpd.add_route('/admin/category/remove', eca.http.GenerateEvent('categoryremove'), methods=["POST"])
   httpd.add_route('/admin/order/remove', eca.http.GenerateEvent('orderremove'), methods=["POST"])
   httpd.add_route('/admin/orderitem/remove', eca.http.GenerateEvent('orderitemremove'), methods=["POST"])
   httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
+  httpd.add_route('/admin/item/remove', eca.http.GenerateEvent('itemremove'), methods=["POST"])
   httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
 
@@ -73,6 +75,17 @@ def removeKey(ctx, e):
     print('Remove key')
     emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
+@event('itemremove')
+def removeItem(ctx, e):
+    itemActions.delItem(e.data['iid'])
+    print('Remove Item')
+    emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
+
+@event('categoryremove')
+def removeCategory(ctx, e):
+    itemActions.delCategory(e.data['cid'])
+    print('Remove category')
+    emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):

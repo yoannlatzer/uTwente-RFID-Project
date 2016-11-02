@@ -26,7 +26,7 @@ def editCategory(cid):
 
 def delCategory(cid):
     sql.begin()
-    sql.cur.execute("DELETE FROM categories WHERRE cid=?", [cid])
+    sql.cur.execute("DELETE FROM categories WHERE cid=?", [cid])
     sql.commit()
     sql.end()
 
@@ -75,6 +75,6 @@ def editItem(name, stock, price, image, cid, iid):
 def delItem(iid):
     """deletes an Item, based on iid given in the submit/POST"""
     sql.begin()
-    sql.cur.execute("DELETE FROM items WHERRE iid=?", [iid])
+    sql.cur.execute("DELETE FROM items WHERE iid=?", [iid])
     sql.commit()
     sql.end()

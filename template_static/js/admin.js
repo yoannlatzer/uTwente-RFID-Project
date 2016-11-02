@@ -22,16 +22,16 @@ function editCategory(cid) {
 
 }
 
-function removeCategory(cid) {
-
+function deleteCategory(cid) {
+    $.post('/admin/category/remove', JSON.stringify({cid: cid}))
 }
 
 function editItem(iid) {
 
 }
 
-function removeItem(iid) {
-
+function deleteItem(iid) {
+    $.post('/admin/item/remove', JSON.stringify({iid: iid}))
 }
 
 function removeOrder(oid) {
