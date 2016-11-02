@@ -16,7 +16,7 @@
       if ( typeof message.pid != 'undefined') {
         $('#authenticated_name').text(message.name)
         $('#authenticated_sid').text(message.sid)
-        $('#authenticated_balance').text(message.balance)
+        $('#authenticated_balance').text(Math.round(message.balance*100)/100)
       }
       if ($('#authCategories').hasClass('screen') == true && $('#authItems').hasClass('screen') == true) {
         $('#authCategories').removeClass('screen');
