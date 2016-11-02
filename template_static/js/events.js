@@ -14,10 +14,9 @@
       $('#authenticated').removeClass('col-md-4')
       $('#authenticated').removeClass('screen')
       if ( typeof message.pid != 'undefined') {
-        $('#authenticated_name').text('Name: ' + message.name)
-        $('#authenticated_sid').text('Student#: ' + message.sid)
-        $('#authenticated_type').text('Type: ' + message.type)
-        $('#authenticated_balance').text('Balance: ' + message.balance)
+        $('#authenticated_name').text(message.name)
+        $('#authenticated_sid').text(message.sid)
+        $('#authenticated_balance').text(message.balance)
       }
       if ($('#authCategories').hasClass('screen') == true && $('#authItems').hasClass('screen') == true) {
         $('#authCategories').removeClass('screen');

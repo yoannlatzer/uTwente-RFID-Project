@@ -213,25 +213,27 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
     <!--
     BEGIN SHOP SCREEN
     -->
-    <div id="authenticated" class="col-md-4 group screen" style="height:415px;">
-        <h1>Welcome back</h1>
-        Page when logged in..
-        <ul>
-            <li id="authenticated_name"></li>
-            <li id="authenticated_sid"></li>
-            <li id="authenticated_type"></li>
-            <li id="authenticated_balance"></li>
-        </ul>
-        <br />
-        <div id="authCategories" class="screen"></div>
-        <div id="authItems" class="screen"></div>
-        <br />
-        <div id="authBasket">
-            <h1>Shopping Basket</h1>
-            <ul id="basketList"></ul>
-            <input type="button" value="Check out" onClick="buyBasket()" />
+    <div id="authenticated" class="group screen" style="height:415px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
+                <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
+            </div>
         </div>
-        <a href="#" id="categoriesLink" class="screen" onClick="categories()">Categories</a><br />
+        <div class="row">
+            <div class="col-md-8">
+                <h1>Shop</h1>
+                <a href="#" id="categoriesLink" class="screen" onClick="categories()">Categories</a><br />
+                <div id="authCategories" class="screen"></div>
+                <div id="authItems" class="screen"></div>
+            </div>
+            <div class="col-md-4">
+                <div id="authBasket">
+                <h1>Shopping Basket</h1>
+                <ul id="basketList"></ul>
+                <input type="button" value="Check out" onClick="buyBasket()" />
+            </div>
+        </div>
         <a href="#" onClick="logout()">Logout</a>
     </div>
     <div id="admin_link" class="screen">
