@@ -60,6 +60,7 @@ def keyList():
 
     #this should work as kid is now the hashed cardID
 def removeKey(kid):
+    """Remove a key, can be based on selection"""
     sql.begin()
     sql.cur.execute("DELETE FROM keys WHERE kid=?", [str(kid)])
     sql.commit()
@@ -94,6 +95,7 @@ def removeUser(pid):
     result = sql.cur.execute("SELECT balance from persons WHERE pid=?",[pid])    
     res = result.fetchone()
     print (res[0])
+    # not removing if balance is positive?
     if res[0] <= 0:
         sql.cur.execute("DELETE FROM keys WHERE pid=?",[pid])
         result = sql.cur.execute("SELECT bid FROM basket WHERE pid=?",[pid])        
@@ -115,6 +117,44 @@ def removeOrders(pid):
     
 def removeOrderItems(bid):
     sql.begin()
-    sql.cur.execute("DELETE FROM items WHERE bid=?",[bid])
+    sql.cur.execute("DELETE FROM orderitems WHERE bid=?",[bid])
     sql.commit()
     sql.end()
+
+def getFullOrders():
+    orders = getOrders()
+    result = []
+    for i in [orders]:
+        z = len(i) - 1
+        while z >= 0:
+            items = getOrderItems(orders[z][0])
+            result.append({'oid': orders[z][0], 'total': orders[z][1], 'date': orders[z][2], 'items': items})
+            z -= 1
+    return result
+
+def getOrders():
+    """Get all orders and their information"""
+    sql.begin()
+    result = sql.cur.execute("SELECT bid, total, date, pid FROM orders")
+    res = result.fetchall()
+    sql.end()
+    return res
+    
+def getOrders2(oid):
+    """Get all orders and their information"""
+    sql.begin()
+    result = sql.cur.execute("SELECT bid, total, date, pid FROM orders WHERE bid=?",[oid])
+    res = result.fetchall()
+    sql.end()
+    return res
+    
+def getOrderItems(oid):
+    """Get all items for an oid"""
+    sql.begin()
+    result = sql.cur.execute("""SELECT bid, orderitems.iid,items.item_name, quantity, price
+                       FROM items, orderitems
+                       WHERE orderitems.bid = ?
+                       and items.iid = orderitems.iid""",[oid])
+    res = result.fetchall()
+    sql.end()                       
+    return res

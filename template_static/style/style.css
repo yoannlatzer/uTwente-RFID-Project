@@ -53,3 +53,27 @@ h2, .h2 {
     color: rgba(265,265,265,265);
     width: 95.6667%;
 }
+
+.category {
+    font-size: 17px;
+    text-align: center;
+    height: 100px;
+    width: 100px;
+    float: left;
+    margin: 10px;
+    background-color: #e0e0e0;
+}
+
+.item {
+    height: 170px;
+    width: 130px;
+    float: left;
+    margin: 10px;
+    background-color: #e0e0e0;
+    padding: 5px;
+}
+
+.item_image {
+    height: 120px;
+    width: 120px;
+}

@@ -14,10 +14,9 @@
       $('#authenticated').removeClass('col-md-4')
       $('#authenticated').removeClass('screen')
       if ( typeof message.pid != 'undefined') {
-        $('#authenticated_name').text('Name: ' + message.name)
-        $('#authenticated_sid').text('Student#: ' + message.sid)
-        $('#authenticated_type').text('Type: ' + message.type)
-        $('#authenticated_balance').text('Balance: ' + message.balance)
+        $('#authenticated_name').text(message.name)
+        $('#authenticated_sid').text(message.sid)
+        $('#authenticated_balance').text(Math.round(message.balance*100)/100)
       }
       if ($('#authCategories').hasClass('screen') == true && $('#authItems').hasClass('screen') == true) {
         $('#authCategories').removeClass('screen');
@@ -40,6 +39,7 @@
       $div =  $('#authCategories');
       message.data.map(function(cat) {
         $('<div/>')
+            .addClass('group category')
             .attr('onClick', 'setCategory(' + cat[0] + ')')
             .text(cat[1])
             .appendTo($div)
@@ -54,9 +54,20 @@
       $('#authItems').empty();
       $div =  $('#authItems');
       message.data.map(function(i) {
+        console.log(i)
+        $image = $('<img/>')
+            .attr('src', '/images/items/' + i[4])
+            .addClass('item_image')
+        $name = $('<span/>')
+            .text(i[1])
+        $price = $('<span/>')
+            .html('<br />&euro; ' + i[3])
         $('<div/>')
+            .addClass('group item')
             .attr('onClick', 'selectItem(' + i[0] + ')')
-            .text(i[1] + ' Price: ' + i[3])
+            .append($image)
+            .append($name)
+            .append($price)
             .appendTo($div)
       });
       $('#authItems').removeClass('screen');
@@ -68,13 +79,61 @@
       if (typeof message.data != 'undefined' ) {
 
         $('#basketList').empty();
-        $ul = $('#basketList');
+        $table = $('#basketList');
+          $name = $('<td/>')
+              .text('Item')
+          $quantity = $('<td/>')
+              .text('Quantity')
+          $price = $('<td/>')
+              .text('Price')
+          $total = $('<td/>')
+              .text('Total')
+          $delete = $('<td/>')
+              .text('')
+          $('<tr/>')
+              .append($name)
+              .append($quantity)
+              .append($price)
+              .append($total)
+              .append($delete)
+              .appendTo($table)
+        var totalPrice = 0
         message.data.map(function (item) {
-          $('<li/>')
-              .text('Item: ' + item.name + ' Price: ' + item.price + ' Quantity: ' + item.quantity + ' Total: ' + Math.round(((item.quantity * item.price) * 100)) / 100 + ' [x]')
-              .attr('onClick', 'removeItem(' + item.iid + ')')
-              .appendTo($ul)
+          $name = $('<td/>')
+              .text(item.name)
+          $quantity = $('<td/>')
+              .text('x' + item.quantity)
+          $price = $('<td/>')
+              .html("&euro; " + item.price)
+          $total = $('<td/>')
+              .html('&euro; ' + Math.round(((item.quantity * item.price) * 100)) / 100)
+          totalPrice += item.quantity * item.price
+          $delete = $('<td/>')
+              .html('<span onClick=\'removeItem('+item.iid+')\'>[x]</span>')
+          $('<tr/>')
+              .append($name)
+              .append($quantity)
+              .append($price)
+              .append($total)
+              .append($delete)
+              .appendTo($table)
         });
+        $empty = $('<td/>')
+            .text('')
+            .attr('colspan', 3)
+
+        $total = $('<td/>')
+            .html('&euro; ' + (Math.round(totalPrice * 100) / 100))
+        $('<tr/>')
+            .append($total)
+            .prepend($empty)
+            .appendTo($table)
+        if ( typeof message.data != 'undefined' && message.data.length > 0) {
+          $('#basketButton').removeClass('screen')
+        }
+        else {
+          $('#basketButton').addClass('screen')
+        }
 
         $('#authItems').removeClass('screen');
       }
@@ -210,6 +269,65 @@
                 .appendTo($select)
           });
           break
+        case 'orderList':
+          $('#orderListContent').empty();
+        $table = $('#orderListContent');
+          $name = $('<td/>')
+              .text('Item')
+          $quantity = $('<td/>')
+              .text('Quantity')
+          $price = $('<td/>')
+              .text('Price')
+          $total = $('<td/>')
+              .text('Total')
+          $delete = $('<td/>')
+              .text('')
+          $('<tr/>')
+              .append($name)
+              .append($quantity)
+              .append($price)
+              .append($total)
+              .append($delete)
+              .appendTo($table)
+        var totalPrice = 0
+        message.data.map(function (item) {
+          $name = $('<td/>')
+              .text(item.name)
+          $quantity = $('<td/>')
+              .text('x' + item.quantity)
+          $price = $('<td/>')
+              .html("&euro; " + item.price)
+          $total = $('<td/>')
+              .html('&euro; ' + Math.round(((item.quantity * item.price) * 100)) / 100)
+          totalPrice += item.quantity * item.price
+          $delete = $('<td/>')
+              .html('<span onClick=\'removeItem('+item.iid+')\'>[x]</span>')
+          $('<tr/>')
+              .append($name)
+              .append($quantity)
+              .append($price)
+              .append($total)
+              .append($delete)
+              .appendTo($table)
+        });
+        $empty = $('<td/>')
+            .text('')
+            .attr('colspan', 3)
+
+        $total = $('<td/>')
+            .html('&euro; ' + (Math.round(totalPrice * 100) / 100))
+        $('<tr/>')
+            .append($total)
+            .prepend($empty)
+            .appendTo($table)
+        if ( typeof message.data != 'undefined' && message.data.length > 0) {
+          $('#basketButton').removeClass('screen')
+        }
+        else {
+          $('#basketButton').addClass('screen')
+        }
+
+        $('#authItems').removeClass('screen');
       }
     });
   };
@@ -238,6 +356,8 @@
       $('#authCategories').addClass('screen');
       $('#thankyou').addClass('screen');
       $('#authItems').addClass('screen');
+      $('#basketButton').addClass('screen')
+
       goto('home')
     });
   };

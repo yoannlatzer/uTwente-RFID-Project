@@ -68,21 +68,24 @@ def openAdminScreen(ctx, e):
 
 @event('adminpage')
 def showAdminPage(ctx, e):
-    if ctx.person[4] == 1:
-        if e.data['page'] == 'keyList':
-            emit('adminpage', {'page': e.data['page'], 'data': userActions.keyList()})
-        if e.data['page'] == 'userList':
-            emit('adminpage', {'page': e.data['page'], 'data': userActions.userList()})
-        if e.data['page'] == 'adminList':
-            emit('adminpage', {'page': e.data['page'], 'data': userActions.adminList()})
-        if e.data['page'] == 'categoryAdd':
-            emit('adminpage', {'page': e.data['page']})
-        if e.data['page'] == 'categoryList':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
-        if e.data['page'] == 'productList':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
-        if e.data['page'] == 'productAdd':
-            emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+    if ctx.person != None:
+        if ctx.person[4] == 1:
+            if e.data['page'] == 'keyList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.keyList()})
+            if e.data['page'] == 'userList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.userList()})
+            if e.data['page'] == 'adminList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.adminList()})
+            if e.data['page'] == 'categoryAdd':
+                emit('adminpage', {'page': e.data['page']})
+            if e.data['page'] == 'categoryList':
+                emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+            if e.data['page'] == 'productList':
+                emit('adminpage', {'page': e.data['page'], 'data': itemActions.getItems()})
+            if e.data['page'] == 'productAdd':
+                emit('adminpage', {'page': e.data['page'], 'data': itemActions.categoriesList()})
+            if e.data['page'] == 'orderList':
+                emit('adminpage', {'page': e.data['page'], 'data': userActions.getFullOrders()})
 
 @event('addItem')
 def newItem(ctx, e):
@@ -177,6 +180,7 @@ def registerUser(ctx, e):
 
 def loginUser(ctx, e):
     if ctx.person != None:
+        ctx.basket = []
         emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2], 'balance': ctx.person[3]})
         print('Successful login!')
 

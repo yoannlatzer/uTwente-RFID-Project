@@ -68,68 +68,120 @@
       <script src="/js/events.js"></script>
   </head>
 <body>
+<div class="container-fluid">
     <div class="row">
         <div id="header" class="col-md-11 group">
-        <h1>
-            Stress Snack System
-        </h1>
+            <h1>Stress Snack System</h1>
         </div>
     </div>
-    <div class="row">
-        <div id="thankyou" class="col-md-11 group screen">
-        <h1>
-            Thank you for ...
-        </h1>
+    <div id="thankyou" class="row screen">
+        <div class="col-md-11 group">
+            <h1>Thank you for ...</h1>
         </div>
     </div>
     <div class="row">
         <div id="photo" class="col-md-4 group">
-            <div style="text-align:center;margin:auto;" ><object width="auto" height="auto" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0"> <param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" /> <param name="allowFullScreen" value="false" /> <param name="src" value="https://www.flickr.com/apps/slideshow/show.swf?v=71649" /> <embed width="100%" height="350" type="application/x-shockwave-flash" src="https://www.flickr.com/apps/slideshow/show.swf?v=71649" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" allowFullScreen="false" /> </object><br /></div>
+            <div style="text-align:center;margin:auto;">
+                <object width="auto" height="auto" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"  codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0">
+                    <param name="flashvars" value="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" />
+                    <param name="allowFullScreen" value="false" /> <param name="src" value="https://www.flickr.com/apps/slideshow/show.swf?v=71649" />
+                    <embed width="100%" height="350" type="application/x-shockwave-flash" src="https://www.flickr.com/apps/slideshow/show.swf?v=71649" flashvars="offsite=true&amp;lang=en-us&amp;page_show_url=%2Fphotos%2Fsvstress%2Fshow&amp;page_show_back_url=%2Fphotos%2Fsvstress%2F&amp;user_id=63809364@N05" allowFullScreen="false" />
+                </object>
+            </div>
         </div>
-    <div id="events" class="col-md-3 group" style="height:415px;">
-                <h4 class="caps-title">
-                    Upcoming Events
-                </h4>
-                <ul class="nav">
-                    <li>
-                    <a class="nav-date-label"><span>16/11 - Drink lecture Shell</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>30/11 - Freshmen lasergaming</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>06/01 - Ski Trip to France</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>01/03 - StressCongress</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>16/11 - Drink lecture Shell</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>30/11 - Freshmen lasergaming</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>06/01 - Ski Trip to France</span></a>
-                    </li>
-                    <li>
-                    <a class="nav-date-label"><span>01/03 - StressCongress</span></a>
-                    </li>
-                </ul>
+        <div id="events" class="col-md-3 group" style="height:415px;">
+            <h4 class="caps-title">Upcoming Events</h4>
+            <ul class="nav">
+                <li>
+                <a class="nav-date-label"><span>16/11 - Drink lecture Shell</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>30/11 - Freshmen lasergaming</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>06/01 - Ski Trip to France</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>01/03 - StressCongress</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>16/11 - Drink lecture Shell</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>30/11 - Freshmen lasergaming</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>06/01 - Ski Trip to France</span></a>
+                </li>
+                <li>
+                <a class="nav-date-label"><span>01/03 - StressCongress</span></a>
+                </li>
+            </ul>
         </div>
-    <!--
-    BEGIN HOME SCREEN
-    -->
-    <div id="home" class="col-md-4 group" style="height:415px;">
-        <h2>Please scan your card</h2>
-        <i>or click here to log in.</i>
-        <ul>
-            <li><a href="#" onclick="goto('login')">Login with username and password (not functional)</a></li>
-            <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
-            <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
-            <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
-        </ul>
-        <input type="text" id="cardid" /><input type="button" value="Flash card" onClick="flashCard()" />
+        <!--
+        BEGIN HOME SCREEN
+        -->
+        <div id="home" class="col-md-4 group" style="height:415px;">
+            <h2>Please scan your card</h2>
+            <i>or click here to log in.</i>
+            <ul>
+                <li><a href="#" onclick="goto('login')">Login with username and password (not functional)</a></li>
+                <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
+                <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
+                <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
+            </ul>
+            <input type="text" id="cardid" /><input type="button" value="Flash card" onClick="flashCard()" />
+        </div>
+        <!--
+        END HOME SCREEN
+        <!--
+        BEGIN NEW USER SCREEN
+        -->
+        <div id="newUser" class="col-md-4 group screen" style="height:415px;">
+            <h4>Register as a new user (todo errors)</h4>
+            <form>
+                <div class="form-group">
+                    <label for="register_name">Name</label>
+                    <input placeholder="Name" type="text" id="register_name" class="form-control" /><br />
+                </div>
+                <div class="form-group">
+                    <label for="register_studentnr">Studentnumber</label>
+                    <input placeholder="s1234567" type="text" id="register_studentnr" class="form-control"/><br />
+                </div>
+                <div class="form-group">
+                    <label for="register_password">Password</label>
+                    <input placeholder="password" type="password" id="register_password" class="form-control" /><br />
+                </div>
+                    <button onClick="register()" class="btn btn-primary">Register</button><br />
+            </form>
+            <br />
+            <a href="#" onclick="goto('home')">go back</a>
+        </div>
+        <!--
+        END NEW USER SCREEN
+        -->
+        <!--
+        BEGIN LOGIN SCREEN
+        -->
+        <div id="login" class="col-md-4 group screen" style="height:415px;">
+            <h1>Please enter your student number and password (not functional)</h1>
+            <form>
+                <div class="form-group">
+                    <label for="studentnr">Studentnumber</label>
+                    <input placeholder="s1234567" type="text" id="studentnr" class="form-control"/><br />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input placeholder="password" type="password" id="password" class="form-control" /><br />
+                </div>
+                    <button class="btn btn-primary">Login</button><br />
+            </form>
+            <br />
+            <a href="#" href="#" onclick="goto('home')">go back</a>
+        </div>
+        <!--
+        END LOGIN SCREEN
+        -->
     </div>
     <div class="row">
         <div id="news" class="col-md-7 group" style="height:355px;">
@@ -137,173 +189,137 @@
 Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement for their first spectacle of this year. With retro music for the 90s and 00s and unlimited refills the stage was set for an awesome party. At 21:00 the lights and music were switched on and the party was ready to start. Throughout the evening people were enjoying the refills in their own tankard and we can say that there have been a lot of refills. The B.U.F.F.E.L.S. enjoyed the evening very much and hope that you had the same. As board we want to thank everyone present and we think the party was a huge success and are looking forward to the next one. Are you having trouble remembering the party be sure to check out the photos and piece together the evening.
         </div>
         <div id="statistics" class="col-md-4 group" style="height:355px;">
-            <h2>Statistics</h2>
-            <ul class="list-group">
-                <li class="list-group-item">
-                    Most sold item: Kanjers
-                </li>
-                <li class="list-group-item">
-                    Least sold item: Energy Drink
-                </li>
-                <li class="list-group-item">
-                    Cheapest item: &#8364; 0.25
-                </li>
-                <li class="list-group-item">
-                    Average money spend: &#8364; 0.41
-                </li>
-                <li class="list-group-item">
-                    Most kanjers eaten by: Kevin
-                </li>
-                <li class="list-group-item">
-                    Number of snacks: 41
-                </li>
+                <h2>Statistics</h2>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        Most sold item: Kanjers
+                    </li>
+                    <li class="list-group-item">
+                        Least sold item: Energy Drink
+                    </li>
+                    <li class="list-group-item">
+                        Cheapest item: &#8364; 0.25
+                    </li>
+                    <li class="list-group-item">
+                        Average money spend: &#8364; 0.41
+                    </li>
+                    <li class="list-group-item">
+                        Most kanjers eaten by: Kevin
+                    </li>
+                    <li class="list-group-item">
+                        Number of snacks: 41
+                    </li>
+                </ul>
+        </div>
+        <!--
+        BEGIN SHOP SCREEN
+        -->
+        <div id="authenticated" class=" screen" style="height:415px;">
+            <div class="row">
+                <div class="col-md-8 group" style="height:130px;">
+                    <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
+                    <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
+                </div>
+                <div class="col-md-2 group" style="height:130px;">
+                    <a href="#" onClick="logout()">Logout</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 group">
+                    <h1>Shop</h1>
+                    <a href="#" id="categoriesLink" class="screen " onClick="categories()">Categories</a><br />
+                    <div id="authCategories" class="screen"></div>
+                    <div id="authItems" class="screen"></div>
+                </div>
+                <div class="col-md-4 group">
+                    <div id="authBasket">
+                        <h1>Shopping Basket</h1>
+                        <table id="basketList" style="width: 100%;"></table>
+                        <input id="basketButton" class="screen" type="button" value="Check out" onClick="buyBasket()" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 group">
+                    <div id="admin_link" class="screen">
+                        <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
+                    </div>
+                </div>
+            </div>
+            <!--
+            END SHOP SCREEN
+            -->
+        </div>
+        <!--
+        BEGIN ADMIN SCREEN
+        -->
+        <div id="admin" class="screen" style="height:415px;">
+            Whoohoo admin screen<br />
+            <ul>
+                <li><a href="#" onClick="adminPage('adminList')">Admin list</a></li>
+                <li><a href="#" onClick="adminPage('userList')">User list</a></li>
+                <li><a href="#" onClick="adminPage('keyList')">Key list</a></li>
+                <li><a href="#" onClick="adminPage('categoryList')">Category list</a></li>
+                <li><a href="#" onClick="adminPage('categoryAdd')">Category add</a></li>
+                <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
+                <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
+                <li><a href="#" onClick="adminPage('orderList')">Orders</a></li>
             </ul>
-        </div>
-    <!--
-    END HOME SCREEN
-    -->
-    <!--
-    BEGIN NEW USER SCREEN
-    -->
-    <div id="newUser" class="col-md-4 group screen" style="height:415px;">
-        <h4>Register as a new user (todo errors)</h4>
-        <form>
-            <div class="form-group">
-                <label for="register_name">Name</label>
-                <input placeholder="Name" type="text" id="register_name" class="form-control" /><br />
+            <div id="adminList" class="screen">
+                <h1>admin list</h1>
+                <div id="adminListContent"></div>
             </div>
-            <div class="form-group">
-                <label for="register_studentnr">Studentnumber</label>
-                <input placeholder="s1234567" type="text" id="register_studentnr" class="form-control"/><br />
+            <div id="userList" class="screen">
+                <h1>User list</h1>
+                <div id="userListContent"></div>
             </div>
-            <div class="form-group">
-                <label for="register_password">Password</label>
-                <input placeholder="password" type="password" id="register_password" class="form-control" /><br />
+            <div id="keyList" class="screen">
+                <h1>Key list</h1>
+                <div id="keyListContent"></div>
             </div>
-                <button onClick="register()" class="btn btn-primary">Register</button><br />
-        </form>
-        <br />
-        <a href="#" onclick="goto('home')">go back</a>
-    </div>
-    <!--
-    END NEW USER SCREEN
-    -->
-    <!--
-    BEGIN LOGIN SCREEN
-    -->
-    <div id="login" class="col-md-4 group screen" style="height:415px;">
-        <h1>Please enter your student number and password (not functional)</h1>
-        <form>
-            <div class="form-group">
-                <label for="studentnr">Studentnumber</label>
-                <input placeholder="s1234567" type="text" id="studentnr" class="form-control"/><br />
+            <div id="categoryList" class="screen">
+                <h1>Category list</h1>
+                <div id="categoryListContent"></div>
             </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input placeholder="password" type="password" id="password" class="form-control" /><br />
+            <div id="categoryAdd" class="screen">
+                <h1>Add Category</h1>
+                <form>
+                    <input type="text" placeholder="Category name" id="categoryName" /><br /><br />
+                    <input type="submit" value="Add Category" onClick="addCategory()">
+                </form>
             </div>
-                <button class="btn btn-primary">Login</button><br />
-        </form>
-        <br />
-        <a href="#" href="#" onclick="goto('home')">go back</a>
+            <div id="productList" class="screen">
+                <h1>Product list</h1>
+                <div id="productListContent"></div>
+            </div>
+            <div id="productAdd" class="screen">
+                <h1>Add Product</h1>
+                <form>
+                    <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
+                    <select id="addItemCategory"></select><br />
+                    <input style="width: 250px;" type="number" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
+                    <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
+                    <input type="submit" value="Add Product" onClick="addItem()">
+                </form>
+            </div>
+            <div id="orderList" class="screen">
+                <h1>Order list</h1>
+                <table id="orderListContent"></table>
+            </div>
+            <a href="#" onClick="logout()">Logout</a>
+        </div>
+        <!--
+        END ADMIN SCREEN
+        -->
+
+        <!--
+        END AUTHENTICATED SCREEN
+        -->
     </div>
-    <!--
-    END LOGIN SCREEN
-    -->
-    <!--
-    BEGIN SHOP SCREEN
-    -->
-    <div id="authenticated" class="col-md-4 group screen" style="height:415px;">
-        <h1>Welcome back</h1>
-        Page when logged in..
-        <ul>
-            <li id="authenticated_name"></li>
-            <li id="authenticated_sid"></li>
-            <li id="authenticated_type"></li>
-            <li id="authenticated_balance"></li>
-        </ul>
-        <br />
-        <div id="authCategories" class="screen"></div>
-        <div id="authItems" class="screen"></div>
-        <br />
-        <div id="authBasket">
-            <h1>Shopping Basket</h1>
-            <ul id="basketList"></ul>
-            <input type="button" value="Check out" onClick="buyBasket()" />
-        </div>
-        <a href="#" id="categoriesLink" class="screen" onClick="categories()">Categories</a><br />
-        <a href="#" onClick="logout()">Logout</a>
-    </div>
-    <div id="admin_link" class="screen">
-        <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
-    </div>
-    <!--
-    END SHOP SCREEN
-    -->
-    <!--
-    BEGIN ADMIN SCREEN
-    -->
-    <div id="admin" class="screen" style="height:415px;">
-        Whoohoo admin screen<br />
-        <ul>
-            <li><a href="#" onClick="adminPage('adminList')">Admin list</a></li>
-            <li><a href="#" onClick="adminPage('userList')">User list</a></li>
-            <li><a href="#" onClick="adminPage('keyList')">Key list</a></li>
-            <li><a href="#" onClick="adminPage('categoryList')">Category list</a></li>
-            <li><a href="#" onClick="adminPage('categoryAdd')">Category add</a></li>
-            <li><a href="#" onClick="adminPage('productList')">Product list</a></li>
-            <li><a href="#" onClick="adminPage('productAdd')">Add Product</a></li>
-            <li><a href="#" onClick="adminPage('orderList')">Orders</a></li>
-        </ul>
-        <div id="adminList" class="screen">
-            <h1>admin list</h1>
-            <div id="adminListContent"></div>
-        </div>
-        <div id="userList" class="screen">
-            <h1>User list</h1>
-            <div id="userListContent"></div>
-        </div>
-        <div id="keyList" class="screen">
-            <h1>Key list</h1>
-            <div id="keyListContent"></div>
-        </div>
-        <div id="categoryList" class="screen">
-            <h1>Category list</h1>
-            <div id="categoryListContent"></div>
-        </div>
-        <div id="categoryAdd" class="screen">
-            <h1>Add Category</h1>
-            <form>
-                <input type="text" placeholder="Category name" id="categoryName" /><br /><br />
-                <input type="submit" value="Add Category" onClick="addCategory()">
-            </form>
-        </div>
-        <div id="productList" class="screen">
-            <h1>Product list</h1>
-            <div id="productListContent"></div>
-        </div>
-        <div id="productAdd" class="screen">
-            <h1>Add Product</h1>
-            <form>
-                <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
-                <select id="addItemCategory"></select><br />
-                <input style="width: 250px;" type="number" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
-                <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
-                <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
-                <input type="submit" value="Add Product" onClick="addItem()">
-            </form>
-        </div>
-        <div id="orderList" class="screen">
-            <h1>Order list</h1>
-            <div id="orderListContent"></div>
-        </div>
-        <a href="#" onClick="logout()">Logout</a>
-    </div>
+
 </div>
 
-    <!--
-    END ADMIN SCREEN
-    -->
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
         // Event to show new user screen (unknown card)
