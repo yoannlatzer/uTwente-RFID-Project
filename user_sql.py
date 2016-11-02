@@ -81,6 +81,13 @@ def userList():
     res = result.fetchall()
     sql.end()
     return res
+
+def getUser(pid):
+    sql.begin()
+    result = sql.cur.execute("SELECT pid, sid, name FROM persons where pid=?",[pid])
+    res = result.fetchone()
+    sql.end()
+    return res
     
 def resetUserBalance(pid):
     """Sets one users balance to 0, useful for "system clean" after invoices"""
@@ -128,7 +135,8 @@ def getFullOrders():
         z = len(i) - 1
         while z >= 0:
             items = getOrderItems(orders[z][0])
-            result.append({'oid': orders[z][0], 'total': orders[z][1], 'date': orders[z][2], 'items': items})
+            person = getUser(orders[z][3])
+            result.append({'oid': orders[z][0], 'total': orders[z][1], 'date': orders[z][2], 'items': items, 'person': person})
             z -= 1
     return result
 

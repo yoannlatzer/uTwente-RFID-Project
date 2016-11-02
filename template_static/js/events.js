@@ -272,62 +272,64 @@
         case 'orderList':
           $('#orderListContent').empty();
         $table = $('#orderListContent');
-          $name = $('<td/>')
-              .text('Item')
-          $quantity = $('<td/>')
-              .text('Quantity')
+          $id = $('<td/>')
+              .text('Order ID')
+          $person = $('<td/>')
+              .text('Person')
           $price = $('<td/>')
-              .text('Price')
-          $total = $('<td/>')
               .text('Total')
+          $date = $('<td/>')
+              .text('Date')
           $delete = $('<td/>')
               .text('')
           $('<tr/>')
-              .append($name)
-              .append($quantity)
+              .append($id)
+              .append($person)
               .append($price)
-              .append($total)
+              .append($date)
               .append($delete)
               .appendTo($table)
-        var totalPrice = 0
-        message.data.map(function (item) {
-          $name = $('<td/>')
-              .text(item.name)
-          $quantity = $('<td/>')
-              .text('x' + item.quantity)
+        message.data.map(function(order) {
+          console.log(order)
+          $id = $('<td/>')
+              .text(order.oid)
+          $person = $('<td/>')
+              .text('x' + order.person[1])
           $price = $('<td/>')
-              .html("&euro; " + item.price)
-          $total = $('<td/>')
-              .html('&euro; ' + Math.round(((item.quantity * item.price) * 100)) / 100)
-          totalPrice += item.quantity * item.price
+              .html("&euro; " + order.total)
+          $date = $('<td/>')
+              .text(order.date)
           $delete = $('<td/>')
-              .html('<span onClick=\'removeItem('+item.iid+')\'>[x]</span>')
+              .html('<span onClick=\'removeOrder('+order.oid+')\'>[x]</span>')
           $('<tr/>')
-              .append($name)
-              .append($quantity)
+              .append($id)
+              .append($person)
               .append($price)
-              .append($total)
+              .append($date)
               .append($delete)
               .appendTo($table)
+          if ( order.items.length > 0 ) {
+            order.items.map(function(item) {
+              $id = $('<td/>')
+                   .text(item[1])
+              $person = $('<td/>')
+                   .text(item[2])
+              $price = $('<td/>')
+                  .html("&euro; " + item[4])
+              $quantity = $('<td/>')
+                  .text(item[3])
+              $delete = $('<td/>')
+                  .html('<span onClick=\'removeOrderItem(' + order.oid + ', ' + item[0] + ')\'>[x]</span>')
+          $('<tr/>')
+              .append($id)
+              .append($person)
+              .append($quantity)
+              .append($price)
+              .append($delete)
+              .appendTo($table)
+            })
+          }
         });
-        $empty = $('<td/>')
-            .text('')
-            .attr('colspan', 3)
-
-        $total = $('<td/>')
-            .html('&euro; ' + (Math.round(totalPrice * 100) / 100))
-        $('<tr/>')
-            .append($total)
-            .prepend($empty)
-            .appendTo($table)
-        if ( typeof message.data != 'undefined' && message.data.length > 0) {
-          $('#basketButton').removeClass('screen')
-        }
-        else {
-          $('#basketButton').addClass('screen')
-        }
-
-        $('#authItems').removeClass('screen');
       }
     });
   };
