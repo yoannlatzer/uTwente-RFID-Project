@@ -358,7 +358,7 @@
               $quantity = $('<td/>')
                   .text(item[3])
               $delete = $('<td/>')
-                  .html('<span onClick=\'removeOrderItem(' + order.oid + ', ' + item[0] + ')\'>[x]</span>')
+                  .html('<span onClick=\'removeOrderItem(' + order.oid + ', ' + item[1] + ')\'>[x]</span>')
           $('<tr/>')
               .append($id)
               .append($person)

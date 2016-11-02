@@ -148,6 +148,15 @@ def removeOrder(oid):
 
 def removeOrderItem(oid, iid):
     sql.begin()
+    pid = sql.cur.execute("SELECT pid FROM orders WHERE oid=?", [oid])
+    pid = pid.fetchone()
+    res = sql.cur.execute("SELECT quantity, price FROM orderitems WHERE oid=? AND iid=?", [oid, iid])
+    res = res.fetchone()
+    totalRemoved = res[0] * res[1]
+    addUserBalance(pid[0], totalRemoved)
+    sql.begin()
+    sql.cur.execute("UPDATE orders SET total = total - ? WHERE oid=?", [totalRemoved, oid])
+    sql.commit()
     sql.cur.execute("DELETE FROM orderitems WHERE oid=? AND iid=?", [oid, iid])
     sql.commit()
     sql.end()
