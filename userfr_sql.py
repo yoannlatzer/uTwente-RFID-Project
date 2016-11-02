@@ -78,7 +78,15 @@ def getUsers():
     
 def getStats():
     """Return should be: most sold item, least sold item, cheapest item, average money spend, most items of most sold, number of different snacks"""
-    res = []  #First (a,b,c) is most sold, second (a,b,c) is least sold,  
+    """
+    First (iid,item_name,quant) is Most sold
+    Second (iid,item_name,quant) is least sold
+    Third (iid,item_name,current_price) is cheapest item
+    Fourth (average order price) is avg_order_price ##COURTESY OF FANGFANG
+    Fifth (pid, username, quant) user who ate most of most sold item
+    Sixth (number of different items in system)
+    """
+    res = []  
     sql.begin()
     result = sql.cur.execute("""SELECT items.iid, item_name, SUM(orderitems.quantity) as quant
                                 FROM items, orderitems, orders
@@ -88,6 +96,7 @@ def getStats():
                                 order by quant desc
                                 """)
     res.append((result.fetchone()))
+    x = res[0][0]
     result = sql.cur.execute("""SELECT items.iid, item_name, SUM(orderitems.quantity) as quant
                                 FROM items, orderitems, orders
                                 WHERE items.iid = orderitems.iid
@@ -96,6 +105,24 @@ def getStats():
                                 order by quant asc
                                 """)
     res.append((result.fetchone()))
-
+    result = sql.cur.execute("""SELECT iid, item_name, MIN(current_price)
+                                FROM items                                
+                                """)
+    res.append((result.fetchone()))
+    result = sql.cur.execute("""SELECT AVG(total)
+                                FROM orders
+                                """)
+    res.append((result.fetchone()))
+    result = sql.cur.execute("""SELECT persons.pid, persons.name, SUM(orderitems.quantity) as quantitem
+                                FROM persons, orders, orderitems
+                                WHERE persons.pid = orders.pid
+                                AND orderitems.iid = ?
+                                AND orders.oid = orderitems.oid
+                                GROUP BY persons.pid
+                                order by quantitem desc
+                                """,[x])
+    res.append((result.fetchone()))
+    result = sql.cur.execute("SELECT COUNT(iid) FROM items")    
+    res.append((result.fetchone()))
     sql.end()
     return res
