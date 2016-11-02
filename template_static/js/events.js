@@ -269,6 +269,65 @@
                 .appendTo($select)
           });
           break
+        case 'orderList':
+          $('#orderListContent').empty();
+        $table = $('#orderListContent');
+          $name = $('<td/>')
+              .text('Item')
+          $quantity = $('<td/>')
+              .text('Quantity')
+          $price = $('<td/>')
+              .text('Price')
+          $total = $('<td/>')
+              .text('Total')
+          $delete = $('<td/>')
+              .text('')
+          $('<tr/>')
+              .append($name)
+              .append($quantity)
+              .append($price)
+              .append($total)
+              .append($delete)
+              .appendTo($table)
+        var totalPrice = 0
+        message.data.map(function (item) {
+          $name = $('<td/>')
+              .text(item.name)
+          $quantity = $('<td/>')
+              .text('x' + item.quantity)
+          $price = $('<td/>')
+              .html("&euro; " + item.price)
+          $total = $('<td/>')
+              .html('&euro; ' + Math.round(((item.quantity * item.price) * 100)) / 100)
+          totalPrice += item.quantity * item.price
+          $delete = $('<td/>')
+              .html('<span onClick=\'removeItem('+item.iid+')\'>[x]</span>')
+          $('<tr/>')
+              .append($name)
+              .append($quantity)
+              .append($price)
+              .append($total)
+              .append($delete)
+              .appendTo($table)
+        });
+        $empty = $('<td/>')
+            .text('')
+            .attr('colspan', 3)
+
+        $total = $('<td/>')
+            .html('&euro; ' + (Math.round(totalPrice * 100) / 100))
+        $('<tr/>')
+            .append($total)
+            .prepend($empty)
+            .appendTo($table)
+        if ( typeof message.data != 'undefined' && message.data.length > 0) {
+          $('#basketButton').removeClass('screen')
+        }
+        else {
+          $('#basketButton').addClass('screen')
+        }
+
+        $('#authItems').removeClass('screen');
       }
     });
   };
