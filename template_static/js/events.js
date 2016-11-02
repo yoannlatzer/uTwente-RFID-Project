@@ -158,13 +158,22 @@
 
       switch(currentAdminPage) {
         // get admin list
+        case 'editCategory':
+
+          break
+        case 'editProduct':
+
+          break
+        case 'editUser':
+
+          break
         case 'adminList':
             $('#' + currentAdminPage + 'Content').empty()
             $div = $('#' + currentAdminPage + 'Content');
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + Math.round(item[3] * 100) / 100)
 
               $user = $('<div>')
                   .text('Make User')
@@ -195,7 +204,7 @@
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + Math.round(item[3] * 100) / 100)
               $user = $('<div>')
                   .text('Make Admin')
                   .attr('onClick', 'makeAdmin(' + item[0] + ')')
@@ -241,22 +250,52 @@
         // get category list
         case 'categoryList':
           $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('id: ' + item[0] + " Name: " + item[1] + " - [ Edit | Delete ]")
-                .appendTo($ul)
-          });
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-3')
+                  .text('id: ' + item[0] + ", Name: " + item[1])
+              $edit = $('<div>')
+                  .text('edit category')
+                  .attr('onClick', 'editCategory(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete category')
+                  .attr('onClick', 'deleteCategory(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break
         // get product list
         case 'productList':
-          $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('id: ' + item[0] + " Name: " + item[1] + " - [ Edit | Delete ]")
-                .appendTo($ul)
-          });
+           $('#' + currentAdminPage + 'Content').empty()
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-3')
+                  .text('id: ' + item[0] + ", Name: " + item[1])
+              $edit = $('<div>')
+                  .text('edit item')
+                  .attr('onClick', 'editItem(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete item')
+                  .attr('onClick', 'deleteItem(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break
         // get product add page
         case 'productAdd':
@@ -311,7 +350,7 @@
           if ( order.items.length > 0 ) {
             order.items.map(function(item) {
               $id = $('<td/>')
-                   .text(item[1])
+                   .text('')
               $person = $('<td/>')
                    .text(item[2])
               $price = $('<td/>')

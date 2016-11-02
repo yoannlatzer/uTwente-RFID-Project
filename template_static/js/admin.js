@@ -17,3 +17,28 @@ function deleteUser(pid) {
 function deleteKey(kid) {
     $.post('/admin/key/remove', JSON.stringify({kid: kid}))
 }
+
+function editCategory(cid) {
+
+}
+
+function removeCategory(cid) {
+
+}
+
+function editItem(iid) {
+
+}
+
+function removeItem(iid) {
+
+}
+
+function removeOrder(oid) {
+    $.post('/admin/order/remove', JSON.stringify({oid: oid}))
+}
+
+function removeOrderItem(oid, iid) {
+    $.post('/admin/orderitem/remove', JSON.stringify({oid: oid, iid: iid}))
+}
+

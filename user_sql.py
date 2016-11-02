@@ -96,6 +96,13 @@ def resetUserBalance(pid):
     sql.commit()
     sql.end()
 
+def addUserBalance(pid, add):
+    """Sets one users balance to 0, useful for "system clean" after invoices"""
+    sql.begin()
+    sql.cur.execute("UPDATE persons SET balance = balance - ? where pid=?", [add, pid])
+    sql.commit()
+    sql.end()
+
 def removeUser(pid):
     """Removes users and all activity linked to that user"""
     sql.begin()
@@ -127,7 +134,24 @@ def removeOrderItems(oid):
     sql.cur.execute("DELETE FROM orderitems WHERE oid=?",[oid])
     sql.commit()
     sql.end()
-    
+
+def removeOrder(oid):
+    sql.begin()
+    order = sql.cur.execute("SELECT total, pid FROM orders WHERE oid=?", [oid])
+    order = order.fetchone()
+    addUserBalance(order[1], order[0])
+    sql.begin()
+    sql.cur.execute("DELETE FROM orders WHERE oid=?",[oid])
+    sql.commit()
+    sql.end()
+    removeOrderItems(oid)
+
+def removeOrderItem(oid, iid):
+    sql.begin()
+    sql.cur.execute("DELETE FROM orderitems WHERE oid=? AND iid=?", [oid, iid])
+    sql.commit()
+    sql.end()
+
 def getOrders():
     """Get all orders and their information"""
     sql.begin()
