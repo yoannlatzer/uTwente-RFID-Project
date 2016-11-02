@@ -39,6 +39,7 @@
       $div =  $('#authCategories');
       message.data.map(function(cat) {
         $('<div/>')
+            .addClass('group category')
             .attr('onClick', 'setCategory(' + cat[0] + ')')
             .text(cat[1])
             .appendTo($div)
@@ -53,9 +54,20 @@
       $('#authItems').empty();
       $div =  $('#authItems');
       message.data.map(function(i) {
+        console.log(i)
+        $image = $('<img/>')
+            .attr('src', '/images/items/' + i[4])
+            .addClass('item_image')
+        $name = $('<span/>')
+            .text(i[1])
+        $price = $('<span/>')
+            .html('<br />&euro; ' + i[3])
         $('<div/>')
+            .addClass('group item')
             .attr('onClick', 'selectItem(' + i[0] + ')')
-            .text(i[1] + ' Price: ' + i[3])
+            .append($image)
+            .append($name)
+            .append($price)
             .appendTo($div)
       });
       $('#authItems').removeClass('screen');
