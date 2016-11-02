@@ -60,6 +60,7 @@ def keyList():
 
     #this should work as kid is now the hashed cardID
 def removeKey(kid):
+    """Remove a key, can be based on selection"""
     sql.begin()
     sql.cur.execute("DELETE FROM keys WHERE kid=?", [str(kid)])
     sql.commit()
@@ -116,7 +117,7 @@ def removeOrders(pid):
     
 def removeOrderItems(bid):
     sql.begin()
-    sql.cur.execute("DELETE FROM items WHERE bid=?",[bid])
+    sql.cur.execute("DELETE FROM orderitems WHERE bid=?",[bid])
     sql.commit()
     sql.end()
     
