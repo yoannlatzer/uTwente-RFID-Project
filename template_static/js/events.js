@@ -269,6 +269,67 @@
                 .appendTo($select)
           });
           break
+        case 'orderList':
+          $('#orderListContent').empty();
+        $table = $('#orderListContent');
+          $id = $('<td/>')
+              .text('Order ID')
+          $person = $('<td/>')
+              .text('Person')
+          $price = $('<td/>')
+              .text('Total')
+          $date = $('<td/>')
+              .text('Date')
+          $delete = $('<td/>')
+              .text('')
+          $('<tr/>')
+              .append($id)
+              .append($person)
+              .append($price)
+              .append($date)
+              .append($delete)
+              .appendTo($table)
+        message.data.map(function(order) {
+          console.log(order)
+          $id = $('<td/>')
+              .text(order.oid)
+          $person = $('<td/>')
+              .text('x' + order.person[1])
+          $price = $('<td/>')
+              .html("&euro; " + order.total)
+          $date = $('<td/>')
+              .text(order.date)
+          $delete = $('<td/>')
+              .html('<span onClick=\'removeOrder('+order.oid+')\'>[x]</span>')
+          $('<tr/>')
+              .append($id)
+              .append($person)
+              .append($price)
+              .append($date)
+              .append($delete)
+              .appendTo($table)
+          if ( order.items.length > 0 ) {
+            order.items.map(function(item) {
+              $id = $('<td/>')
+                   .text(item[1])
+              $person = $('<td/>')
+                   .text(item[2])
+              $price = $('<td/>')
+                  .html("&euro; " + item[4])
+              $quantity = $('<td/>')
+                  .text(item[3])
+              $delete = $('<td/>')
+                  .html('<span onClick=\'removeOrderItem(' + order.oid + ', ' + item[0] + ')\'>[x]</span>')
+          $('<tr/>')
+              .append($id)
+              .append($person)
+              .append($quantity)
+              .append($price)
+              .append($delete)
+              .appendTo($table)
+            })
+          }
+        });
       }
     });
   };

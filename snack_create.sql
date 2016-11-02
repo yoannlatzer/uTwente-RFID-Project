@@ -56,14 +56,14 @@ CHECK(pic_url <> ''),
 FOREIGN KEY(cid) REFERENCES categories(cid)
 );
 INSERT INTO items VALUES(1,'Bueno',20,0.41,'xx', 1);
-INSERT INTO items VALUES(2,'Bagel',25,1.41,'bagel.jpg', 1);
+INSERT INTO items VALUES(2,'Bagel',25,2.41,'bagel.jpg', 1);
 INSERT INTO items VALUES(3,'Fristi',10,1.41,'xx', 0);
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS orders;
 
 CREATE TABLE orders
 (
-bid INTEGER PRIMARY KEY NOT NULL,     -- basket ID
+oid INTEGER PRIMARY KEY NOT NULL,     -- basket ID
 total DECIMAL(5,2),                   -- never directly accessed by user, should be safe
 date datetime,                        -- in YYYY-MM-DD HH-MM-SS format
 pid NOT NULL,                         -- person id
@@ -75,11 +75,11 @@ DROP TABLE IF EXISTS orderitems;
 
 Create TABLE orderitems
 (
-bid INTEGER NOT NULL,                 -- basket ID
+oid INTEGER NOT NULL,                 -- basket ID
 iid INTEGER NOT NULL,                 -- Item ID
 quantity INTEGER,                     -- amount of times this item
 price DECIMAL(5,2),                   -- Price as found in system on time of Buying, singular price
-PRIMARY KEY (bid,iid),
-FOREIGN KEY(bid) REFERENCES orders(bid),
+PRIMARY KEY (oid,iid),
+FOREIGN KEY(oid) REFERENCES orders(oid),
 FOREIGN KEY (iid) REFERENCES items(iid)
 )

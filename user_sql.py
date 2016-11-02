@@ -81,6 +81,13 @@ def userList():
     res = result.fetchall()
     sql.end()
     return res
+
+def getUser(pid):
+    sql.begin()
+    result = sql.cur.execute("SELECT pid, sid, name FROM persons where pid=?",[pid])
+    res = result.fetchone()
+    sql.end()
+    return res
     
 def resetUserBalance(pid):
     """Sets one users balance to 0, useful for "system clean" after invoices"""
@@ -98,7 +105,7 @@ def removeUser(pid):
     # not removing if balance is positive?
     if res[0] <= 0:
         sql.cur.execute("DELETE FROM keys WHERE pid=?",[pid])
-        result = sql.cur.execute("SELECT bid FROM basket WHERE pid=?",[pid])        
+        result = sql.cur.execute("SELECT oid FROM basket WHERE pid=?",[pid])        
         res = result.fetchall()
         print ([res])
         for i in [res]:
@@ -115,12 +122,20 @@ def removeOrders(pid):
     sql.commit()
     sql.end()
     
-def removeOrderItems(bid):
+def removeOrderItems(oid):
     sql.begin()
-    sql.cur.execute("DELETE FROM orderitems WHERE bid=?",[bid])
+    sql.cur.execute("DELETE FROM orderitems WHERE oid=?",[oid])
     sql.commit()
     sql.end()
-
+    
+def getOrders():
+    """Get all orders and their information"""
+    sql.begin()
+    result = sql.cur.execute("SELECT oid, total, date, pid FROM orders")
+    res = result.fetchall()
+    sql.end()
+    return res
+    
 def getFullOrders():
     orders = getOrders()
     result = []
@@ -128,22 +143,15 @@ def getFullOrders():
         z = len(i) - 1
         while z >= 0:
             items = getOrderItems(orders[z][0])
-            result.append({'oid': orders[z][0], 'total': orders[z][1], 'date': orders[z][2], 'items': items})
+            person = getUser(orders[z][3])
+            result.append({'oid': orders[z][0], 'total': orders[z][1], 'date': orders[z][2], 'items': items, 'person': person})
             z -= 1
-    return result
-
-def getOrders():
-    """Get all orders and their information"""
-    sql.begin()
-    result = sql.cur.execute("SELECT bid, total, date, pid FROM orders")
-    res = result.fetchall()
-    sql.end()
-    return res
+    return result    
     
 def getOrders2(oid):
     """Get all orders and their information"""
     sql.begin()
-    result = sql.cur.execute("SELECT bid, total, date, pid FROM orders WHERE bid=?",[oid])
+    result = sql.cur.execute("SELECT oid, total, date, pid FROM orders WHERE oid=?",[oid])
     res = result.fetchall()
     sql.end()
     return res
@@ -151,9 +159,9 @@ def getOrders2(oid):
 def getOrderItems(oid):
     """Get all items for an oid"""
     sql.begin()
-    result = sql.cur.execute("""SELECT bid, orderitems.iid,items.item_name, quantity, price
+    result = sql.cur.execute("""SELECT oid, orderitems.iid,items.item_name, quantity, price
                        FROM items, orderitems
-                       WHERE orderitems.bid = ?
+                       WHERE orderitems.oid = ?
                        and items.iid = orderitems.iid""",[oid])
     res = result.fetchall()
     sql.end()                       

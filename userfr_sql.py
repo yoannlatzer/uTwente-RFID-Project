@@ -24,7 +24,7 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
     """Create the basket and Transactions of different items and update userbalance, stock accordingly"""
     sql.begin()
     sql.cur.execute("""INSERT INTO orders (pid,date) VALUES(?,CURRENT_TIMESTAMP)""", [pid])
-    bid = sql.lastId()
+    oid = sql.lastId()
     print (len(item))
     if len(item)>=1:
         for i in [item]:
@@ -32,13 +32,13 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
             while z >= 0:
                 x = sql.cur.execute("SELECT current_price FROM items WHERE iid=?",[i[z][0]])
                 x = x.fetchone()
-                #print for every item (z), bid, itemid, amount(int), price
+                #print for every item (z), oid, itemid, amount(int), price
                 
                 iid = i[z][0]
                 quant = i[z][1]
-                print (z, bid, iid, quant , x[0])
+                print (z, oid, iid, quant , x[0])
                 #technically you wouldn't expect multiple entries of the same iid, so we don't have to catch those
-                sql.cur.execute("""INSERT INTO orderitems (bid,iid,quantity,price) VALUES (?,?,?,?) """,[bid,iid,quant,x[0]])
+                sql.cur.execute("""INSERT INTO orderitems (oid,iid,quantity,price) VALUES (?,?,?,?) """,[oid,iid,quant,x[0]])
                 z -= 1
                 sql.cur.execute("UPDATE items SET stock=stock-? WHERE iid=?",[quant,iid])
                 
@@ -46,13 +46,13 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
                 #keep adding up all the time             
                 
                 
-        some = sql.cur.execute("""SELECT round(SUM(price*quantity),2) FROM orderitems where bid=?""",[bid])
+        some = sql.cur.execute("""SELECT round(SUM(price*quantity),2) FROM orderitems where oid=?""",[oid])
         rex = some.fetchone()
         print (rex[0], pid)
     #sql.cur.execute("UPDATE items SET item_name=?, stock=?, current_price=? WHERE iid=?",  [str(name),int(stock),float(price),int(iid)])
         sql.cur.execute("UPDATE persons SET balance=balance+? WHERE pid=?",[rex[0],pid])
-        sql.cur.execute("UPDATE orders SET total=? WHERE bid=?",[rex[0],bid])    
-        result = sql.cur.execute("SELECT total FROM orders WHERE bid=?",[bid])
+        sql.cur.execute("UPDATE orders SET total=? WHERE oid=?",[rex[0],oid])    
+        result = sql.cur.execute("SELECT total FROM orders WHERE oid=?",[oid])
         res= result.fetchone() #should allways only return one
         sql.commit()        #only commit after everything has been inserted on the right place
         sql.end()
@@ -70,8 +70,32 @@ def getUsers():
     """Mainly debug for quick overview of data to test allowed inputs for other queries"""
     sql.begin()
     result = sql.cur.execute('''SELECT kid, persons.pid, persons.name,persons.sid,persons.balance, usertype
-                            from persons,  keys
+                            FROM persons,  keys
                             WHERE keys.pid = persons.pid ''')
     res = result.fetchall()
+    sql.end()
+    return res
+    
+def getStats():
+    """Return should be: most sold item, least sold item, cheapest item, average money spend, most items of most sold, number of different snacks"""
+    res = []  #First (a,b,c) is most sold, second (a,b,c) is least sold,  
+    sql.begin()
+    result = sql.cur.execute("""SELECT items.iid, item_name, SUM(orderitems.quantity) as quant
+                                FROM items, orderitems, orders
+                                WHERE items.iid = orderitems.iid
+                                AND orders.oid = orderitems.oid
+                                GROUP by items.iid
+                                order by quant desc
+                                """)
+    res.append((result.fetchone()))
+    result = sql.cur.execute("""SELECT items.iid, item_name, SUM(orderitems.quantity) as quant
+                                FROM items, orderitems, orders
+                                WHERE items.iid = orderitems.iid
+                                AND orders.oid = orderitems.oid
+                                GROUP by items.iid
+                                order by quant asc
+                                """)
+    res.append((result.fetchone()))
+
     sql.end()
     return res
