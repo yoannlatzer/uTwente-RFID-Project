@@ -216,8 +216,17 @@ def keyList():
     sql.begin()
     result = sql.cur.execute("SELECT kid, pid, keyname FROM keys")
     res = result.fetchall()
+    output = []
+    for i in [res]:
+        z = len(i) - 1
+        while z >= 0:
+            result = sql.cur.execute("SELECT sid FROM persons WHERE pid=?", [res[z][1]])
+            sid = result.fetchone()
+            output.append([res[z][0], res[z][1], res[z][2], sid[0]])
+            z -= 1
+
     sql.end()
-    return res
+    return output
 
     #this should work as kid is now the hashed cardID
 def removeKey(kid):
