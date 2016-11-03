@@ -11,7 +11,6 @@ import ToCSV as csv
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
-  httpd.add_route('/scan/pause', eca.http.GenerateEvent('scanPause'), methods=["POST"])
   httpd.add_route('/stats', eca.http.GenerateEvent('getStats'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
@@ -51,11 +50,6 @@ def setup(ctx, e):
     sql.cur_tables()
     logoutUser(ctx, e)
     statsGet(ctx,e)
-
-@event('scanPause')
-def pauseScan(ctx, e):
-   pass
-   # rfid.pause(ctx)
 
 @event('getStats')
 def statsGet(ctx, e):
@@ -270,7 +264,7 @@ def registerUser(ctx, e):
                 userActions.newUser(e.data['name'], e.data['sid'], e.data['pass'], ctx.currentHash, e.data['keyname'])
                 # show logged in screen
                 print('Successful registration!')
-                user = rfid.sendFakeHash(ctx.currentHash)
+                user = authenticateHash(ctx.currentHash)
                 ctx.person = user
                 loginUser(ctx, e)
 
@@ -297,7 +291,6 @@ def logoutUser(ctx, e):
     emit('logout', {})
     statsGet(ctx, e)
     print('Successful logged out!')
-    #rfid.listen(ctx)
 
 @event('fakescan')
 def scan(ctx, e):
@@ -313,7 +306,7 @@ def scan(ctx, e):
 def realscan(ctx, hash):
     ctx.user = None
     ctx.currentHash = hash
-    user = rfid.sendFakeHash(ctx.currentHash)
+    user = authenticateHash(ctx.currentHash)
     if user == False:
         emit('newUser', {})
     else:
