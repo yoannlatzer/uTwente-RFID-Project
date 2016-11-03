@@ -14,7 +14,7 @@
       $('#statsLeastSold').text(message.data[1][1]);
       $('#statsCheapestName').text(message.data[2][1]);
       $('#statsCheapestPrice').text(message.data[2][2]);
-      $('#statsAvgSpend').text(message.data[3][0]);
+      $('#statsAvgSpend').text(Math.round(message.data[3][0]*100)/100);
       $('#statsBiggestFatty').text(message.data[4][1]);
       $('#statsNumberSnacks').text(message.data[5][0]);
     });
