@@ -19,6 +19,8 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/page', eca.http.GenerateEvent('adminpage'), methods=["POST"])
   httpd.add_route('/admin/admin/make', eca.http.GenerateEvent('adminmake'), methods=["POST"])
   httpd.add_route('/admin/admin/remove', eca.http.GenerateEvent('adminremove'), methods=["POST"])
+  httpd.add_route('/admin/user/edit', eca.http.GenerateEvent('useredit'), methods=["POST"])
+  httpd.add_route('/admin/user/update', eca.http.GenerateEvent('userupdate'), methods=["POST"])
   httpd.add_route('/admin/user/remove', eca.http.GenerateEvent('userremove'), methods=["POST"])
   httpd.add_route('/admin/key/remove', eca.http.GenerateEvent('keyremove'), methods=["POST"])
   httpd.add_route('/admin/category/remove', eca.http.GenerateEvent('categoryremove'), methods=["POST"])
@@ -41,51 +43,75 @@ def setup(ctx, e):
 
 @event('adminmake')
 def makeAdmin(ctx, e):
-    userActions.makeAdmin(e.data['pid'])
-    print('Make admin')
-    emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+    if ctx.person[4] == 1:
+        userActions.makeAdmin(e.data['pid'])
+        print('Make admin')
+        emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
 
 @event('adminremove')
 def removeAdmin(ctx, e):
-    userActions.removeAdmin(e.data['pid'])
-    print('Remove admin')
-    emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+    if ctx.person[4] == 1:
+        userActions.removeAdmin(e.data['pid'])
+        print('Remove admin')
+        emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+
+@event('useredit')
+def editUserPage(ctx, e):
+    if ctx.person[4] == 1:
+        print('show edit user page')
+        print(e.data)
+        emit('adminpage', {'page': 'editUser', 'data': userActions.getUser(e.data['pid'])})
+
+@event('userupdate')
+def updateUser(ctx, e):
+    if ctx.person[4] == 1:
+        #post action here
+        print(e.data)
+        userActions.editUser(e.data['name'], e.data['balance'], e.data['sid'], e.data['pid'])
+        print('Update user')
+        emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
 
 @event('userremove')
 def removeUser(ctx, e):
-    userActions.removeUser(e.data['pid'])
-    print('Remove user')
-    emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
+    if ctx.person[4] == 1:
+        userActions.removeUser(e.data['pid'])
+        print('Remove user')
+        emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
 
 @event('orderitemremove')
 def removeOrderItem(ctx, e):
-    userActions.removeOrderItem(e.data['oid'], e.data['iid'])
-    print('Remove oder item')
-    emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
+    if ctx.person[4] == 1:
+        userActions.removeOrderItem(e.data['oid'], e.data['iid'])
+        print('Remove oder item')
+        emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
 
 @event('orderremove')
 def removeOrder(ctx, e):
-    userActions.removeOrder(e.data['oid'])
-    print('Remove oder')
-    emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
+    if ctx.person[4] == 1:
+        userActions.removeOrder(e.data['oid'])
+        print('Remove oder')
+        emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
 
 @event('keyremove')
 def removeKey(ctx, e):
-    userActions.removeKey(e.data['kid'])
-    print('Remove key')
-    emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
+    if ctx.person[4] == 1:
+        userActions.removeKey(e.data['kid'])
+        print('Remove key')
+        emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
 @event('itemremove')
 def removeItem(ctx, e):
-    itemActions.delItem(e.data['iid'])
-    print('Remove Item')
-    emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
+    if ctx.person[4] == 1:
+        itemActions.delItem(e.data['iid'])
+        print('Remove Item')
+        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
 
 @event('categoryremove')
 def removeCategory(ctx, e):
-    itemActions.delCategory(e.data['cid'])
-    print('Remove category')
-    emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
+    if ctx.person[4] == 1:
+        itemActions.delCategory(e.data['cid'])
+        print('Remove category')
+        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
@@ -161,7 +187,7 @@ def addBasketItem(basket, iid):
     return basket
 
 @event('itemsRemove')
-def removeItem(ctx, e):
+def removesItem(ctx, e):
     ctx.basket = removeBasketItem(ctx.basket, e.data['iid'])
     emit('basket', {'data': ctx.basket})
     print('Remove Item')

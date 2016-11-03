@@ -60,11 +60,17 @@ def userList():
 
 def getUser(pid):
     sql.begin()
-    result = sql.cur.execute("SELECT pid, sid, name FROM persons where pid=?",[pid])
+    result = sql.cur.execute("SELECT pid, sid, name, balance FROM persons where pid=?",[pid])
     res = result.fetchone()
     sql.end()
     return res
-    
+
+def editUser(name, balance, sid, pid):
+    sql.begin()
+    sql.cur.execute("UPDATE persons SET name=?, sid=?, balance=? WHERE pid=?", [str(name), str(sid), float(balance), int(pid)])
+    sql.commit()
+    sql.end()
+
 def resetUserBalance(pid):
     """Sets one users balance to 0, useful for "system clean" after invoices"""
     sql.begin()

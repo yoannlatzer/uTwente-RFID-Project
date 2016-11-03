@@ -10,6 +10,15 @@ function editUser(pid) {
     $.post('/admin/user/edit', JSON.stringify({pid: pid}))
 }
 
+function updateUser() {
+    $.post('/admin/user/update', JSON.stringify({
+        pid: $('#editUserPid').val(),
+        name: $('#editUserName').val(),
+        balance: $('#editUserBalance').val(),
+        sid: $('#editUserSid').val()
+    }))
+}
+
 function deleteUser(pid) {
     $.post('/admin/user/remove', JSON.stringify({pid: pid}))
 }

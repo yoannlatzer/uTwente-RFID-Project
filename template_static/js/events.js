@@ -162,10 +162,12 @@
 
           break
         case 'editProduct':
-
           break
         case 'editUser':
-
+            $('#editUserName').val(message.data[2])
+            $('#editUserPid').val(message.data[0])
+            $('#editUserBalance').val(message.data[3])
+            $('#editUserSid').val(message.data[1])
           break
         case 'adminList':
             $('#' + currentAdminPage + 'Content').empty()
