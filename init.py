@@ -1,12 +1,10 @@
 from eca import *
 import eca.http
-#import serial_listener as rfid
 from authenticate import authenticateHash
 import user_sql as userActions
 import product_sql as itemActions
 import userfr_sql as userFrontendActions
 import exe_sql as sql
-import fake
 import ToCSV as csv
 import demo as demo
 

@@ -25,7 +25,6 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
     sql.begin()
     sql.cur.execute("""INSERT INTO orders (pid,date) VALUES(?,CURRENT_TIMESTAMP)""", [pid])
     oid = sql.lastId()
-    print (len(item))
     if len(item)>=1:
         for i in [item]:
             z = len(i)-1
@@ -36,19 +35,14 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
                 
                 iid = i[z][0]
                 quant = i[z][1]
-                print (z, oid, iid, quant , x[0])
                 #technically you wouldn't expect multiple entries of the same iid, so we don't have to catch those
                 sql.cur.execute("""INSERT INTO orderitems (oid,iid,quantity,price) VALUES (?,?,?,?) """,[oid,iid,quant,x[0]])
                 z -= 1
                 sql.cur.execute("UPDATE items SET stock=stock-? WHERE iid=?",[quant,iid])
-                
-                #TODO: CATCH ERROR LATER IF AN ERROR OCCURS LATER ON AND WE  NEED A ROLLBACK SO BASKETID does not
-                #keep adding up all the time             
-                
+                #keep adding up all the time
                 
         some = sql.cur.execute("""SELECT round(SUM(price*quantity),2) FROM orderitems where oid=?""",[oid])
         rex = some.fetchone()
-        print (rex[0], pid)
     #sql.cur.execute("UPDATE items SET item_name=?, stock=?, current_price=? WHERE iid=?",  [str(name),int(stock),float(price),int(iid)])
         sql.cur.execute("UPDATE persons SET balance=balance+? WHERE pid=?",[rex[0],pid])
         sql.cur.execute("UPDATE orders SET total=? WHERE oid=?",[rex[0],oid])    
@@ -56,12 +50,7 @@ def CreateTransAndBask(pid,item): #should update the pid to become keyhash from 
         res= result.fetchone() #should allways only return one
         sql.commit()        #only commit after everything has been inserted on the right place
         sql.end()
-        print (sql.cur_tables())
-        print (res)    
         return res
-#    else:
-#        sql.rollback()  #otherwise destroy the false try
-#    sql.rollback()
     sql.end()
     
 

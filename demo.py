@@ -1,11 +1,12 @@
 import user_sql as userActions
 import product_sql as itemActions
+import userfr_sql as userFrontendActions
 
 def demoData():
     print('Insert demo data')
-    userActions.newUser('Admin', 1000000, 'password', '0', 'studkaart')
+    userActions.newUser('Admin', 1000000, 'password', '0', 'tag')
     userActions.makeAdmin(1)
-    userActions.newUser('User 1', 1000001, 'password', '1', 'ov')
+    userActions.newUser('Pieter-Tjerk', 1000001, 'password', '1', 'Studenten kaart')
     itemActions.newItem('Bueno', 10, 0.54, 'bueno.png', 2)
     itemActions.newItem('Bastogne', 10, 0.54, 'snacks/bastogne.png', 2)
     itemActions.newItem('Chips', 10, 0.54, 'snacks/chips.png', 2)
@@ -23,8 +24,8 @@ def demoData():
     itemActions.newItem('Timeout Granen', 10, 0.54, 'snacks/timeout_granen.png', 2)
     itemActions.newItem('Tuc', 10, 0.54, 'snacks/tuc.png', 2)
     itemActions.newItem('Twix', 10, 0.54, 'snacks/twix.png', 2)
-    itemActions.newItem('Bagel', 4, 0.66, 'bagel.png', 1)
-    itemActions.newItem('Appeltje', 4, 0.66, 'food/appeltje.png', 1)
+    itemActions.newItem('Bagel', 104, 0.66, 'bagel.png', 1)
+    itemActions.newItem('Appeltje', 4, 0.26, 'food/appeltje.png', 1)
     itemActions.newItem('Banaan', 4, 0.66, 'food/banaan.png', 1)
     itemActions.newItem('Frikandelbroodje', 4, 0.66, 'food/frikandelbroodje.png', 1)
     itemActions.newItem('Groene appel', 4, 0.66, 'food/groene_appel.png', 1)
@@ -39,4 +40,13 @@ def demoData():
     itemActions.newItem('Fanta Casis', 25, 0.99, 'drinks/fanta-casis.png', 0)
     itemActions.newItem('Redbull', 25, 0.99, 'drinks/redbull.png', 0)
     itemActions.newItem('Sprite', 25, 0.99, 'drinks/sprite.png', 0)
+    userFrontendActions.CreateTransAndBask(2, [
+        (26, 20),
+        (19, 4),
+        (20, 2)
+    ])
+    userFrontendActions.CreateTransAndBask(2, [
+        (26, 1),
+        (27, 5)
+    ])
     print('Database is ready')
