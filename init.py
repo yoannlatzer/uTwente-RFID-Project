@@ -8,6 +8,7 @@ import exe_sql as sql
 import fake
 
 def add_request_handlers(httpd):
+  httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
   httpd.add_route('/categories/list', eca.http.GenerateEvent('categoriesList'), methods=["POST"])
@@ -19,46 +20,121 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/page', eca.http.GenerateEvent('adminpage'), methods=["POST"])
   httpd.add_route('/admin/admin/make', eca.http.GenerateEvent('adminmake'), methods=["POST"])
   httpd.add_route('/admin/admin/remove', eca.http.GenerateEvent('adminremove'), methods=["POST"])
+  httpd.add_route('/admin/user/edit', eca.http.GenerateEvent('useredit'), methods=["POST"])
+  httpd.add_route('/admin/user/update', eca.http.GenerateEvent('userupdate'), methods=["POST"])
   httpd.add_route('/admin/user/remove', eca.http.GenerateEvent('userremove'), methods=["POST"])
   httpd.add_route('/admin/key/remove', eca.http.GenerateEvent('keyremove'), methods=["POST"])
-  httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
   httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
+  httpd.add_route('/admin/category/edit', eca.http.GenerateEvent('categoryedit'), methods=["POST"])
+  httpd.add_route('/admin/category/update', eca.http.GenerateEvent('categoryupdate'), methods=["POST"])
+  httpd.add_route('/admin/category/remove', eca.http.GenerateEvent('categoryremove'), methods=["POST"])
+  httpd.add_route('/admin/order/remove', eca.http.GenerateEvent('orderremove'), methods=["POST"])
+  httpd.add_route('/admin/orderitem/remove', eca.http.GenerateEvent('orderitemremove'), methods=["POST"])
+  httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
+  httpd.add_route('/admin/item/edit', eca.http.GenerateEvent('itemedit'), methods=["POST"])
+  httpd.add_route('/admin/item/update', eca.http.GenerateEvent('itemupdate'), methods=["POST"])
+  httpd.add_route('/admin/item/remove', eca.http.GenerateEvent('itemremove'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
 
 @event('init')
 def setup(ctx, e):
     sql.create_db()
     logoutUser(ctx, e)
-    userActions.newUser('Admin', 1000000, fake.hash(0))
+    userActions.newUser('Admin', 1000000, 'password', fake.hash(0), 'studkaart')
     userActions.makeAdmin(1)
-    userActions.newUser('User 1', 1000001, fake.hash(1))
+    userActions.newUser('User 1', 1000001, 'password', fake.hash(1), 'ov')
     sql.cur_tables()
     rfid.listen()
 
 @event('adminmake')
 def makeAdmin(ctx, e):
-    userActions.makeAdmin(e.data['pid'])
-    print('Make admin')
-    emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+    if ctx.person[4] == 1:
+        userActions.makeAdmin(e.data['pid'])
+        print('Make admin')
+        emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
 
 @event('adminremove')
 def removeAdmin(ctx, e):
-    userActions.removeAdmin(e.data['pid'])
-    print('Remove admin')
-    emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+    if ctx.person[4] == 1:
+        userActions.removeAdmin(e.data['pid'])
+        print('Remove admin')
+        emit('adminpage', {'page': 'adminList', 'data': userActions.adminList()})
+
+@event('useredit')
+def editUserPage(ctx, e):
+    if ctx.person[4] == 1:
+        print('show edit user page')
+        emit('adminpage', {'page': 'editUser', 'data': userActions.getUser(e.data['pid'])})
+
+@event('userupdate')
+def updateUser(ctx, e):
+    if ctx.person[4] == 1:
+        userActions.editUser(e.data['name'], e.data['balance'], e.data['sid'], e.data['pid'])
+        print('Update user')
+        emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
 
 @event('userremove')
 def removeUser(ctx, e):
-    userActions.removeUser(e.data['pid'])
-    print('Remove user')
-    emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
+    if ctx.person[4] == 1:
+        userActions.removeUser(e.data['pid'])
+        print('Remove user')
+        emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
+
+@event('orderitemremove')
+def removeOrderItem(ctx, e):
+    if ctx.person[4] == 1:
+        userActions.removeOrderItem(e.data['oid'], e.data['iid'])
+        print('Remove oder item')
+        emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
+
+@event('orderremove')
+def removeOrder(ctx, e):
+    if ctx.person[4] == 1:
+        userActions.removeOrder(e.data['oid'])
+        print('Remove oder')
+        emit('adminpage', {'page': 'orderList', 'data': userActions.getFullOrders()})
 
 @event('keyremove')
 def removeKey(ctx, e):
-    userActions.removeKey(e.data['kid'])
-    print('Remove key')
-    emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
+    if ctx.person[4] == 1:
+        userActions.removeKey(e.data['kid'])
+        print('Remove key')
+        emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
+@event('addCategory')
+def newCategory(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.newCategory(e.data['name'])
+        print('Category added', e.data['name'])
+        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
+
+    else:
+        logoutUser()
+
+@event('categoriesList')
+def listCategories(ctx, e):
+    emit('categories', {'data': itemActions.categoriesList()})
+    print('List categories')
+
+@event('categoryedit')
+def editCategory(ctx, e):
+    if ctx.person[4] == 1:
+        print('Edit category')
+        emit('adminpage', {'page': 'editCategory', 'data': itemActions.getCategory(e.data['cid'])})
+
+@event('categoryupdate')
+def updateCategory(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.editCategory(e.data['name'], e.data['cid'])
+        print('Update category')
+        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
+
+@event('categoryremove')
+def removeCategory(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.delCategory(e.data['cid'])
+        print('Remove category')
+        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
 
 @event('adminscreen')
 def openAdminScreen(ctx, e):
@@ -97,25 +173,30 @@ def newItem(ctx, e):
     else:
         logoutUser()
 
-@event('addCategory')
-def newCategory(ctx, e):
+@event('itemedit')
+def editItem(ctx, e):
     if ctx.person[4] == 1:
-        itemActions.newCategory(e.data['name'])
-        print('Category added', e.data['name'])
-        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
+        print('Edit item')
+        emit('adminpage', {'page': 'editProduct', 'data': itemActions.getItem(e.data['iid']), 'categories': itemActions.categoriesList()})
 
-    else:
-        logoutUser()
-
-@event('categoriesList')
-def listCategories(ctx, e):
-    emit('categories', {'data': itemActions.categoriesList()})
-    print('List categories')
+@event('itemupdate')
+def updateItem(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.editItem(e.data['name'], e.data['stock'], e.data['price'], e.data['image'], e.data['cid'], e.data['iid'])
+        print('Update item')
+        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
 
 @event('itemsList')
 def listItems(ctx, e):
     emit('items', {'data': itemActions.getFilterdItems(e.data['cid'])})
     print('List items')
+
+@event('itemremove')
+def removeItem(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.delItem(e.data['iid'])
+        print('Remove Item')
+        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
 
 @event('itemsSelect')
 def selectItem(ctx, e):
@@ -134,7 +215,7 @@ def addBasketItem(basket, iid):
     return basket
 
 @event('itemsRemove')
-def removeItem(ctx, e):
+def removesItem(ctx, e):
     ctx.basket = removeBasketItem(ctx.basket, e.data['iid'])
     emit('basket', {'data': ctx.basket})
     print('Remove Item')
@@ -159,9 +240,9 @@ def buy(ctx, e):
 @event('register')
 def registerUser(ctx, e):
     if ctx.currentHash == None:
-        # todo: error feedback to user
         # Error no card known
         print("Error: No card active in system!")
+        logoutUser(ctx, e)
     else:
         if not (e.data['sid']):
             # Error no student number given
@@ -171,12 +252,21 @@ def registerUser(ctx, e):
                 print("Error: No name given!")
             else:
                 # card hash and student number known
-                userActions.newUser(e.data['name'], e.data['sid'], ctx.currentHash)
+                userActions.newUser(e.data['name'], e.data['sid'], e.data['pass'], ctx.currentHash, e.data['keyname'])
                 # show logged in screen
                 print('Successful registration!')
                 user = rfid.sendFakeHash(ctx.currentHash)
                 ctx.person = user
                 loginUser(ctx, e)
+
+@event('userPassLogin')
+def loginUserPass(ctx, e):
+    person = userActions.loginUser(e.data['sid'], e.data['password'])
+    if person == None:
+        logoutUser(ctx, e)
+    else:
+        ctx.person = person
+        loginUser(ctx, e)
 
 def loginUser(ctx, e):
     if ctx.person != None:

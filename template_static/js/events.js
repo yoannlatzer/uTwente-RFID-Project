@@ -158,13 +158,48 @@
 
       switch(currentAdminPage) {
         // get admin list
+        case 'editCategory':
+          $('#editCategoryCid').val(message.data[0])
+          $('#editCategoryName').val(message.data[1])
+          break
+        case 'editProduct':
+          $('#editItemCategory').empty()
+          $select =  $('#editItemCategory')
+          message.categories.map(function(item) {
+            if (message.data[5] == item[0]) {
+              $('<option/>')
+                  .attr('value', item[0])
+                  .attr('selected', 'selected')
+                  .text(item[1])
+                  .appendTo($select)
+            }
+            else {
+              $('<option/>')
+                  .attr('value', item[0])
+                  .text(item[1])
+                  .appendTo($select)
+            }
+          });
+
+            //iid, item_name, stock, current_price, pic_url, cid
+          $('#editItemIid').val(message.data[0])
+          $('#editItemName').val(message.data[1])
+          $('#editItemUrl').val(message.data[4])
+          $('#editItemPrice').val(message.data[3])
+          $('#editItemStock').val(message.data[2])
+        case 'editUser':
+            $('#editUserName').val(message.data[2])
+            $('#editUserPid').val(message.data[0])
+            $('#editUserBalance').val(message.data[3])
+            $('#editUserSid').val(message.data[1])
+          break
         case 'adminList':
             $('#' + currentAdminPage + 'Content').empty()
             $div = $('#' + currentAdminPage + 'Content');
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + Math.round(item[3] * 100) / 100)
 
               $user = $('<div>')
                   .text('Make User')
@@ -195,7 +230,7 @@
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + item[3])
+                  .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + Math.round(item[3] * 100) / 100)
               $user = $('<div>')
                   .text('Make Admin')
                   .attr('onClick', 'makeAdmin(' + item[0] + ')')
@@ -224,7 +259,7 @@
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('Key id: ' + item[0] + ", Person id: " + item[1])
+                  .text('Key id: ' + item[0] + ", Person id: " + item[1] + ", Key label: " + item[2])
               $delete = $('<div>')
                   .text('delete key')
                   .attr('onClick', 'deleteKey(' + item[0] + ')')
@@ -241,22 +276,52 @@
         // get category list
         case 'categoryList':
           $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('id: ' + item[0] + " Name: " + item[1] + " - [ Edit | Delete ]")
-                .appendTo($ul)
-          });
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-3')
+                  .text('id: ' + item[0] + ", Name: " + item[1])
+              $edit = $('<div>')
+                  .text('edit category')
+                  .attr('onClick', 'editCategory(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete category')
+                  .attr('onClick', 'deleteCategory(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break
         // get product list
         case 'productList':
-          $('#' + currentAdminPage + 'Content').empty()
-          $ul =  $('#' + currentAdminPage + 'Content').append('<ul>');
-          message.data.map(function(item) {
-            $('<li/>')
-                .text('id: ' + item[0] + " Name: " + item[1] + " - [ Edit | Delete ]")
-                .appendTo($ul)
-          });
+           $('#' + currentAdminPage + 'Content').empty()
+            $div = $('#' + currentAdminPage + 'Content');
+            message.data.map(function(item) {
+              $info = $('<div>')
+                  .addClass('col-md-3')
+                  .text('id: ' + item[0] + ", Name: " + item[1] + ", Stock: " + item[2] + ", Price: " + item[3])
+              $edit = $('<div>')
+                  .text('edit item')
+                  .attr('onClick', 'editItem(' + item[0] + ')')
+              $delete = $('<div>')
+                  .text('delete item')
+                  .attr('onClick', 'deleteItem(' + item[0] + ')')
+              $actions = $('<div>')
+                  .addClass('col-md-5')
+                  .append($edit)
+                  .append($delete)
+              $subDiv = $('<div>')
+                  .addClass('row')
+                  .append($info)
+                  .append($actions)
+                  .appendTo($div)
+            });
           break
         // get product add page
         case 'productAdd':
@@ -272,62 +337,64 @@
         case 'orderList':
           $('#orderListContent').empty();
         $table = $('#orderListContent');
-          $name = $('<td/>')
-              .text('Item')
-          $quantity = $('<td/>')
-              .text('Quantity')
+          $id = $('<td/>')
+              .text('Order ID')
+          $person = $('<td/>')
+              .text('Person')
           $price = $('<td/>')
-              .text('Price')
-          $total = $('<td/>')
               .text('Total')
+          $date = $('<td/>')
+              .text('Date')
           $delete = $('<td/>')
               .text('')
           $('<tr/>')
-              .append($name)
-              .append($quantity)
+              .append($id)
+              .append($person)
               .append($price)
-              .append($total)
+              .append($date)
               .append($delete)
               .appendTo($table)
-        var totalPrice = 0
-        message.data.map(function (item) {
-          $name = $('<td/>')
-              .text(item.name)
-          $quantity = $('<td/>')
-              .text('x' + item.quantity)
+        message.data.map(function(order) {
+          console.log(order)
+          $id = $('<td/>')
+              .text(order.oid)
+          $person = $('<td/>')
+              .text('x' + order.person[1])
           $price = $('<td/>')
-              .html("&euro; " + item.price)
-          $total = $('<td/>')
-              .html('&euro; ' + Math.round(((item.quantity * item.price) * 100)) / 100)
-          totalPrice += item.quantity * item.price
+              .html("&euro; " + order.total)
+          $date = $('<td/>')
+              .text(order.date)
           $delete = $('<td/>')
-              .html('<span onClick=\'removeItem('+item.iid+')\'>[x]</span>')
+              .html('<span onClick=\'removeOrder('+order.oid+')\'>[x]</span>')
           $('<tr/>')
-              .append($name)
-              .append($quantity)
+              .append($id)
+              .append($person)
               .append($price)
-              .append($total)
+              .append($date)
               .append($delete)
               .appendTo($table)
+          if ( order.items.length > 0 ) {
+            order.items.map(function(item) {
+              $id = $('<td/>')
+                   .text('')
+              $person = $('<td/>')
+                   .text(item[2])
+              $price = $('<td/>')
+                  .html("&euro; " + item[4])
+              $quantity = $('<td/>')
+                  .text(item[3])
+              $delete = $('<td/>')
+                  .html('<span onClick=\'removeOrderItem(' + order.oid + ', ' + item[1] + ')\'>[x]</span>')
+          $('<tr/>')
+              .append($id)
+              .append($person)
+              .append($quantity)
+              .append($price)
+              .append($delete)
+              .appendTo($table)
+            })
+          }
         });
-        $empty = $('<td/>')
-            .text('')
-            .attr('colspan', 3)
-
-        $total = $('<td/>')
-            .html('&euro; ' + (Math.round(totalPrice * 100) / 100))
-        $('<tr/>')
-            .append($total)
-            .prepend($empty)
-            .appendTo($table)
-        if ( typeof message.data != 'undefined' && message.data.length > 0) {
-          $('#basketButton').removeClass('screen')
-        }
-        else {
-          $('#basketButton').addClass('screen')
-        }
-
-        $('#authItems').removeClass('screen');
       }
     });
   };

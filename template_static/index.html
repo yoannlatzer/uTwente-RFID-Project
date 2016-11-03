@@ -2,7 +2,7 @@
 <html>
   <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>Hello world</title>
+      <title>Stress Snack System</title>
       <link rel="stylesheet" href="/style/style.css"/>
       <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
       <script src="/lib/jquery-2.1.1.min.js"></script>
@@ -123,9 +123,8 @@
         -->
         <div id="home" class="col-md-4 group" style="height:415px;">
             <h2>Please scan your card</h2>
-            <i>or click here to log in.</i>
+            <i>or click <a href="#" onclick="goto('login')">here</a> to log in.</i>
             <ul>
-                <li><a href="#" onclick="goto('login')">Login with username and password (not functional)</a></li>
                 <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
                 <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
                 <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
@@ -138,7 +137,7 @@
         BEGIN NEW USER SCREEN
         -->
         <div id="newUser" class="col-md-4 group screen" style="height:415px;">
-            <h4>Register as a new user (todo errors)</h4>
+            <h4>Register as a new user</h4>
             <form>
                 <div class="form-group">
                     <label for="register_name">Name</label>
@@ -152,10 +151,13 @@
                     <label for="register_password">Password</label>
                     <input placeholder="password" type="password" id="register_password" class="form-control" /><br />
                 </div>
-                    <button onClick="register()" class="btn btn-primary">Register</button><br />
+                <div class="form-group">
+                    <label for="card_label">Card label</label>
+                    <input placeholder="Student card" type="text" id="card_label" class="form-control" /><br />
+                </div>
+                    <button onClick="register()" class="btn btn-primary">Register</button>
+                    <button onclick="goto('home')" href="#" class="btn btn-danger">Go Back</button>
             </form>
-            <br />
-            <a href="#" onclick="goto('home')">go back</a>
         </div>
         <!--
         END NEW USER SCREEN
@@ -164,20 +166,21 @@
         BEGIN LOGIN SCREEN
         -->
         <div id="login" class="col-md-4 group screen" style="height:415px;">
-            <h1>Please enter your student number and password (not functional)</h1>
+            <h1>Login</h1>
             <form>
                 <div class="form-group">
-                    <label for="studentnr">Studentnumber</label>
-                    <input placeholder="s1234567" type="text" id="studentnr" class="form-control"/><br />
+                    <label for="loginsid">Studentnumber</label>
+                    <input placeholder="s1234567" type="text" id="loginsid" class="form-control"/><br />
                 </div>
                 <div class="form-group">
-                    <label for="password">Password</label>
-                    <input placeholder="password" type="password" id="password" class="form-control" /><br />
+                    <label for="loginpassword">Password</label>
+                    <input placeholder="password" type="password" id="loginpassword" class="form-control" /><br />
                 </div>
-                    <button class="btn btn-primary">Login</button><br />
+                    <button class="btn btn-primary" onClick="login()">Login</button>
+                    <button onclick="goto('home')" href="#" class="btn btn-danger">Go Back</button>
             </form>
             <br />
-            <a href="#" href="#" onclick="goto('home')">go back</a>
+            
         </div>
         <!--
         END LOGIN SCREEN
@@ -216,34 +219,28 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
         -->
         <div id="authenticated" class=" screen" style="height:415px;">
             <div class="row">
-                <div class="col-md-8 group" style="height:130px;">
-                    <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
-                    <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
-                </div>
-                <div class="col-md-2 group" style="height:130px;">
-                    <a href="#" onClick="logout()">Logout</a>
-                </div>
-            </div>
-            <div class="row">
                 <div class="col-md-7 group">
-                    <h1>Shop</h1>
+                 <h1>Shop</h1>
                     <a href="#" id="categoriesLink" class="screen " onClick="categories()">Categories</a><br />
                     <div id="authCategories" class="screen"></div>
                     <div id="authItems" class="screen"></div>
                 </div>
-                <div class="col-md-4 group">
-                    <div id="authBasket">
+                <div class="col-md-4">
+                    <div id="authID" class="group">           
+                        <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
+                        <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
+                        <a href="#" onClick="logout()">Logout</a>
+                    </div>
+                    <div id="authBasket" class="group">
                         <h1>Shopping Basket</h1>
-                        <table id="basketList" style="width: 100%;"></table>
+                        <table id="basketList" class="table table-striped" style="width: 100%;"></table>
                         <input id="basketButton" class="screen" type="button" value="Check out" onClick="buyBasket()" />
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div id="admin_link"  class="row screen">
                 <div class="col-md-5 group">
-                    <div id="admin_link" class="screen">
-                        <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
-                    </div>
+                    <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
                 </div>
             </div>
             <!--
@@ -297,7 +294,7 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                 <form>
                     <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
                     <select id="addItemCategory"></select><br />
-                    <input style="width: 250px;" type="number" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
+                    <input style="width: 250px;" type="number" step="any" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
                     <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
                     <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
                     <input type="submit" value="Add Product" onClick="addItem()">
@@ -305,7 +302,37 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
             </div>
             <div id="orderList" class="screen">
                 <h1>Order list</h1>
-                <table id="orderListContent"></table>
+                <table id="orderListContent" style="width: 100%;"></table>
+            </div>
+            <div id="editUser" class="screen">
+                <h1>Edit user</h1>
+                <form>
+                    <input style="width: 250px;" type="hidden" id="editUserPid" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Name" id="editUserName" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Student Number" id="editUserSid" /><br />
+                    <input style="width: 250px;" type="number" placeholder="Balance" id="editUserBalance" /><br />
+                    <input type="submit" value="Update User" onClick="updateUser()">
+                </form>
+            </div>
+            <div id="editCategory" class="screen">
+                <h1>Edit category</h1>
+                <form>
+                    <input style="width: 250px;" type="hidden" id="editCategoryCid" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Name" id="editCategoryName" /><br />
+                    <input type="submit" value="Update User" onClick="updateCategory()">
+                </form>
+            </div>
+            <div id="editProduct" class="screen">
+                <h1>Edit product</h1>
+                <form>
+                    <input style="width: 250px;" type="hidden" id="editItemIid" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="editItemName" /><br />
+                    <select id="editItemCategory"></select><br />
+                    <input style="width: 250px;" type="number" step="any" placeholder="Price exp. 1.50" id="editItemPrice" /><br />
+                    <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="editItemStock" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="editItemUrl" /><br /><br />
+                    <input type="submit" value="Update Product" onClick="updateItem()">
+                </form>
             </div>
             <a href="#" onClick="logout()">Logout</a>
         </div>
