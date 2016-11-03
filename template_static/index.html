@@ -229,7 +229,10 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                     <div id="authID" class="group">           
                         <h1>Welcome back <span id="authenticated_name"></span> (<span id="authenticated_sid"></span>)</h1>
                         <span>Your negative balance is: &euro; <span id="authenticated_balance"></span></span>
-                        <a href="#" onClick="logout()">Logout</a>
+                        <button class="btn btn-danger" onClick="logout()">Logout</button>
+                    <div id="admin_link"  class="screen">
+                            <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
+                    </div>
                     </div>
                     <div id="authBasket" class="group">
                         <h1>Shopping Basket</h1>
