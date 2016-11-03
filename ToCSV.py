@@ -1,6 +1,6 @@
 import exe_sql as sql
 import datetime
-
+import urllib.request
 
 def getcsv():
 
@@ -17,4 +17,7 @@ def getcsv():
     csv_out = open(filename, 'w')
     csv_out.write(csv_data)     #fills the csv file with csv_data from the orders table
     csv_out.close()             #closes the csv file
+    urllib.request.urlretrieve("%f.csv" % filename, filename)
     sql.end()                   #ends the database connection
+
+
