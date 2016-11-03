@@ -17,7 +17,6 @@ def getcsv():
     csv_out = open(path, 'w')
     csv_out.write(csv_data)     #fills the csv file with csv_data from the orders table
     csv_out.close()             #closes the csv file
-   # urllib.request.urlretrieve("http://localhost:8080/%s" % filename, filename)
     sql.end()                   #ends the database connection
     emit('csv', {'data': filename})
 
