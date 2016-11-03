@@ -6,9 +6,11 @@ import product_sql as itemActions
 import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
+import ToCSV as csv
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
+  httpd.add_route('/stats', eca.http.GenerateEvent('getStats'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
   httpd.add_route('/categories/list', eca.http.GenerateEvent('categoriesList'), methods=["POST"])
@@ -35,6 +37,7 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/item/update', eca.http.GenerateEvent('itemupdate'), methods=["POST"])
   httpd.add_route('/admin/item/remove', eca.http.GenerateEvent('itemremove'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
+  httpd.add_route('/admin/downloadcsv', eca.http.GenerateEvent('downloadcsv'), methods=["POST"])
 
 @event('init')
 def setup(ctx, e):
@@ -44,6 +47,11 @@ def setup(ctx, e):
     userActions.newUser('User 1', 1000001, 'password', fake.hash(1), 'ov')
     sql.cur_tables()
     logoutUser(ctx, e)
+    statsGet(ctx,e)
+
+@event('getStats')
+def statsGet(ctx, e):
+    emit('stats', {'data': userFrontendActions.getStats()})
 
 @event('adminmake')
 def makeAdmin(ctx, e):
@@ -279,6 +287,7 @@ def logoutUser(ctx, e):
     ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
     ctx.basket = []
     emit('logout', {})
+    statsGet(ctx, e)
     print('Successful logged out!')
     rfid.listen(ctx)
 
@@ -302,3 +311,8 @@ def realscan(ctx, hash):
         ctx.person = user
         # show logged in screen
         loginUser(ctx, {})
+
+@event('downloadcsv')
+def csvdownload(ctx,e):
+    csv.getcsv()
+

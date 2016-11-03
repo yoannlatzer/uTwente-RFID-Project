@@ -71,6 +71,8 @@ pid NOT NULL,                         -- person id
 FOREIGN KEY(pid) REFERENCES persons(pid)
 );
 INSERT INTO orders VALUES (1,15.62,CURRENT_TIMESTAMP,2);
+INSERT INTO orders VALUES (2,15.62,CURRENT_TIMESTAMP,2);
+INSERT INTO orders VALUES (3,15.62,CURRENT_TIMESTAMP,2);
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS orderitems;
 
@@ -83,4 +85,9 @@ price DECIMAL(5,2),                   -- Price as found in system on time of Buy
 PRIMARY KEY (oid,iid),
 FOREIGN KEY(oid) REFERENCES orders(oid),
 FOREIGN KEY (iid) REFERENCES items(iid)
-)
+);
+  INSERT INTO orderitems VALUES (1,1,2,0.41);
+  INSERT INTO orderitems VALUES (1,2,2,0.41);
+  INSERT INTO orderitems VALUES (2,1,4,0.41);
+  INSERT INTO orderitems VALUES (2,3,2,0.41);
+  INSERT INTO orderitems VALUES (3,3,1,0.41);

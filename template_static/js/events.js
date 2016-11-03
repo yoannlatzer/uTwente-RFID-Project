@@ -1,7 +1,22 @@
 (function($, block) {
+
   block.fn.newUser = function() {
     this.actions(function(e, message) {
       goto('newUser')
+    });
+  };
+
+  block.fn.stats = function() {
+    this.actions(function(e, message) {
+      console.log(message)
+      $('#statsMostSold').text(message.data[0][1]);
+      $('#statsMostSold1').text(message.data[0][1]);
+      $('#statsLeastSold').text(message.data[1][1]);
+      $('#statsCheapestName').text(message.data[2][1]);
+      $('#statsCheapestPrice').text(message.data[2][2]);
+      $('#statsAvgSpend').text(message.data[3][0]);
+      $('#statsBiggestFatty').text(message.data[4][1]);
+      $('#statsNumberSnacks').text(message.data[5][0]);
     });
   };
 
@@ -234,13 +249,16 @@
               $info = $('<div>')
                   .addClass('col-md-7')
                   .text('pid:' + item[0] + ", student#: " + item[2] + ", name: " + item[1] + ", balance: " + Math.round(item[3] * 100) / 100)
-              $user = $('<div>')
+              $user = $('<button>')
+                  .addClass('btn btn-success')
                   .text('Make Admin')
                   .attr('onClick', 'makeAdmin(' + item[0] + ')')
-              $edit = $('<div>')
+              $edit = $('<button>')
+                  .addClass('btn btn-warning')
                   .text('edit')
                   .attr('onClick', 'editUser(' + item[0] + ')')
-              $delete = $('<div>')
+              $delete = $('<button>')
+                  .addClass('btn btn-danger')
                   .text('delete')
                   .attr('onClick', 'deleteUser(' + item[0] + ')')
               $actions = $('<div>')
@@ -263,7 +281,8 @@
               $info = $('<div>')
                   .addClass('col-md-7')
                   .text('Key id: ' + item[0] + ", Person id: " + item[1] + ", Student Number: " + item[3] + ", Key label: " + item[2])
-              $delete = $('<div>')
+              $delete = $('<button>')
+                  .addClass('btn btn-danger')
                   .text('delete key')
                   .attr('onClick', 'deleteKey(' + item[0] + ')')
               $actions = $('<div>')
@@ -284,10 +303,12 @@
               $info = $('<div>')
                   .addClass('col-md-3')
                   .text('id: ' + item[0] + ", Name: " + item[1])
-              $edit = $('<div>')
+              $edit = $('<button>')
+                  .addClass('btn btn-warning')
                   .text('edit category')
                   .attr('onClick', 'editCategory(' + item[0] + ')')
-              $delete = $('<div>')
+              $delete = $('<button>')
+                  .addClass('btn btn-danger')
                   .text('delete category')
                   .attr('onClick', 'deleteCategory(' + item[0] + ')')
               $actions = $('<div>')
@@ -309,10 +330,12 @@
               $info = $('<div>')
                   .addClass('col-md-3')
                   .text('id: ' + item[0] + ", Name: " + item[1] + ", Stock: " + item[2] + ", Price: " + item[3])
-              $edit = $('<div>')
+              $edit = $('<button>')
+                  .addClass('btn btn-warning')
                   .text('edit item')
                   .attr('onClick', 'editItem(' + item[0] + ')')
-              $delete = $('<div>')
+              $delete = $('<button>')
+                  .addClass('btn btn-danger')
                   .text('delete item')
                   .attr('onClick', 'deleteItem(' + item[0] + ')')
               $actions = $('<div>')
