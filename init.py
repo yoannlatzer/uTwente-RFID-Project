@@ -6,6 +6,7 @@ import product_sql as itemActions
 import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
+import ToCSV as csv
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
@@ -36,6 +37,7 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/item/update', eca.http.GenerateEvent('itemupdate'), methods=["POST"])
   httpd.add_route('/admin/item/remove', eca.http.GenerateEvent('itemremove'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
+  httpd.add_route('/admin/downloadcsv', eca.http.GenerateEvent('downloadcsv'), methods=["POST"])
 
 @event('init')
 def setup(ctx, e):
@@ -309,3 +311,8 @@ def realscan(ctx, hash):
         ctx.person = user
         # show logged in screen
         loginUser(ctx, {})
+
+@event('downloadcsv')
+def csvdownload(ctx,e):
+    csv.getcsv()
+
