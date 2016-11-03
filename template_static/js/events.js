@@ -10,7 +10,14 @@
     this.actions(function(e, message) {
       window.location.href = 'csv/' + message.data;
     });
+  };  
+
+  block.fn.downloadSql = function() {
+    this.actions(function(e, message) {
+      window.location.href = 'sql/' + message.data;
+    });
   };
+
 
   block.fn.stats = function() {
     this.actions(function(e, message) {

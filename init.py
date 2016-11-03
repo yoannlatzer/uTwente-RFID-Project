@@ -40,6 +40,7 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/item/remove', eca.http.GenerateEvent('itemremove'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
   httpd.add_route('/admin/downloadcsv', eca.http.GenerateEvent('downloadcsv'), methods=["POST"])
+  httpd.add_route('/admin/downloadsql', eca.http.GenerateEvent('downloadsql'), methods=["POST"])
 
 @event('init')
 def setup(ctx, e):
@@ -324,3 +325,6 @@ def realscan(ctx, hash):
 def csvdownload(ctx,e):
     csv.getcsv()
 
+@event('downloadsql')
+def sqldownload(ctx,e):
+    csv.getSQLDump()

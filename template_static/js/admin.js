@@ -70,3 +70,7 @@ function removeOrderItem(oid, iid) {
 function downloadcsv1() {
     $.post('/admin/downloadcsv',JSON.stringify({}))
 }
+
+function downloadsql1() {
+    $.post('/admin/downloadsql',JSON.stringify({}))
+}
