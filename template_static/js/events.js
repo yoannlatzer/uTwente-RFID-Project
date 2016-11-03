@@ -6,6 +6,12 @@
     });
   };
 
+  block.fn.downloadCsv = function() {
+    this.actions(function(e, message) {
+      window.location.href = 'csv/' + message.data;
+    });
+  };
+
   block.fn.stats = function() {
     this.actions(function(e, message) {
       $('#statsMostSold').text(message.data[0][1]);

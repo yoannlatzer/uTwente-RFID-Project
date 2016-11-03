@@ -357,9 +357,12 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
     </div>
 
 </div>
-
+<div id="download"></div>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
+        // Event csv download
+        block('#download').downloadCsv();
+        events.connect('csv', '#download');
         // Event stats
         block('#statistics').stats();
         events.connect('stats', '#statistics');
