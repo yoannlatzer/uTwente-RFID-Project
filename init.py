@@ -1,6 +1,6 @@
 from eca import *
 import eca.http
-import serial_listener as rfid
+#import serial_listener as rfid
 import user_sql as userActions
 import product_sql as itemActions
 import userfr_sql as userFrontendActions
@@ -52,7 +52,8 @@ def setup(ctx, e):
 
 @event('scanPause')
 def pauseScan(ctx, e):
-    rfid.pause(ctx)
+   pass
+   # rfid.pause(ctx)
 
 @event('getStats')
 def statsGet(ctx, e):
