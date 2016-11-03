@@ -293,7 +293,7 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                 <form>
                     <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
                     <select id="addItemCategory"></select><br />
-                    <input style="width: 250px;" type="number" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
+                    <input style="width: 250px;" type="number" step="any" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
                     <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
                     <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
                     <input type="submit" value="Add Product" onClick="addItem()">
@@ -314,13 +314,23 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                 </form>
             </div>
             <div id="editCategory" class="screen">
-                <h1>Edit user</h1>
+                <h1>Edit category</h1>
                 <form>
-                    <input style="width: 250px;" type="hidden" id="editUserPid" /><br />
-                    <input style="width: 250px;" type="text" placeholder="Name" id="editUserName" /><br />
-                    <input style="width: 250px;" type="text" placeholder="Student Number" id="editUserSid" /><br />
-                    <input style="width: 250px;" type="number" placeholder="Balance" id="editUserBalance" /><br />
-                    <input type="submit" value="Update User" onClick="updateUser()">
+                    <input style="width: 250px;" type="hidden" id="editCategoryCid" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Name" id="editCategoryName" /><br />
+                    <input type="submit" value="Update User" onClick="updateCategory()">
+                </form>
+            </div>
+            <div id="editProduct" class="screen">
+                <h1>Edit product</h1>
+                <form>
+                    <input style="width: 250px;" type="hidden" id="editItemIid" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="editItemName" /><br />
+                    <select id="editItemCategory"></select><br />
+                    <input style="width: 250px;" type="number" step="any" placeholder="Price exp. 1.50" id="editItemPrice" /><br />
+                    <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="editItemStock" /><br />
+                    <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="editItemUrl" /><br /><br />
+                    <input type="submit" value="Update Product" onClick="updateItem()">
                 </form>
             </div>
             <a href="#" onClick="logout()">Logout</a>

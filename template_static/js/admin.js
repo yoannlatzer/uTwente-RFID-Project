@@ -28,17 +28,33 @@ function deleteKey(kid) {
 }
 
 function editCategory(cid) {
-
+    $.post('/admin/category/edit', JSON.stringify({cid: cid}))
 }
 
+function updateCategory() {
+    $.post('/admin/category/update', JSON.stringify({
+        cid: $('#editCategoryCid').val(),
+        name: $('#editCategoryName').val()
+    }))
+}
 function deleteCategory(cid) {
     $.post('/admin/category/remove', JSON.stringify({cid: cid}))
 }
 
 function editItem(iid) {
-
+    $.post('/admin/item/edit', JSON.stringify({iid: iid}))
 }
 
+function updateItem() {
+    $.post('/admin/item/update', JSON.stringify({
+        iid: $('#editItemIid').val(),
+        name: $('#editItemName').val(),
+        cid: $('#editItemCategory').val(),
+        price: $('#editItemPrice').val(),
+        stock: $('#editItemStock').val(),
+        image: $('#editItemUrl').val()
+    }))
+}
 function deleteItem(iid) {
     $.post('/admin/item/remove', JSON.stringify({iid: iid}))
 }

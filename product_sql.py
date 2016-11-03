@@ -21,6 +21,13 @@ def newCategory(name):
     sql.commit()
     sql.end()
 
+def getCategory(cid):
+    sql.begin()
+    result = sql.cur.execute('SELECT cid, name FROM categories WHERE cid=?', [int(cid)])
+    res = result.fetchone()
+    sql.end()
+    return res
+
 def editCategory(name, cid):
     """Edit the name of a category"""
     sql.begin()
@@ -59,7 +66,6 @@ def getItem(iid):
     result = sql.cur.execute('SELECT iid, item_name, stock, current_price, pic_url, cid FROM items WHERE iid=?', [int(iid)])
     res = result.fetchone()
     sql.end()
-    print (res)
     return res
 
 def newItem(name, stock, price, image, cid):

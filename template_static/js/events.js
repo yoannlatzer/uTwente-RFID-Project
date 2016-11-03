@@ -159,10 +159,34 @@
       switch(currentAdminPage) {
         // get admin list
         case 'editCategory':
-
+          $('#editCategoryCid').val(message.data[0])
+          $('#editCategoryName').val(message.data[1])
           break
         case 'editProduct':
-          break
+          $('#editItemCategory').empty()
+          $select =  $('#editItemCategory')
+          message.categories.map(function(item) {
+            if (message.data[5] == item[0]) {
+              $('<option/>')
+                  .attr('value', item[0])
+                  .attr('selected', 'selected')
+                  .text(item[1])
+                  .appendTo($select)
+            }
+            else {
+              $('<option/>')
+                  .attr('value', item[0])
+                  .text(item[1])
+                  .appendTo($select)
+            }
+          });
+
+            //iid, item_name, stock, current_price, pic_url, cid
+          $('#editItemIid').val(message.data[0])
+          $('#editItemName').val(message.data[1])
+          $('#editItemUrl').val(message.data[4])
+          $('#editItemPrice').val(message.data[3])
+          $('#editItemStock').val(message.data[2])
         case 'editUser':
             $('#editUserName').val(message.data[2])
             $('#editUserPid').val(message.data[0])

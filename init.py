@@ -23,12 +23,16 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/user/update', eca.http.GenerateEvent('userupdate'), methods=["POST"])
   httpd.add_route('/admin/user/remove', eca.http.GenerateEvent('userremove'), methods=["POST"])
   httpd.add_route('/admin/key/remove', eca.http.GenerateEvent('keyremove'), methods=["POST"])
+  httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
+  httpd.add_route('/admin/category/edit', eca.http.GenerateEvent('categoryedit'), methods=["POST"])
+  httpd.add_route('/admin/category/update', eca.http.GenerateEvent('categoryupdate'), methods=["POST"])
   httpd.add_route('/admin/category/remove', eca.http.GenerateEvent('categoryremove'), methods=["POST"])
   httpd.add_route('/admin/order/remove', eca.http.GenerateEvent('orderremove'), methods=["POST"])
   httpd.add_route('/admin/orderitem/remove', eca.http.GenerateEvent('orderitemremove'), methods=["POST"])
   httpd.add_route('/admin/item/add', eca.http.GenerateEvent('addItem'), methods=["POST"])
+  httpd.add_route('/admin/item/edit', eca.http.GenerateEvent('itemedit'), methods=["POST"])
+  httpd.add_route('/admin/item/update', eca.http.GenerateEvent('itemupdate'), methods=["POST"])
   httpd.add_route('/admin/item/remove', eca.http.GenerateEvent('itemremove'), methods=["POST"])
-  httpd.add_route('/admin/category/add', eca.http.GenerateEvent('addCategory'), methods=["POST"])
   httpd.add_route('/logout', eca.http.GenerateEvent('logout'), methods=["POST"])
 
 @event('init')
@@ -59,14 +63,11 @@ def removeAdmin(ctx, e):
 def editUserPage(ctx, e):
     if ctx.person[4] == 1:
         print('show edit user page')
-        print(e.data)
         emit('adminpage', {'page': 'editUser', 'data': userActions.getUser(e.data['pid'])})
 
 @event('userupdate')
 def updateUser(ctx, e):
     if ctx.person[4] == 1:
-        #post action here
-        print(e.data)
         userActions.editUser(e.data['name'], e.data['balance'], e.data['sid'], e.data['pid'])
         print('Update user')
         emit('adminpage', {'page': 'userList', 'data': userActions.userList()})
@@ -99,12 +100,33 @@ def removeKey(ctx, e):
         print('Remove key')
         emit('adminpage', {'page': 'keyList', 'data': userActions.keyList()})
 
-@event('itemremove')
-def removeItem(ctx, e):
+@event('addCategory')
+def newCategory(ctx, e):
     if ctx.person[4] == 1:
-        itemActions.delItem(e.data['iid'])
-        print('Remove Item')
-        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
+        itemActions.newCategory(e.data['name'])
+        print('Category added', e.data['name'])
+        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
+
+    else:
+        logoutUser()
+
+@event('categoriesList')
+def listCategories(ctx, e):
+    emit('categories', {'data': itemActions.categoriesList()})
+    print('List categories')
+
+@event('categoryedit')
+def editCategory(ctx, e):
+    if ctx.person[4] == 1:
+        print('Edit category')
+        emit('adminpage', {'page': 'editCategory', 'data': itemActions.getCategory(e.data['cid'])})
+
+@event('categoryupdate')
+def updateCategory(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.editCategory(e.data['name'], e.data['cid'])
+        print('Update category')
+        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
 
 @event('categoryremove')
 def removeCategory(ctx, e):
@@ -150,25 +172,30 @@ def newItem(ctx, e):
     else:
         logoutUser()
 
-@event('addCategory')
-def newCategory(ctx, e):
+@event('itemedit')
+def editItem(ctx, e):
     if ctx.person[4] == 1:
-        itemActions.newCategory(e.data['name'])
-        print('Category added', e.data['name'])
-        emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
+        print('Edit item')
+        emit('adminpage', {'page': 'editProduct', 'data': itemActions.getItem(e.data['iid']), 'categories': itemActions.categoriesList()})
 
-    else:
-        logoutUser()
-
-@event('categoriesList')
-def listCategories(ctx, e):
-    emit('categories', {'data': itemActions.categoriesList()})
-    print('List categories')
+@event('itemupdate')
+def updateItem(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.editItem(e.data['name'], e.data['stock'], e.data['price'], e.data['image'], e.data['cid'], e.data['iid'])
+        print('Update item')
+        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
 
 @event('itemsList')
 def listItems(ctx, e):
     emit('items', {'data': itemActions.getFilterdItems(e.data['cid'])})
     print('List items')
+
+@event('itemremove')
+def removeItem(ctx, e):
+    if ctx.person[4] == 1:
+        itemActions.delItem(e.data['iid'])
+        print('Remove Item')
+        emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
 
 @event('itemsSelect')
 def selectItem(ctx, e):
