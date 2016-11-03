@@ -295,7 +295,6 @@ def scan(ctx, e):
         # show logged in screen
         loginUser(ctx, e)
 
-<<<<<<< Updated upstream
 def realscan(ctx, hash):
     ctx.currentHash = hash
     user = rfid.sendFakeHash(ctx.currentHash)
@@ -305,8 +304,8 @@ def realscan(ctx, hash):
         ctx.person = user
         # show logged in screen
         loginUser(ctx, {})
-=======
+
 @event('downloadcsv')
 def csvdownload(ctx,e):
     csv.getcsv()
->>>>>>> Stashed changes
+
