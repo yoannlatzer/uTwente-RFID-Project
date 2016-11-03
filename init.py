@@ -9,6 +9,7 @@ import fake
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
+  httpd.add_route('/stats', eca.http.GenerateEvent('getStats'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
   httpd.add_route('/categories/list', eca.http.GenerateEvent('categoriesList'), methods=["POST"])
@@ -44,6 +45,11 @@ def setup(ctx, e):
     userActions.newUser('User 1', 1000001, 'password', fake.hash(1), 'ov')
     sql.cur_tables()
     logoutUser(ctx, e)
+    statsGet(ctx,e)
+
+@event('getStats')
+def statsGet(ctx, e):
+    emit('stats', {'data': userFrontendActions.getStats()})
 
 @event('adminmake')
 def makeAdmin(ctx, e):
@@ -279,6 +285,7 @@ def logoutUser(ctx, e):
     ctx.currentHash = None # CurrentHash cache scanned card hash (logged in hash)
     ctx.basket = []
     emit('logout', {})
+    statsGet(ctx, e)
     print('Successful logged out!')
     rfid.listen(ctx)
 

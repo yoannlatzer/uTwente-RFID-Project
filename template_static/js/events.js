@@ -1,7 +1,22 @@
 (function($, block) {
+
   block.fn.newUser = function() {
     this.actions(function(e, message) {
       goto('newUser')
+    });
+  };
+
+  block.fn.stats = function() {
+    this.actions(function(e, message) {
+      console.log(message)
+      $('#statsMostSold').text(message.data[0][1]);
+      $('#statsMostSold1').text(message.data[0][1]);
+      $('#statsLeastSold').text(message.data[1][1]);
+      $('#statsCheapestName').text(message.data[2][1]);
+      $('#statsCheapestPrice').text(message.data[2][2]);
+      $('#statsAvgSpend').text(message.data[3][0]);
+      $('#statsBiggestFatty').text(message.data[4][1]);
+      $('#statsNumberSnacks').text(message.data[5][0]);
     });
   };
 

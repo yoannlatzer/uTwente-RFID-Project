@@ -14,6 +14,7 @@
           var current = 'home';
           $(document).ready(function() {
               $('#home').removeClass('screen');
+              $.post('/stats', JSON.stringify({}));
           });
 
           function goto(page) {
@@ -195,22 +196,22 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                 <h2>Statistics</h2>
                 <ul class="list-group">
                     <li class="list-group-item">
-                        Most sold item: Kanjers
+                        Most sold item: <label id="statsMostSold"></label>
                     </li>
                     <li class="list-group-item">
-                        Least sold item: Energy Drink
+                        Least sold item: <label id="statsLeastSold"></label>
                     </li>
                     <li class="list-group-item">
-                        Cheapest item: &#8364; 0.25
+                        Cheapest item: <label id="statsCheapestName"></label> &euro; <label id="statsCheapestPrice"></label>
                     </li>
                     <li class="list-group-item">
-                        Average money spend: &#8364; 0.41
+                        Average money spent: &euro; <label id="statsAvgSpend"></label>
                     </li>
                     <li class="list-group-item">
-                        Most kanjers eaten by: Kevin
+                        Most <label id="statsMostSold1"></label> eaten by: <label id="statsBiggestFatty"></label>
                     </li>
                     <li class="list-group-item">
-                        Number of snacks: 41
+                        Number of snacks: <label id="statsNumberSnacks"></label>
                     </li>
                 </ul>
         </div>
@@ -349,6 +350,9 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
 
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
+        // Event stats
+        block('#statistics').stats();
+        events.connect('stats', '#statistics');
         // Event to show new user screen (unknown card)
         block('#newUser').newUser();
         events.connect('newUser', '#newUser');
