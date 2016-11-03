@@ -20,4 +20,13 @@ def getcsv():
     sql.end()                   #ends the database connection
     emit('csv', {'data': filename})
 
-
+def getSQLDump():
+    sql.begin()
+    filename = 'dump.sql'
+    path = 'template_static/sql/{}'.format(filename)
+    sql_out = open(path, 'w')
+    with sql_out:
+        for line in sql.con.iterdump():
+            sql_out.write('%s\n' % line)
+    sql.end()
+    emit('sql',{'data': filename })

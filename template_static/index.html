@@ -83,7 +83,7 @@
     </div>
     <div id="thankyou" class="row screen">
         <div class="col-md-11 group">
-            <h1>Thank you for ...</h1>
+            <h1>Thank you for Buying!</h1>
         </div>
     </div>
     <div class="row">
@@ -316,6 +316,9 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                 <table id="orderListContent" style="width: 100%;"></table>
                 <a href="#" id="downloadcsv" onClick="downloadcsv1()" class="btn btn-success">Download CSV</a>
             </div>
+            <div id="" class="screen">                
+                <a href="#" id="downloadsql" onClick="downloadsql1()" class="btn btn-success">Download SQLs</a>
+            </div>
             <div id="editUser" class="screen">
                 <h1>Edit user</h1>
                 <form>
@@ -358,8 +361,12 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
 
 </div>
 <div id="download"></div>
+<div id="downloadsql"></div>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
     <script>
+        // Event sql download
+        block('#downloadsql').downloadSql();
+        events.connect('sql', '#downloadsql');
         // Event csv download
         block('#download').downloadCsv();
         events.connect('csv', '#download');
