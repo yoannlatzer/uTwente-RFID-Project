@@ -8,7 +8,6 @@
 
   block.fn.stats = function() {
     this.actions(function(e, message) {
-      console.log(message)
       $('#statsMostSold').text(message.data[0][1]);
       $('#statsMostSold1').text(message.data[0][1]);
       $('#statsLeastSold').text(message.data[1][1]);
@@ -362,8 +361,7 @@
           break
         case 'orderList':
           $('#orderListContent').empty();
-        $table = $('#orderListContent')
-            .addClass('table table-striped');
+        $table = $('#orderListContent');
           $id = $('<td/>')
               .text('Order ID')
           $person = $('<td/>')
