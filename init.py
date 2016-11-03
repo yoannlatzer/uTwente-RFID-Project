@@ -8,6 +8,7 @@ import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
 import ToCSV as csv
+import demo as demo
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
@@ -44,12 +45,10 @@ def add_request_handlers(httpd):
 @event('init')
 def setup(ctx, e):
     sql.create_db()
-    userActions.newUser('Admin', 1000000, 'password', fake.hash(0), 'studkaart')
-    userActions.makeAdmin(1)
-    userActions.newUser('User 1', 1000001, 'password', fake.hash(1), 'ov')
+    demo.demoData()
     sql.cur_tables()
     logoutUser(ctx, e)
-    statsGet(ctx,e)
+
 
 @event('getStats')
 def statsGet(ctx, e):

@@ -42,7 +42,6 @@ def delCategory(cid):
     sql.commit()
     sql.end()
 
-
 #Items
 def getItems():
     """Gives an array of all items :: () -> [(a,b,c),(a,b,c)]"""

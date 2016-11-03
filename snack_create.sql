@@ -42,6 +42,7 @@ name varchar
 );
 INSERT INTO categories VALUES(0, 'Drinks');
 INSERT INTO categories VALUES(1, 'Food');
+INSERT INTO categories VALUES(2, 'Snacks');
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS items;
 
@@ -56,9 +57,6 @@ cid INTEGER,                           --category ID
 CHECK(pic_url <> ''),
 FOREIGN KEY(cid) REFERENCES categories(cid)
 );
-INSERT INTO items VALUES(1,'Bueno',20,0.41,'bueno.png', 1);
-INSERT INTO items VALUES(2,'Bagel',25,2.41,'bagel.png', 1);
-INSERT INTO items VALUES(3,'Fristi',10,1.41,'fristi.png', 0);
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS orders;
 
@@ -70,9 +68,6 @@ date datetime,                        -- in YYYY-MM-DD HH-MM-SS format
 pid NOT NULL,                         -- person id
 FOREIGN KEY(pid) REFERENCES persons(pid)
 );
-INSERT INTO orders VALUES (1,15.62,CURRENT_TIMESTAMP,2);
-INSERT INTO orders VALUES (2,15.62,CURRENT_TIMESTAMP,2);
-INSERT INTO orders VALUES (3,15.62,CURRENT_TIMESTAMP,2);
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS orderitems;
 
@@ -86,8 +81,3 @@ PRIMARY KEY (oid,iid),
 FOREIGN KEY(oid) REFERENCES orders(oid),
 FOREIGN KEY (iid) REFERENCES items(iid)
 );
-  INSERT INTO orderitems VALUES (1,1,2,0.41);
-  INSERT INTO orderitems VALUES (1,2,2,0.41);
-  INSERT INTO orderitems VALUES (2,1,4,0.41);
-  INSERT INTO orderitems VALUES (2,3,2,0.41);
-  INSERT INTO orderitems VALUES (3,3,1,0.41);
