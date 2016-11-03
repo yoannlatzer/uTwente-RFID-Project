@@ -15,6 +15,11 @@
           $(document).ready(function() {
               $('#home').removeClass('screen');
               $.post('/stats', JSON.stringify({}));
+              if (typeof window.location.href.split('?')[1] != 'undefined' &&  window.location.href.split('?')[1] == 'debug') {
+                  $('#debug').removeClass('screen')
+                  $('#cardid').removeClass('screen')
+                  $('#debugButton').removeClass('screen')
+              }
           });
 
           function goto(page) {
@@ -131,12 +136,14 @@
         <div id="home" class="col-md-4 group" style="height:415px;">
             <h2>Please scan your card</h2>
             <i>or click <a href="#" onclick="goto('login')">here</a> to log in.</i>
-            <ul>
-                <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
-                <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
-                <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
-            </ul>
-            <input type="text" id="cardid" /><input type="button" value="Flash card" onClick="flashCard()" />
+            <div id="debug" class="screen">
+                <ul>
+                    <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
+                    <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
+                    <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
+                </ul>
+            </div>
+            <input class="screen" type="text" id="cardid" /><input class="screen" id="debugButton" type="button" value="Flash card" onClick="flashCard()" />
         </div>
         <!--
         END HOME SCREEN
