@@ -123,9 +123,8 @@
         -->
         <div id="home" class="col-md-4 group" style="height:415px;">
             <h2>Please scan your card</h2>
-            <i>or click here to log in.</i>
+            <i>or click <a href="#" onclick="goto('login')">here</a> to log in.</i>
             <ul>
-                <li><a href="#" onclick="goto('login')">Login with username and password (not functional)</a></li>
                 <li><a href="#" onclick="fakeScan(0)">Fake scan uid (0, admin)</a></li>
                 <li><a href="#" onclick="fakeScan(1)">Fake scan uid (1, student 1)</a></li>
                 <li><a href="#" onclick="fakeScan(2)">Fake scan uid (2, unkown card)</a></li>
@@ -138,7 +137,7 @@
         BEGIN NEW USER SCREEN
         -->
         <div id="newUser" class="col-md-4 group screen" style="height:415px;">
-            <h4>Register as a new user (todo errors)</h4>
+            <h4>Register as a new user</h4>
             <form>
                 <div class="form-group">
                     <label for="register_name">Name</label>
