@@ -6,7 +6,8 @@ pid INTEGER NOT NULL PRIMARY KEY,     -- person id
 name VARCHAR,
 sid INTEGER UNIQUE,                   -- student id
 balance DECIMAL (5,2) DEFAULT 0,      -- SHOULD ONLY BE NUMBERS, DO NOT USE THE 'FEATURE' of strings, check this in python/js input!
-usertype TINYINT                      -- 0: user, 1: admin
+usertype TINYINT,                     -- 0: user, 1: admin
+password VARCHAR
 );
 --------------------------------------------------------------------------------
 DROP TABLE IF EXISTS keys;

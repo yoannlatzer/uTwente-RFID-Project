@@ -8,6 +8,7 @@ import exe_sql as sql
 import fake
 
 def add_request_handlers(httpd):
+  httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
   httpd.add_route('/categories/list', eca.http.GenerateEvent('categoriesList'), methods=["POST"])
@@ -39,9 +40,9 @@ def add_request_handlers(httpd):
 def setup(ctx, e):
     sql.create_db()
     logoutUser(ctx, e)
-    userActions.newUser('Admin', 1000000, fake.hash(0))
+    userActions.newUser('Admin', 1000000, 'password', fake.hash(0))
     userActions.makeAdmin(1)
-    userActions.newUser('User 1', 1000001, fake.hash(1))
+    userActions.newUser('User 1', 1000001, 'password', fake.hash(1))
     sql.cur_tables()
     rfid.listen()
 
@@ -239,9 +240,9 @@ def buy(ctx, e):
 @event('register')
 def registerUser(ctx, e):
     if ctx.currentHash == None:
-        # todo: error feedback to user
         # Error no card known
         print("Error: No card active in system!")
+        logoutUser(ctx, e)
     else:
         if not (e.data['sid']):
             # Error no student number given
@@ -251,12 +252,21 @@ def registerUser(ctx, e):
                 print("Error: No name given!")
             else:
                 # card hash and student number known
-                userActions.newUser(e.data['name'], e.data['sid'], ctx.currentHash)
+                userActions.newUser(e.data['name'], e.data['sid'], e.data['pass'], ctx.currentHash)
                 # show logged in screen
                 print('Successful registration!')
                 user = rfid.sendFakeHash(ctx.currentHash)
                 ctx.person = user
                 loginUser(ctx, e)
+
+@event('userPassLogin')
+def loginUserPass(ctx, e):
+    person = userActions.loginUser(e.data['sid'], e.data['password'])
+    if person == None:
+        logoutUser(ctx, e)
+    else:
+        ctx.person = person
+        loginUser(ctx, e)
 
 def loginUser(ctx, e):
     if ctx.person != None:

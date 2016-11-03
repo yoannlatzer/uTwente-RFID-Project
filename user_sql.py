@@ -4,9 +4,9 @@ For all your query needs to do with users!
 """
 
 import exe_sql as sql
-import random
+import bcrypt
 
-def newUser(name,sid, hash): # user will not be created under a new name if SID already exists due to UNIQUE CONSTRAINT
+def newUser(name,sid, password, hash): # user will not be created under a new name if SID already exists due to UNIQUE CONSTRAINT
     """Create a new keyhash entry, new persons (pid) and link these in KPL"""
     sql.begin()
     hash = str(hash)
@@ -18,14 +18,29 @@ def newUser(name,sid, hash): # user will not be created under a new name if SID 
     res = x.fetchone()
     if res == None:
         # insert user
-        sql.cur.execute("INSERT INTO persons (name,sid,usertype,balance) VALUES(?,?,0,?)", [name, sid,round(random.uniform(1,20),2)])
+        password = password.encode('utf-8')
+        hashed = bcrypt.hashpw(password, bcrypt.gensalt())
+        sql.cur.execute("INSERT INTO persons (name,sid,usertype,balance,password) VALUES(?,?,0,?,?)", [name, sid, 0, hashed])
         sql.commit()
         pid = sql.lastId()
-        print ("this")
-    print ("that")
-    sql.cur.execute("UPDATE keys SET pid=? WHERE kid=?",[pid,hash])    
+
+    sql.cur.execute("UPDATE keys SET pid=? WHERE kid=?",[pid,hash])
     sql.commit()
     sql.end()
+
+def loginUser(sid, password):
+    sql.begin()
+    res = sql.cur.execute("SELECT * FROM persons WHERE sid=?", [sid])
+    person = res.fetchone()
+    sql.end()
+    if person != None:
+        password = password.encode('utf-8')
+        if bcrypt.hashpw(password, person[5]) == person[5]:
+            return person
+        else:
+            return None
+    else:
+        return None
 
 def makeAdmin(pid):
     """Up someones usertype"""
