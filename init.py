@@ -40,9 +40,9 @@ def add_request_handlers(httpd):
 def setup(ctx, e):
     sql.create_db()
     logoutUser(ctx, e)
-    userActions.newUser('Admin', 1000000, 'password', fake.hash(0))
+    userActions.newUser('Admin', 1000000, 'password', fake.hash(0), 'studkaart')
     userActions.makeAdmin(1)
-    userActions.newUser('User 1', 1000001, 'password', fake.hash(1))
+    userActions.newUser('User 1', 1000001, 'password', fake.hash(1), 'ov')
     sql.cur_tables()
     rfid.listen()
 
@@ -252,7 +252,7 @@ def registerUser(ctx, e):
                 print("Error: No name given!")
             else:
                 # card hash and student number known
-                userActions.newUser(e.data['name'], e.data['sid'], e.data['pass'], ctx.currentHash)
+                userActions.newUser(e.data['name'], e.data['sid'], e.data['pass'], ctx.currentHash, e.data['keyname'])
                 # show logged in screen
                 print('Successful registration!')
                 user = rfid.sendFakeHash(ctx.currentHash)

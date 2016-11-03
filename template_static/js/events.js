@@ -259,7 +259,7 @@
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-7')
-                  .text('Key id: ' + item[0] + ", Person id: " + item[1])
+                  .text('Key id: ' + item[0] + ", Person id: " + item[1] + ", Key label: " + item[2])
               $delete = $('<div>')
                   .text('delete key')
                   .attr('onClick', 'deleteKey(' + item[0] + ')')

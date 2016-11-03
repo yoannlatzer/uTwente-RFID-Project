@@ -6,12 +6,12 @@ For all your query needs to do with users!
 import exe_sql as sql
 import bcrypt
 
-def newUser(name,sid, password, hash): # user will not be created under a new name if SID already exists due to UNIQUE CONSTRAINT
+def newUser(name, sid, password, hash, keyname): # user will not be created under a new name if SID already exists due to UNIQUE CONSTRAINT
     """Create a new keyhash entry, new persons (pid) and link these in KPL"""
     sql.begin()
     hash = str(hash)
     # insert card
-    sql.cur.execute("INSERT INTO keys (kid) VALUES(?)",[hash])
+    sql.cur.execute("INSERT INTO keys (kid, keyname) VALUES(?,?)",[hash, keyname])
     sql.commit()
     
     x = sql.cur.execute("SELECT * FROM persons WHERE sid=?",[sid])
@@ -23,7 +23,8 @@ def newUser(name,sid, password, hash): # user will not be created under a new na
         sql.cur.execute("INSERT INTO persons (name,sid,usertype,balance,password) VALUES(?,?,0,?,?)", [name, sid, 0, hashed])
         sql.commit()
         pid = sql.lastId()
-
+    else:
+        pid = res[0]
     sql.cur.execute("UPDATE keys SET pid=? WHERE kid=?",[pid,hash])
     sql.commit()
     sql.end()
@@ -213,7 +214,7 @@ def getOrderItems(oid):
 def keyList():
     """Get list of all keys in system (mainly unreadable hashes)"""
     sql.begin()
-    result = sql.cur.execute("SELECT kid, pid FROM keys")
+    result = sql.cur.execute("SELECT kid, pid, keyname FROM keys")
     res = result.fetchall()
     sql.end()
     return res

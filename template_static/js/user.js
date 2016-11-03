@@ -2,7 +2,8 @@ function register() {
     var studentNumber = $('#register_studentnr').val();
     var name = $('#register_name').val();
     var password = $('#register_password').val();
-    $.post('/register', JSON.stringify({sid: studentNumber, name: name, pass: password}));
+    var keyname = $('#card_label').val();
+    $.post('/register', JSON.stringify({sid: studentNumber, name: name, pass: password, keyname: keyname}));
 }
 
 function login() {
