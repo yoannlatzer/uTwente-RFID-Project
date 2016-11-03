@@ -303,6 +303,7 @@ def scan(ctx, e):
         loginUser(ctx, e)
 
 def realscan(ctx, hash):
+    ctx.user = None
     ctx.currentHash = hash
     user = rfid.sendFakeHash(ctx.currentHash)
     if user == False:
