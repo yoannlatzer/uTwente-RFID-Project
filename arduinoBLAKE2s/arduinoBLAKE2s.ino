@@ -24,6 +24,9 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);
 BLAKE2s B2s;
 char key[] = "Les sanglots longs des violons de l'automne, blessent mon coeur d'une langueur monotone";
 uint8_t hashOfJSON[HASH_LEN];
+int melody[] = {
+  174.61, 196.00, 220.00, 261.63
+};
 
 void setup() {
   pinMode(6, OUTPUT);
@@ -82,11 +85,13 @@ void loop() {
       // Print the hash string on serial port
       Serial.println(hashStr);
       // Turn the buzzer on and off when hash is transmitted
-      //tone(6, 523);
-      //delay(200);
-      //tone(6, 698);
-      //delay(200);
-      //noTone(6);
+      for (int i = 0; i < 3; i++) {
+        tone(6, melody[i]);
+        delay(100); 
+      }
+      tone(6, 523.25);
+      delay(200);      
+      noTone(6);
     }
   
 }
