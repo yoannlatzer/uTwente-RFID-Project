@@ -39,12 +39,11 @@ def add_request_handlers(httpd):
 @event('init')
 def setup(ctx, e):
     sql.create_db()
-    logoutUser(ctx, e)
     userActions.newUser('Admin', 1000000, 'password', fake.hash(0), 'studkaart')
     userActions.makeAdmin(1)
     userActions.newUser('User 1', 1000001, 'password', fake.hash(1), 'ov')
     sql.cur_tables()
-    rfid.listen()
+    logoutUser(ctx, e)
 
 @event('adminmake')
 def makeAdmin(ctx, e):
@@ -109,7 +108,7 @@ def newCategory(ctx, e):
         emit('adminpage', {'page': 'categoryList', 'data': itemActions.categoriesList()})
 
     else:
-        logoutUser()
+        logoutUser(ctx, e)
 
 @event('categoriesList')
 def listCategories(ctx, e):
@@ -171,7 +170,7 @@ def newItem(ctx, e):
         emit('adminpage', {'page': 'productList', 'data': itemActions.getItems()})
 
     else:
-        logoutUser()
+        logoutUser(ctx, e)
 
 @event('itemedit')
 def editItem(ctx, e):
@@ -281,6 +280,7 @@ def logoutUser(ctx, e):
     ctx.basket = []
     emit('logout', {})
     print('Successful logged out!')
+    rfid.listen(ctx)
 
 @event('fakescan')
 def scan(ctx, e):
@@ -292,3 +292,13 @@ def scan(ctx, e):
         ctx.person = user
         # show logged in screen
         loginUser(ctx, e)
+
+def realscan(ctx, hash):
+    ctx.currentHash = hash
+    user = rfid.sendFakeHash(ctx.currentHash)
+    if user == False:
+        emit('newUser', {})
+    else:
+        ctx.person = user
+        # show logged in screen
+        loginUser(ctx, {})

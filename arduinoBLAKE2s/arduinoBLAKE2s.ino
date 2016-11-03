@@ -80,7 +80,7 @@ void loop() {
       hashStr += String(+hashOfJSON[i], HEX);
       }
       // Print the hash string on serial port
-      Serial.print(hashStr);
+      Serial.println(hashStr);
       // Turn the buzzer on and off when hash is transmitted
       //tone(6, 523);
       //delay(200);

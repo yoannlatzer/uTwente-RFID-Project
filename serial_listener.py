@@ -2,9 +2,10 @@
 # list ports python -m serial.tools.list_ports
 from authenticate import authenticateHash
 import serial
+import init as scan
 
-def listen():
-    HASH_BYTES = 2
+def listen(ctx):
+    uidString = ""
     ser = serial.Serial()
     ser.baudrate = 9600 # Set boudrate
     ser.port = 'COM3' # Set port
@@ -15,15 +16,16 @@ def listen():
     if ser.is_open == True:
         while True:
             # Wait until a tag is read
-            hash = ser.read(HASH_BYTES)
-            #print(hash)
-            if len(hash) == HASH_BYTES:
-                print(hash)
-                # TODO: Do something with hash
-                authenticateHash(hash)
+            hash = ser.read()
+            if hash == b'\r':
+                print(uidString)
+                scan.realscan(ctx, uidString)
                 # Flush the bus
                 ser.flushInput()
+                uidString = ""
+                return
+            if len(hash) != 0 :
+                uidString += hash.decode("utf-8")
     ser.close() # Close serial port
-
 def sendFakeHash(hash):
     return authenticateHash(hash)
