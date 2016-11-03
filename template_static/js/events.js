@@ -362,7 +362,8 @@
           break
         case 'orderList':
           $('#orderListContent').empty();
-        $table = $('#orderListContent');
+        $table = $('#orderListContent')
+            .addClass('table table-striped');
           $id = $('<td/>')
               .text('Order ID')
           $person = $('<td/>')

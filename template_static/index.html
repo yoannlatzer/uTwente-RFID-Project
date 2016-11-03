@@ -218,11 +218,11 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
         <!--
         BEGIN SHOP SCREEN
         -->
-        <div id="authenticated" class=" screen" style="height:415px;">
+        <div id="authenticated" class="screen" style="height:415px;">
             <div class="row">
-                <div class="col-md-7 group">
+                <div class="col-md-7 group" style="min-height:750px;">
                  <h1>Shop</h1>
-                    <a href="#" id="categoriesLink" class="screen " onClick="categories()">Categories</a><br />
+                    <a href="#" id="categoriesLink" class="screen " onClick="categories()"><h2>Back to categories</h2></a><br />
                     <div id="authCategories" class="screen"></div>
                     <div id="authItems" class="screen"></div>
                 </div>
@@ -235,7 +235,7 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
                             <a href="#" onClick="loadAdminScreen()">Admin Panel</a>
                     </div>
                     </div>
-                    <div id="authBasket" class="group">
+                    <div id="authBasket" class="group" style="min-height:300px;">
                         <h1>Shopping Basket</h1>
                         <table id="basketList" class="table table-striped" style="width: 100%;"></table>
                         <input id="basketButton" class="screen" type="button" value="Check out" onClick="buyBasket()" />
@@ -297,11 +297,11 @@ Last wednesday, the 5th of October the B.U.F.F.E.L.S. took over the MBasement fo
             <div id="productAdd" class="screen">
                 <h1>Add Product</h1>
                 <form>
-                    <input style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
-                    <select id="addItemCategory"></select><br />
-                    <input style="width: 250px;" type="number" step="any" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
-                    <input style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
-                    <input style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
+                    <input class="form-control" style="width: 250px;" type="text" placeholder="Product Name exp. Bagel" id="addItemName" /><br />
+                    <select class="form-control" style="width: 250px;" id="addItemCategory"></select><br />
+                    <input class="form-control" style="width: 250px;" type="number" step="any" placeholder="Price exp. 1.50" id="addItemPrice" /><br />
+                    <input class="form-control" style="width: 250px;" type="number" placeholder="Items in stock exp. 10" id="addItemStock" /><br />
+                    <input class="form-control" style="width: 250px;" type="text" placeholder="Image filename exp. bagels.jpg" id="addItemUrl" /><br /><br />
                     <input type="submit" value="Add Product" onClick="addItem()">
                 </form>
             </div>
