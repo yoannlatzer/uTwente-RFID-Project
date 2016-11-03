@@ -6,7 +6,7 @@ import product_sql as itemActions
 import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
-#import ToCSV as csv
+import ToCSV as csv
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
@@ -294,7 +294,7 @@ def logoutUser(ctx, e):
     emit('logout', {})
     statsGet(ctx, e)
     print('Successful logged out!')
-    rfid.listen(ctx)
+    #rfid.listen(ctx)
 
 @event('fakescan')
 def scan(ctx, e):
