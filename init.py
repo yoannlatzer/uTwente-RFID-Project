@@ -1,6 +1,7 @@
 from eca import *
 import eca.http
 #import serial_listener as rfid
+from authenticate import authenticateHash
 import user_sql as userActions
 import product_sql as itemActions
 import userfr_sql as userFrontendActions
@@ -299,8 +300,8 @@ def logoutUser(ctx, e):
 
 @event('fakescan')
 def scan(ctx, e):
-    ctx.currentHash = fake.hash(e.data['id'])
-    user = rfid.sendFakeHash(ctx.currentHash)
+    ctx.currentHash = e.data['id']
+    user = authenticateHash(ctx.currentHash)
     if user == False:
         emit('newUser', {})
     else:
