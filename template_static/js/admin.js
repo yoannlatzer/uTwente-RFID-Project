@@ -67,3 +67,6 @@ function removeOrderItem(oid, iid) {
     $.post('/admin/orderitem/remove', JSON.stringify({oid: oid, iid: iid}))
 }
 
+function downloadcsv1() {
+    $.post('/admin/downloadcsv',JSON.stringify({}))
+}
