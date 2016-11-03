@@ -7,7 +7,7 @@ import init as scan
 uidString = ""
 ser = serial.Serial()
 ser.baudrate = 9600 # Set boudrate
-ser.port = 'COM3' # Set port
+ser.port = '/dev/cu.usbmodem1421' # Set port
 ser.timeout = 0 # Set timeout 0s
 
 def pause(ctx):
