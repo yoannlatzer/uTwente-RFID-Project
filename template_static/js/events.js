@@ -305,7 +305,7 @@
             message.data.map(function(item) {
               $info = $('<div>')
                   .addClass('col-md-3')
-                  .text('id: ' + item[0] + ", Name: " + item[1])
+                  .text('id: ' + item[0] + ", Name: " + item[1] + ", Stock: " + item[2] + ", Price: " + item[3])
               $edit = $('<div>')
                   .text('edit item')
                   .attr('onClick', 'editItem(' + item[0] + ')')
