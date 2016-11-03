@@ -6,10 +6,11 @@ import product_sql as itemActions
 import userfr_sql as userFrontendActions
 import exe_sql as sql
 import fake
-import ToCSV as csv
+#import ToCSV as csv
 
 def add_request_handlers(httpd):
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
+  httpd.add_route('/scan/pause', eca.http.GenerateEvent('scanPause'), methods=["POST"])
   httpd.add_route('/stats', eca.http.GenerateEvent('getStats'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
   httpd.add_route('/register', eca.http.GenerateEvent('register'), methods=["POST"])
@@ -48,6 +49,10 @@ def setup(ctx, e):
     sql.cur_tables()
     logoutUser(ctx, e)
     statsGet(ctx,e)
+
+@event('scanPause')
+def pauseScan(ctx, e):
+    rfid.pause(ctx)
 
 @event('getStats')
 def statsGet(ctx, e):

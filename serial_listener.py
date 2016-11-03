@@ -4,13 +4,16 @@ from authenticate import authenticateHash
 import serial
 import init as scan
 
-def listen(ctx):
-    uidString = ""
-    ser = serial.Serial()
-    ser.baudrate = 9600 # Set boudrate
-    ser.port = 'COM3' # Set port
-    ser.timeout = 0 # Set timeout 0s
+uidString = ""
+ser = serial.Serial()
+ser.baudrate = 9600 # Set boudrate
+ser.port = 'COM3' # Set port
+ser.timeout = 0 # Set timeout 0s
 
+def pause(ctx):
+    ser.close()
+
+def listen(ctx):
     try:
         ser.open() # Open serial port
         print('Wating for RFID hash...')

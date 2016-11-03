@@ -18,6 +18,12 @@
           });
 
           function goto(page) {
+              if (page == 'home' && $('#home').hasClass('screen') == true) {
+                  $.post('/logout', JSON.stringify({}));
+              }
+              if (page == 'login') {
+                  $.post('/scan/pause', JSON.stringify({}));
+              }
               $('#' + current).addClass('screen');
               $('#' + page).removeClass('screen');
               current = page;
