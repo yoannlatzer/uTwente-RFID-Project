@@ -20,6 +20,7 @@ h4, .h4 {
 }
 
 h2, .h2 {
+    margin-top: 0px;
     font-weight: 300;
     text-transform: uppercase;
 }
