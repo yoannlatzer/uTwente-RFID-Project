@@ -296,7 +296,7 @@
               $delete = $('<button>')
                   .addClass('btn btn-danger')
                   .text('delete key')
-                  .attr('onClick', 'deleteKey(' + item[0] + ')')
+                  .attr('onClick', 'deleteKey(\'' + item[0] + '\')')
               $actions = $('<div>')
                   .addClass('col-md-5')
                   .append($delete)
