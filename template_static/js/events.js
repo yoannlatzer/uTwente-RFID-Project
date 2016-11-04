@@ -27,7 +27,7 @@
       $('#statsCheapestName').text(message.data[2][1]);
       $('#statsCheapestPrice').text(message.data[2][2]);
       $('#statsAvgSpend').text(Math.round(message.data[3][0]*100)/100);
-      $('#statsBiggestFatty').text(message.data[4][1]);
+      $('#MostEpicEater').text(message.data[4][1]);
       $('#statsNumberSnacks').text(message.data[5][0]);
     });
   };
