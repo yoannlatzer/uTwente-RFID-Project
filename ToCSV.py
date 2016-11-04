@@ -15,6 +15,7 @@ def getcsv():
     filename = 'Order_list.csv'
     path = 'template_static/csv/{}'.format(filename)
     csv_out = open(path, 'w')
+    csv_out.write('Name, Total, date, OrderID \n')
     csv_out.write(csv_data)     #fills the csv file with csv_data from the orders table
     csv_out.close()             #closes the csv file
     sql.end()                   #ends the database connection
