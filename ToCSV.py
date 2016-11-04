@@ -4,7 +4,7 @@ import exe_sql as sql
 def getcsv():
 
     sql.begin()     #starts a connection to the database
-    result = sql.cur.execute('SELECT * FROM ORDERS')        #selects all data from the orders table
+    result = sql.cur.execute('SELECT persons.name, orders.total, orders.date, orders.oid FROM persons, orders where orders.pid=persons.pid')        #selects all data from the orders table
     data = result.fetchall()
     csv_data = ''
     for item in [data]:
@@ -15,6 +15,7 @@ def getcsv():
     filename = 'Order_list.csv'
     path = 'template_static/csv/{}'.format(filename)
     csv_out = open(path, 'w')
+    csv_out.write('Name, Total, date, OrderID \n')
     csv_out.write(csv_data)     #fills the csv file with csv_data from the orders table
     csv_out.close()             #closes the csv file
     sql.end()                   #ends the database connection
