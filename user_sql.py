@@ -107,13 +107,11 @@ def removeUser(pid):
     sql.begin()
     result = sql.cur.execute("SELECT balance from persons WHERE pid=?",[pid])    
     res = result.fetchone()
-    print (res[0])
     # not removing if balance is positive?
     if res[0] <= 0:
         sql.cur.execute("DELETE FROM keys WHERE pid=?",[pid])
         result = sql.cur.execute("SELECT oid FROM basket WHERE pid=?",[pid])        
         res = result.fetchall()
-        print ([res])
         for i in [res]:
             z = len(i)-1
             while z >= 0:

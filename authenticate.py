@@ -12,16 +12,13 @@ def authenticateHash(hash):
 
 def getUserId(hash):
     sql.begin()
-    print(str(hash))
     sql.cur.execute("SELECT pid FROM keys WHERE kid=?", [str(hash)])
     pid = sql.cur.fetchone()
-    print(pid)
     if pid == None:
         sql.end()
         return None
     else:
         sql.cur.execute("SELECT * FROM persons WHERE pid=?", [pid[0]])
         person = sql.cur.fetchone()
-    print(person)
     sql.end()
     return person
