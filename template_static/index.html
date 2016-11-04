@@ -16,18 +16,18 @@
               $('#home').removeClass('screen');
               $.post('/stats', JSON.stringify({}));
               if (typeof window.location.href.split('?')[1] != 'undefined' &&  window.location.href.split('?')[1] == 'debug') {
-                  $('#debug').removeClass('screen')
-                  $('#cardid').removeClass('screen')
-                  $('#debugButton').removeClass('screen')
+                  $('#debug').removeClass('screen');
+                  $('#cardid').removeClass('screen');
+                  $('#debugButton').removeClass('screen');
+              }
+              if (typeof window.location.href.split('?')[1] != 'undefined' &&  window.location.href.split('?')[1] == 'setup') {
+                  $.post('/setup', JSON.stringify({}));
               }
           });
 
           function goto(page) {
               if (page == 'home' && $('#home').hasClass('screen') == true) {
                   $.post('/logout', JSON.stringify({}));
-              }
-              if (page == 'login') {
-                  $.post('/scan/pause', JSON.stringify({}));
               }
               $('#' + current).addClass('screen');
               $('#' + page).removeClass('screen');

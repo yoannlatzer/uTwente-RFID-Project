@@ -9,6 +9,7 @@ import ToCSV as csv
 import demo as demo
 
 def add_request_handlers(httpd):
+  httpd.add_route('/setup', eca.http.GenerateEvent('setupDB'), methods=["POST"])
   httpd.add_route('/login', eca.http.GenerateEvent('userPassLogin'), methods=["POST"])
   httpd.add_route('/stats', eca.http.GenerateEvent('getStats'), methods=["POST"])
   httpd.add_route('/fake/id', eca.http.GenerateEvent('fakescan'), methods=["POST"])
@@ -41,12 +42,15 @@ def add_request_handlers(httpd):
   httpd.add_route('/admin/downloadsql', eca.http.GenerateEvent('downloadsql'), methods=["POST"])
 
 @event('init')
+def initial(ctx, e):
+   # sql.cur_tables()
+    pass
+
+@event('setupDB')
 def setup(ctx, e):
     sql.create_db()
     demo.demoData()
     sql.cur_tables()
-    logoutUser(ctx, e)
-
 
 @event('getStats')
 def statsGet(ctx, e):
@@ -277,8 +281,20 @@ def loginUserPass(ctx, e):
 def loginUser(ctx, e):
     if ctx.person != None:
         ctx.basket = []
-        emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2], 'balance': ctx.person[3]})
+        fire_global('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2], 'balance': ctx.person[3]})
         print('Successful login!')
+
+@event('authenticated')
+def authenticatedEmit(ctx, e):
+    ctx.person = [
+        e.data['pid'],
+        e.data['name'],
+        e.data['sid'],
+        e.data['balance'],
+        e.data['type'],
+    ]
+    emit('authenticated', {'pid': ctx.person[0], 'type': ctx.person[4], 'name': ctx.person[1], 'sid': ctx.person[2], 'balance': ctx.person[3]})
+
 
 @event('logout')
 def logoutUser(ctx, e):
@@ -294,22 +310,17 @@ def scan(ctx, e):
     ctx.currentHash = e.data['id']
     user = authenticateHash(ctx.currentHash)
     if user == False:
-        emit('newUser', {})
+        fire_global('newUser', {'hash': ctx.currentHash})
+        print('fire!!')
     else:
         ctx.person = user
         # show logged in screen
         loginUser(ctx, e)
 
-def realscan(ctx, hash):
-    ctx.user = None
-    ctx.currentHash = hash
-    user = authenticateHash(ctx.currentHash)
-    if user == False:
-        emit('newUser', {})
-    else:
-        ctx.person = user
-        # show logged in screen
-        loginUser(ctx, {})
+@event('newUser')
+def emitNewUser(ctx, e):
+    ctx.currentHash = e.data['hash']
+    emit('newUser', {})
 
 @event('downloadcsv')
 def csvdownload(ctx,e):

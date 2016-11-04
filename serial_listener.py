@@ -9,7 +9,7 @@ def listen():
         uidString = ""
         ser = serial.Serial()
         ser.baudrate = 9600  # Set boudrate
-        ser.port = '/dev/cu.usbmodem1411'  # Set port
+        ser.port = '/dev/cu.usbmodem1421'  # Set port
         ser.timeout = 0  # Set timeout 0s
         ser.open() # Open serial port
         print('Wating for RFID hash...')
@@ -19,11 +19,11 @@ def listen():
                 hash = ser.read()
                 if hash == b'\r':
                     print(uidString)
-                    r = requests.post('http://localhost:8080/fake/id', data=json.dumps({'id': uidString}))
+                    r = requests.post('http://localhost:8080/fake/id', data=json.dumps({'id': uidString.replace('\r', '')}))
                     # Flush the bus
                     ser.flushInput()
                     uidString = ""
-                if len(hash) != 0 :
+                if len(hash) != 0:
                     uidString += hash.decode("utf-8")
         ser.close() # Close serial port
     except serial.SerialException:
