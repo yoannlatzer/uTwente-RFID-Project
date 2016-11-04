@@ -4,9 +4,9 @@ import userfr_sql as userFrontendActions
 
 def demoData():
     print('Insert demo data')
-    userActions.newUser('Admin', 1000000, 'password', '61f2fc61fec5b2c7847eaa69368a9e2ee5479f73a8513119476301996ecbc60', 'tag')
+    userActions.newUser('Admin', 's1000000', 'password', '61f2fc61fec5b2c7847eaa69368a9e2ee5479f73a8513119476301996ecbc60', 'tag')
     userActions.makeAdmin(1)
-    userActions.newUser('Pieter-Tjerk', 1000001, 'password', '7025d4507c74741955afb94b73397eaefff4b4caea8b486169c7be8635917', 'Studenten kaart')
+    userActions.newUser('Pieter-Tjerk', 'x1000001', 'password', '7025d4507c74741955afb94b73397eaefff4b4caea8b486169c7be8635917', 'Studenten kaart')
     itemActions.newItem('Bueno', 10, 0.54, 'bueno.png', 2)
     itemActions.newItem('Bastogne', 10, 0.54, 'snacks/bastogne.png', 2)
     itemActions.newItem('Chips', 10, 0.54, 'snacks/chips.png', 2)
